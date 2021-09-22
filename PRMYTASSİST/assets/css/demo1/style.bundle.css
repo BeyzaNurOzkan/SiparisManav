@@ -45848,6 +45848,7 @@ body {
     }
 }
 
+
 @media (max-width: 1024px) {
     .kt-header-mobile {
         display: -webkit-box;
@@ -48017,7 +48018,11 @@ body {
             border-bottom: 1px solid rgba(0, 0, 0, 0.07);
         }
 }
-
+@media (max-width:1023px) {
+    .soldasabitdesktop {
+        display: none;
+    }
+}
 .kt-header-menu-wrapper-close {
     display: none;
 }
