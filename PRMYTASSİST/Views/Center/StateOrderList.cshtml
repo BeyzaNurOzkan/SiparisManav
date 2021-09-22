@@ -1,0 +1,158 @@
+﻿@using Entity
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    User CurrentUser = Session["CurrentUser"] as User;
+    int CurrentUserID = CurrentUser.ID;
+}
+
+<div class="kt-content  kt-grid__item kt-grid__item--fluid" id="kt_content" style="padding-top: 5%;">
+    <div class="kt-portlet kt-portlet--mobile">
+        <div class="kt-portlet__head ">
+            <div class="row pt-3 pb-3">
+                <div class="col-md-2 ml-0" style="align-self:center;">
+                    <div class="kt-portlet__head-label">
+                        <span class="kt-portlet__head-icon">
+                            <i class="flaticon-list"></i>
+                        </span>
+                        <h5 class="kt-subheader__title">
+                            Hal Sipariş Listesi
+                        </h5>
+                    </div>
+                </div>
+                <div class="col-md-3 ml-0 pt-1">
+                    <div class="input-daterange input-group" id="kt_datepicker_5">
+                        <input id="StartDate" type="text" class="form-control" name="start" style="font-size: 12px; text-align-last: center; color: red; border: 1px solid #0049ff;" value="">
+                        <div class="input-group-append" style=" height: 31px; margin-right: -1px; ">
+                            <span class="input-group-text" style=" font-weight: bold; font-size: 15px; border: 1px solid #0049ff;">
+                                -
+                            </span>
+                        </div>
+                        <input id="EndDate" type="text" class="form-control" name="end" style="font-size: 12px; text-align-last: center; color: red; border: 1px solid #0049ff;" value="">
+                    </div>
+                </div>
+                <div class="col-md-1 pr-0 pr-3 pl-0 ml-0 mt-0 pt-1" style="text-align: right;">
+                    <a onclick="ChangeDateRange2()" class="btn btn-warning btn-icon-sm ListButton" style="padding-right: 6px; padding-top: 6px; padding-bottom: 6px; padding-left: 8px;"><i class="icon-2x text-dark-50 flaticon2-list-2"></i> Listele</a>
+                </div>
+                <div class="col-md-6 col-sm-5 pr-0 pl-4" style="text-align: right;">
+                    <a style="font-size: 11px; align-self: center; color: #003366; font-weight: bold; ">
+                        Şube:
+                    </a>
+                    <input disabled id="BranchCount" class="pl-2 mr-0" style="color: #003366; background-color: transparent; width: 25px; border: 0px; font-size: 11px; font-weight: bold; " type="text" value="0" name="BranchCount" placeholder="">
+                    <a href="#userNewModal" onclick="ShowBranchStateOrderListFalse()" id="fark" class="btn btn-info btn-icon-sm pt-2 mr-4 ml-0 " data-toggle="modal" style="color: red; background-color: transparent; width: 40px; border: 0px; font-size: 11px; font-weight: bold; " title="Şube Sipariş Bilgileri">
+                    </a>
+                    <a style="font-size: 11px; align-self: center; color: #003366; font-weight: bold; ">
+                        Sipariş:
+                    </a>
+                    <input disabled id="OrderCount" class="pl-2 mr-4" style="color: #003366; background-color: transparent; width: 30px; border: 0px; font-size: 11px; font-weight: bold; " type="text" value="0" name="OrderCount" placeholder="">
+                    <a style="font-size: 11px; align-self: center; color: #12ac7f; font-weight: bold; ">
+                        Onaylanan:
+                    </a>
+                    <input disabled id="App1Count" class="pl-2 mr-4" style="color: #12ac7f; background-color: transparent; width: 30px; border: 0px; font-size: 11px; font-weight: bold; " type="text" value="0" name="App1Count" placeholder="">
+                    <a style="align-self: center; color: #fd397a; font-size: 11px; font-weight: bold; ">
+                        Red:
+                    </a>
+                    <input disabled id="App2Count" class="pl-2 mr-4" style="color: #fd397a; background-color: transparent; width: 25px; border: 0px; font-size: 11px; font-weight: bold; " type="text" value="0" name="App2Count" placeholder="">
+                    <a style=" align-self: center; color: #003366; font-size: 11px; font-weight: bold; ">
+                        Beklemede:
+                    </a>
+                    <input disabled id="App0Count" class="pl-2 mr-4" style="color: #003366; background-color: transparent; width: 25px; border: 0px; font-size: 11px; font-weight: bold; " type="text" value="0" name="App0Count" placeholder="">
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="kt-portlet kt-portlet--mobile pt-10 pr-2">
+        <div class="kt-portlet__body">
+            <!--begin: Datatable -->
+            <table class="table table-striped- table-bordered table-hover" id="kt_table_getBranchOrderListCenter">
+                <thead>
+                    <tr style="width:100%;">
+                        <th>Seçim</th>
+                        <th>S/N</th>
+                        <th>No</th>
+                        <th>Sipariş Tarihi</th>
+                        <th>Şube Adı</th>
+                        <th>Bölge</th>
+                        <th >Format</th>
+                        <th>Onay Durumu</th>
+                        <th>Ürün Sayısı</th>
+                        <th>Kasa Miktarı</th>
+                        <th>Adet Miktarı</th>
+                        <th>Palet Miktarı</th>
+                        <th>Kayıt Bilgisi</th>
+                        <th>İşlemler</th>
+                    </tr>
+                </thead>
+            </table>
+            <!--end: Datatable -->
+        </div>
+    </div>
+</div>
+<div class="modal fade " id="userNewModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:#003366;">
+                <h5 class="modal-title" style="color:white;" id="">Şube Sipariş Bilgileri - <span id="branchorderdate"></span></h5>
+
+                <button type="button" style="color:white;" class="close" data-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+            <div class="kt-portlet kt-portlet--mobile">
+                <div class="row">
+                    <div class="col-md-6 col-lg-6 col-sm-6">
+                        <h5 class="pl-4" style="padding-top: 4px; text-align: left; margin-top: 4px; color:red ">
+                            Sipariş Girmeyen Şubeler
+                        </h5>
+                        <div class="kt-portlet__body ">
+                            <!--begin: Datatable -->
+                            <table class="table table-striped- table-bordered table-hover table-checkable stripe" id="kt_table_brachestoFalse">
+                                <thead>
+                                    <tr>
+                                        <th>Şube Adı</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                            <!--end: Datatable -->
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-6 col-sm-6">
+                        <h5 style="padding-top: 4px; text-align: left; padding-left: 6px; margin-left: 9px; margin-top: 4px; color: green;">
+                            Sipariş Giren Şubeler
+                        </h5>
+                        <div class="kt-portlet__body ">
+                            <!--begin: Datatable -->
+                            <table class="table table-striped- table-bordered table-hover table-checkable" id="kt_table_brachestoTrue">
+                                <thead>
+                                    <tr>
+                                        <th>Şube Adı</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                            <!--end: Datatable -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<input hidden id="CurrentUserID" type="text" class="form-control" name="end" style="font-size: 12px; text-align-last: center; color: red; " value="@CurrentUserID">
+
+<script src="./assets/vendors/general/jquery/dist/jquery.js" type="text/javascript"></script>
+<script>
+    $(document).ready(function () {
+        UTCTodayforBranchOrderList();
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        var Date = "";
+        getBranchOrderListCenter(Date, Date);
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        var id = "";
+        OrderCountAndAppCount(id, id, id);
+    });
+</script>

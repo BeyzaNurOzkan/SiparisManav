@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="MikroService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://192.168.2.191:8000/MikroService?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://192.168.2.191:8000/MikroService?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://192.168.2.191:8000/MikroService?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/MikroService.Models" />
+      <xsd:import schemaLocation="http://192.168.2.191:8000/MikroService?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/MikroService.Models.Responses" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IMikroService_GetStockCards_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetStockCards" />
+  </wsdl:message>
+  <wsdl:message name="IMikroService_GetStockCards_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetStockCardsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMikroService_GetStockCard_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetStockCard" />
+  </wsdl:message>
+  <wsdl:message name="IMikroService_GetStockCard_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetStockCardResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMikroService_GetStockCardCount_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetStockCardCount" />
+  </wsdl:message>
+  <wsdl:message name="IMikroService_GetStockCardCount_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetStockCardCountResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMikroService_GetCurrentAccounts_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCurrentAccounts" />
+  </wsdl:message>
+  <wsdl:message name="IMikroService_GetCurrentAccounts_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCurrentAccountsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMikroService_GetCurrentAccount_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCurrentAccount" />
+  </wsdl:message>
+  <wsdl:message name="IMikroService_GetCurrentAccount_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCurrentAccountResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMikroService_GetCurrentAccountCount_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCurrentAccountCount" />
+  </wsdl:message>
+  <wsdl:message name="IMikroService_GetCurrentAccountCount_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCurrentAccountCountResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMikroService_SaveCurrentAccount_InputMessage">
+    <wsdl:part name="parameters" element="tns:SaveCurrentAccount" />
+  </wsdl:message>
+  <wsdl:message name="IMikroService_SaveCurrentAccount_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SaveCurrentAccountResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMikroService_GetDocuments_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetDocuments" />
+  </wsdl:message>
+  <wsdl:message name="IMikroService_GetDocuments_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetDocumentsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMikroService_CreateInvoice_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateInvoice" />
+  </wsdl:message>
+  <wsdl:message name="IMikroService_CreateInvoice_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateInvoiceResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMikroService_GetDepotList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetDepotList" />
+  </wsdl:message>
+  <wsdl:message name="IMikroService_GetDepotList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetDepotListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMikroService_GetGroupList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetGroupList" />
+  </wsdl:message>
+  <wsdl:message name="IMikroService_GetGroupList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetGroupListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMikroService_GetBrandList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetBrandList" />
+  </wsdl:message>
+  <wsdl:message name="IMikroService_GetBrandList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetBrandListResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IMikroService">
+    <wsdl:operation name="GetStockCards">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMikroService/GetStockCards" message="tns:IMikroService_GetStockCards_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMikroService/GetStockCardsResponse" message="tns:IMikroService_GetStockCards_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetStockCard">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMikroService/GetStockCard" message="tns:IMikroService_GetStockCard_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMikroService/GetStockCardResponse" message="tns:IMikroService_GetStockCard_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetStockCardCount">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMikroService/GetStockCardCount" message="tns:IMikroService_GetStockCardCount_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMikroService/GetStockCardCountResponse" message="tns:IMikroService_GetStockCardCount_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCurrentAccounts">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMikroService/GetCurrentAccounts" message="tns:IMikroService_GetCurrentAccounts_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMikroService/GetCurrentAccountsResponse" message="tns:IMikroService_GetCurrentAccounts_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCurrentAccount">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMikroService/GetCurrentAccount" message="tns:IMikroService_GetCurrentAccount_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMikroService/GetCurrentAccountResponse" message="tns:IMikroService_GetCurrentAccount_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCurrentAccountCount">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMikroService/GetCurrentAccountCount" message="tns:IMikroService_GetCurrentAccountCount_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMikroService/GetCurrentAccountCountResponse" message="tns:IMikroService_GetCurrentAccountCount_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveCurrentAccount">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMikroService/SaveCurrentAccount" message="tns:IMikroService_SaveCurrentAccount_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMikroService/SaveCurrentAccountResponse" message="tns:IMikroService_SaveCurrentAccount_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDocuments">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMikroService/GetDocuments" message="tns:IMikroService_GetDocuments_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMikroService/GetDocumentsResponse" message="tns:IMikroService_GetDocuments_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateInvoice">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMikroService/CreateInvoice" message="tns:IMikroService_CreateInvoice_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMikroService/CreateInvoiceResponse" message="tns:IMikroService_CreateInvoice_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDepotList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMikroService/GetDepotList" message="tns:IMikroService_GetDepotList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMikroService/GetDepotListResponse" message="tns:IMikroService_GetDepotList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetGroupList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMikroService/GetGroupList" message="tns:IMikroService_GetGroupList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMikroService/GetGroupListResponse" message="tns:IMikroService_GetGroupList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetBrandList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMikroService/GetBrandList" message="tns:IMikroService_GetBrandList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMikroService/GetBrandListResponse" message="tns:IMikroService_GetBrandList_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IMikroService" type="tns:IMikroService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetStockCards">
+      <soap:operation soapAction="http://tempuri.org/IMikroService/GetStockCards" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStockCard">
+      <soap:operation soapAction="http://tempuri.org/IMikroService/GetStockCard" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStockCardCount">
+      <soap:operation soapAction="http://tempuri.org/IMikroService/GetStockCardCount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCurrentAccounts">
+      <soap:operation soapAction="http://tempuri.org/IMikroService/GetCurrentAccounts" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCurrentAccount">
+      <soap:operation soapAction="http://tempuri.org/IMikroService/GetCurrentAccount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCurrentAccountCount">
+      <soap:operation soapAction="http://tempuri.org/IMikroService/GetCurrentAccountCount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveCurrentAccount">
+      <soap:operation soapAction="http://tempuri.org/IMikroService/SaveCurrentAccount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDocuments">
+      <soap:operation soapAction="http://tempuri.org/IMikroService/GetDocuments" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateInvoice">
+      <soap:operation soapAction="http://tempuri.org/IMikroService/CreateInvoice" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDepotList">
+      <soap:operation soapAction="http://tempuri.org/IMikroService/GetDepotList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetGroupList">
+      <soap:operation soapAction="http://tempuri.org/IMikroService/GetGroupList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBrandList">
+      <soap:operation soapAction="http://tempuri.org/IMikroService/GetBrandList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="MikroService">
+    <wsdl:port name="BasicHttpBinding_IMikroService" binding="tns:BasicHttpBinding_IMikroService">
+      <soap:address location="http://192.168.2.191:8000/MikroService" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

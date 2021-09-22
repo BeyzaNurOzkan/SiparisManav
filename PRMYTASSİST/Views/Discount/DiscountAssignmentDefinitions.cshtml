@@ -1,0 +1,113 @@
+﻿@using Entity
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    User CurrentUser = Session["CurrentUser"] as User;
+    List<User> users = Query.Users();
+    List<BranchFormat> branchFormats = Query.getBranchFormat();
+    List<Branch> branches = Query.Branches();
+    List<Discount> discounts = Query.discounts();
+
+}
+
+<div class="kt-content  kt-grid__item kt-grid__item--fluid" id="kt_content" style="padding-top: 5%;">
+    <div class="kt-portlet kt-portlet--mobile">
+        <div class="kt-portlet__head kt-portlet__head-label center pl-1 ml-1 mr-1 pr-1">
+            <div class="row pt-2 mt-2 pb-2 mb-2">
+                <div class="col-md-3" style=" align-self: center; ">
+                            <select id="branchForFormatSelect" class="custom-select form-control" style="color: red; font-weight: bold; width: 93%; " name="branchForRegionsSelect">
+                                <option selected value="0">ŞUBE FORMAT SEÇİNİZ - TÜMÜ</option>
+                                @foreach (var item in branchFormats.Where(q => q.Visible == true))
+                                {
+                                    <option value="@item.ID">@item.FormatName.ToUpper()</option>
+                                }
+                            </select>
+                </div>
+                <div class="col-md-3" style=" align-self: center; ">
+                            <select id="branchDiscountSelect" class="custom-select form-control" style="color: red; font-weight: bold; width: 93%; " name="branchDiscountSelect">
+                                <option selected value="0">İNDİRİM SEÇİNİZ - TÜMÜ</option>
+                                @foreach (var item in discounts.Where(q => q.Visible == true))
+                                {
+                                    <option value="@item.ID">@item.DiscountName.ToUpper()</option>
+                                }
+                            </select>
+                </div>
+                <div class="col-md-4" style=" align-self: center; ">
+                    <div class="row">
+                        <div class="col-lg-2 pr-0" style="align-self: center;">
+                            <label class="header">
+                                Tarih:
+                            </label>
+                        </div>
+                        <div class="col-lg-10">
+                            <div class="input-daterange input-group" id="kt_datepicker_5">
+                                <input id="StartDate" type="text" class="form-control" name="start" style="border: 1px solid #0049ff; font-size: 12px; text-align-last: center; color: red; " value="">
+                                <div class="input-group-append" style=" height: 31px; margin-right: -1px; ">
+                                    <span class="input-group-text" style="border: 1px solid #0049ff; font-weight: bold; font-size: 15px;">
+                                        -
+                                    </span>
+                                </div>
+                                <input id="EndDate" type="text" class="form-control" name="end" style="border: 1px solid #0049ff; font-size: 12px; text-align-last: center; color: red; " value="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 mt-1" style=" text-align: right;">
+                    <a  onclick="BranchProductDiscount()" class="btn btn-warning btn-icon-sm ListButton" style="padding-right: 6px; padding-top: 6px; padding-bottom: 6px; padding-left: 8px;"><i class="icon-2x text-dark-50 flaticon2-list-2"></i>Kaydet</a>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 col-lg-4 col-sm-4">
+                <div class="kt-portlet__body pt-2">
+                    <!--begin: Datatable -->
+                    <table class="table table-striped- table-bordered table-hover table-checkable" id="kt_table_brachestoFormat">
+                        <thead>
+                            <tr>
+                                <th>S/N</th>
+                                <th>Şube Adı</th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <!--end: Datatable -->
+                </div>
+            </div>
+            <div class="col-md-8 col-lg-8 col-sm-8">
+                <div class="kt-portlet__body pt-2">
+                    <!--begin: Datatable -->
+                    <table class="table table-striped- table-bordered table-hover table-checkable" id="kt_table_productDiscount">
+                        <thead>
+                            <tr>
+                                <th>S/N</th>
+                                <th>Barkodu</th>
+                                <th>Ürün Adı</th>
+                                <th>Ürün Kodu</th>
+                                <th>Kategori</th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <!--end: Datatable -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--begin:: Global Mandatory Vendors -->
+<script src="./assets/vendors/general/jquery/dist/jquery.js" type="text/javascript"></script>
+<script>
+    $(document).ready(function () {
+        var id = $('#branchForFormatSelect').val();
+        getBranchesToFormat(id);
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        UTCTodayforBranchOrderList();
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        getProductForDiscount();
+    });
+</script>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="717005d7-4018-4f77-8834-828c8a41072e" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.Generic.List`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://192.168.2.191:8000/MikroService" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="MikroService.xsd" MetadataType="Schema" ID="46331b95-e669-4c54-9203-d8714b9db7db" SourceId="1" SourceUrl="http://192.168.2.191:8000/MikroService?xsd=xsd3" />
+    <MetadataFile FileName="MikroService.disco" MetadataType="Disco" ID="c2ce94a5-aca0-420f-a55f-a10444750005" SourceId="1" SourceUrl="http://192.168.2.191:8000/MikroService?disco" />
+    <MetadataFile FileName="MikroService1.xsd" MetadataType="Schema" ID="29594c69-659f-4233-bef1-c0c2baa7fac7" SourceId="1" SourceUrl="http://192.168.2.191:8000/MikroService?xsd=xsd0" />
+    <MetadataFile FileName="MikroService2.xsd" MetadataType="Schema" ID="9840cf95-e3de-4385-bc45-414b8985308f" SourceId="1" SourceUrl="http://192.168.2.191:8000/MikroService?xsd=xsd1" />
+    <MetadataFile FileName="MikroService.wsdl" MetadataType="Wsdl" ID="b4da8d5f-5bba-44ee-aa71-c4c5f17a2cd3" SourceId="1" SourceUrl="http://192.168.2.191:8000/MikroService?wsdl" />
+    <MetadataFile FileName="MikroService3.xsd" MetadataType="Schema" ID="8ef71c46-f016-4fd0-9e71-bf8fe6383b5c" SourceId="1" SourceUrl="http://192.168.2.191:8000/MikroService?xsd=xsd2" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

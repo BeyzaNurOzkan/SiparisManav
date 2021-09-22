@@ -1,0 +1,311 @@
+﻿@using Entity
+@{
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    User CurrentUser = Session["CurrentUser"] as User;
+    List<User> users = Query.Users();
+    List<Region> regions = Query.getRegion();
+    List<BranchFormat> branchFormats = Query.getBranchFormat();
+    List<Branch> branches = Query.Branches();
+    string url = HttpContext.Current.Request.Url.AbsoluteUri;
+    Uri myUri = new Uri(url);
+    string param12 = HttpUtility.ParseQueryString(myUri.Query).Get("id");
+    int id2 = 0;
+    if (param12 != null)
+    {
+        string id = param12.Split('?').First();
+        id2 = Convert.ToInt32(id);
+    }
+}
+
+<div class="kt-content  kt-grid__item kt-grid__item--fluid" id="kt_content" style="padding-top: 5%;">
+    <div class="kt-portlet kt-portlet--mobile">
+        <div class="kt-portlet__head kt-portlet__head-label center">
+            <div class="row pt-2 mt-2 pb-2 mb-2">
+                <div class="col-md-6" style=" align-self: center; ">
+                    <div class="row">
+                        <div class="col-lg-3 pr-0" style="align-self: center;">
+                            <label class="header">
+                                Sipariş Sevkiyat Dağılımları
+                            </label>
+                        </div>
+                        <div class="col-lg-4">
+                            <select id="branchForRegionsDisSelect" class="custom-select form-control" style="color: red; font-weight: bold; width: 93%; " name="branchForRegionsDisSelect">
+                                <option selected value="0">Bölge Seçiniz</option>
+
+                                @foreach (var item in regions.Where(q => q.IsDeleted == false))
+                                {
+                                    <option value="@item.ID">@item.Name.ToUpper()</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="col-lg-4">
+                            <select id="branchForFormatsDisSelect" class="custom-select form-control" style="color: red; font-weight: bold; width: 93%; " name="branchForFormatsDisSelect">
+                                <option selected value="0">Format Seçiniz</option>
+
+                                @foreach (var item in branchFormats.Where(q => q.Visible == true))
+                                {
+                                    <option value="@item.ID">@item.FormatName.ToUpper()</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6" style=" align-self: center; ">
+                    <div class="row">
+                        <div class="col-lg-2 pr-0" style="align-self: center;">
+                            <label class="header">
+                                Tarih:
+                            </label>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="input-group date" style="width:100%;">
+                                <a class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Geri" style="cursor: pointer;" id="btnDatetimeLeft" value="" onclick="ChangeDatePlus5(0)">
+                                    <i class="icon-2x flaticon2-back"></i>
+                                </a>
+                                <span id="kt_datepicker_3" class="input-group-text" style="border: 1px solid #0049ff; width: 60%; align-items: normal; padding: inherit">
+                                    <input name="dateTimeforSOR" type="text" class="form-control" id="kt_datepicker_2" readonly placeholder="" value="" style=" font-size: 12px; color: red; text-align: center;" />
+                                    <span class="input-group-append">
+                                        <span class="input-group-text">
+                                            <i class="la la-calendar-check-o"></i>
+                                        </span>
+                                    </span>
+                                </span>
+                                <a class="btn btn-sm btn-clean btn-icon btn-icon-md" style="cursor: pointer;" title="İleri" id="btnDatetimeRight" value="" onclick="ChangeDatePlus5(1)">
+                                    <i class="icon-2x pl-2 pr-0 flaticon2-next"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 pr-0 mt-1" style="text-align:right;">
+                            <a id="dlink" style="display:none;"></a>
+                            <a onclick="saveFile(array1 , 'Sheet1', 'myfile.xls')" class="btn btn-info btn-icon-sm" style="padding-right: 6px; padding-top: 6px; padding-bottom: 6px; padding-left: 8px;"><i class="icon-2x far fa-file-excel"></i>Excel</a>
+
+                            <a id="listforDist" onclick="checkedBranchRegionsDis()" class="btn btn-warning btn-icon-sm" style="padding-right: 6px; padding-top: 6px; padding-bottom: 6px; padding-left: 8px;"><i class="icon-2x text-dark-50 flaticon2-list-2"></i> Listele</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 col-lg-3 col-sm-4">
+                <div class="kt-portlet__body pt-2">
+                    <!--begin: Datatable -->
+                    <table class="table table-striped- table-bordered table-hover table-checkable" id="kt_table_brachestoRegions">
+                        <thead>
+                            <tr>
+                                <th>S/N</th>
+                                <th>Şube Adı</th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <!--end: Datatable -->
+                </div>
+            </div>
+            <div class="col-md-8 col-lg-9 col-sm-8">
+                <div class="kt-portlet__body pt-2">
+                    <!--begin: Datatable -->
+                    @for (int i = 0; i < id2; i++)
+                    {
+
+                        <div class="row">
+                            <div class="col-md-7 pb-5 mb-5">
+                                <table class="table table-striped- table-bordered table-hover table-checkable" id="Distributions_@i">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+                                        <tr>
+                                            <th colspan="2">
+                                                <label style="color: black; font-size: 11px; font-weight: bold; ">Şube:</label>
+                                                <label disabled id="orderBranchName_@i" class="pl-1 ml-1 pt-1 pr-0" style="color: red; background-color: transparent;  border: 0px; font-size: 11px; font-weight: bold; " type="text" value="" name="orderBranchName" placeholder=""></label>
+                                            </th>
+                                            <th>
+                                                <label>(</label>
+                                                <label disabled id="RegionName_@i" class="pl-0 ml-0 pt-1 pr-0" style="color: black; background-color: transparent; border: 0px; font-size: 11px; font-weight: bold; " type="text" value="" name="orderBranchName" placeholder=""></label>
+                                                <label>-</label>
+                                                <label disabled id="FormatName_@i" class="pl-0 ml-0 pt-1 pr-0" style="color: black; background-color: transparent; border: 0px; font-size: 11px; font-weight: bold; " type="text" value="" name="orderBranchName" placeholder=""></label>
+                                                <label>)</label>
+                                            <th style="text-align:center;">
+                                                <label disabled id="Date_@i" class="pl-0 ml-0 pt-1 pr-0" style="text-align:center; color: black; background-color: transparent;  border: 0px; font-size: 11px; font-weight: bold; " type="text" value="" name="orderBranchName" placeholder=""></label>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th>S/N</th>
+                                            <th>Barkodu</th>
+                                            <th>Ürün Adı</th>
+                                            <th>Sipariş Miktarı</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+
+                            </div>
+                            <div class="col-md-2">
+                                <table class="table table-striped- table-bordered table-hover table-checkable" id="OrderUnitTotal_@i">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                <label disabled id="orderBranchName2_@i" class="pl-0 ml-0 pt-0 pr-0" style="color: red; background-color: transparent;  border: 0px; font-size: 11px; font-weight: bold; " type="text" value="" name="orderBranchName" placeholder=""></label>
+                                            </th>
+                                            <th></th>
+                                        </tr>
+                                        <tr>
+                                            <th>Sipariş Özeti</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    }
+
+                    <!--end: Datatable -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--begin:: Global Mandatory Vendors -->
+<script src="./assets/vendors/general/jquery/dist/jquery.js" type="text/javascript"></script>
+<script src="https://cdn.jsdelivr.net/alasql/0.3/alasql.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.7.12/xlsx.core.min.js"></script>
+
+
+
+
+<script>
+    $(document).ready(function () {
+        UTCTodayDis();
+    });
+</script>
+
+
+
+<script>
+    $(document).ready(function () {
+        debugger
+        var url = window.location.href;
+        var OrderCode = url.substring(url.lastIndexOf('=') + 1);
+        if (url != OrderCode) {
+            var ilk = url.substring(
+                url.lastIndexOf("d=") + 2,
+                url.lastIndexOf("?")
+            );
+            DistributionsTableTitle(OrderCode, ilk);
+        }
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        debugger
+        var region = $('#branchForRegionsDisSelect').val();
+        var format = $('#branchForFormatsDisSelect').val();
+        var url = window.location.href;
+        var OrderCode = url.substring(url.lastIndexOf('=') + 1);
+        if (url == OrderCode) {
+            OrderCode = 0;
+           
+        }
+        var dateID = localStorage.dateForDist;
+
+        getBranchesToDist(region, format, OrderCode, dateID);
+
+    });
+</script>
+<script>
+    $(document).ready(function () {
+    
+        var url = window.location.href;
+        var OrderCode = url.substring(url.lastIndexOf('=') + 1);
+        if (url != OrderCode) {
+            var ilk = url.substring(
+                url.lastIndexOf("d=") + 2,
+                url.lastIndexOf("?")
+            );
+            DistributionsTable(OrderCode, ilk);
+            setTimeout(function () {
+                DistributionsTable2(OrderCode, ilk);
+            }, 20000)
+
+        }
+    });
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    debugger
+    //table to excel (multiple table)
+    var array1 = new Array();
+    var y = 0;
+    var n = @id2;
+    var z =@id2 * 2;
+    for (var x = 0; x < z; x++) {
+        array1[x] = 'Distributions_' + y;
+        x = x + 1;
+        array1[x] = 'OrderUnitTotal_' + y;
+        y = y + 1;
+
+    }
+    window.saveFile = function saveFile() {
+        debugger
+        var z = array1.length;
+        for (var i = 0; i < z; i++) {
+            var array2 = new Array();
+            array2[0] = array1[i];
+            array2[1] = array1[i+1];
+            tablesToExcel(array2, 'Sheet1', 'Sevkiyat.xls');
+            i = i + 1;
+        }
+
+    }
+    var tablesToExcel = (function () {
+        var uri = 'data:application/vnd.ms-excel;base64,'
+
+            , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><meta http-equiv="content-type" content="application/vnd.ms-excel; charset=UTF-8"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets>'
+            , templateend = '</x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head>'
+            , body = '<body>'
+            , tablevar = '<table>{table'
+            , tablevarend = '}</table>'
+            , bodyend = '</body></html>'
+            , worksheet = '<x:ExcelWorksheet><x:Name>'
+            , worksheetend = '</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet>'
+            , worksheetvar = '{worksheet'
+            , worksheetvarend = '}'
+            , base64 = function (s) { return window.btoa(unescape(encodeURIComponent(s))) }
+            , format = function (s, c) { return s.replace(/{(\w+)}/g, function (m, p) { return c[p]; }) }
+            , wstemplate = ''
+            , tabletemplate = '';
+
+        return function (table, name, filename) {
+            var tables = table;
+            var wstemplate = '';
+            var tabletemplate = '';
+
+            wstemplate = worksheet + worksheetvar + '0' + worksheetvarend + worksheetend;
+            for (var i = 0; i < tables.length; ++i) {
+                tabletemplate += tablevar + i + tablevarend;
+            }
+
+            var allTemplate = template + wstemplate + templateend;
+            var allWorksheet = body + tabletemplate + bodyend;
+            var allOfIt = allTemplate + allWorksheet;
+
+            var ctx = {};
+            ctx['worksheet0'] = name;
+            for (var k = 0; k < tables.length; ++k) {
+                var exceltable;
+                if (!tables[k].nodeType) exceltable = document.getElementById(tables[k]);
+                ctx['table' + k] = exceltable.innerHTML;
+            }
+
+            document.getElementById("dlink").href = uri + base64(format(allOfIt, ctx));;
+            document.getElementById("dlink").download = filename;
+
+            document.getElementById("dlink").click();
+        }
+    })();
+</script>
