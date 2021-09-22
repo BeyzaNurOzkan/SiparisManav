@@ -3,11 +3,7 @@
     $('#kt_datepicker_3').datepicker('hide');
     var dateID = $('#kt_datepicker_2').val();
     $('#kt_datepicker_3').val(dateID);
-    var branchID = $('#branch').val();
-
-
-
-
+   
     getStockProducts(dateID);
     var region = $('#branchForRegionsDisSelect').val();
     var format = $('#branchForFormatsDisSelect').val();
@@ -31,9 +27,7 @@ function getOrderProducts(groupId, branchID) {
     debugger
     var date = $('#kt_datepicker_2').val();
     for (var i = 1; i < 5; i++) {
-        var toolbar = "bos";
-        if (i == 1)
-            toolbar="toolbar"
+       
         var tables = $("#tablenew"+i+"_" + groupId);
         var t = tables.DataTable({
             "bDestroy": true,
@@ -49,7 +43,7 @@ function getOrderProducts(groupId, branchID) {
             "pageLength": 100,
             'stripeClasses': ['stripe1', 'stripe2'],
 
-            dom: `<'row'<'col-sm-12 mb-1 ml-0 text-left'<" `+ toolbar +`">>>
+            dom: `
 
 			<'row'<'col-sm-12'tr>>
 			<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>
@@ -262,6 +256,12 @@ function getOrderProducts(groupId, branchID) {
                             <input hidden id = "MaxCapacity_` + full["ID"] + `" style="padding-bottom: 0;padding-left: 0;padding-top: 0;margin-top: 0; font-size: 1.3rem;   background-color: transparent;width:100%;text-align: center;border: 0px;" type="text" class="form-control bootstrap-touchspin-vertical-btn" value="` + full['MaxCapacity'] + `"  name="demo0" placeholder="">
 `;
 
+                        var barcode = "";
+                        if (full['DiscountProd'] != "") {
+                            barcode = `<i class="pr-2 icon-2x flaticon-add-label-button" style="font-size:15px;color:green;"></i> <span  style="color:green;">` + full['Code'] + `</span>`;
+                        }
+                        else
+                            barcode = `<span class="" style="color:blue;">` + full['Code'] + `</span> `;
 
 
                         var last = `<div class="row">
@@ -276,7 +276,7 @@ function getOrderProducts(groupId, branchID) {
                                 <div class="col-12">
                                    <div class="row">
                                         <div class="col-12 ">
-                                       <span class="" style="color:blue;">` + full['Code'] + `     </span ` + colorUnit + unitweight+`
+                                       ` + barcode +   colorUnit + unitweight +`
                                         </div>
                                         
                                      
@@ -407,51 +407,11 @@ function getOrderProducts(groupId, branchID) {
                 BasketToCheck(false, id, discount.value);
             }
         });
-            $("div.toolbar").html(`
-                        
-                                    <a href="/Branch/NewOrder?list" onclick="window.location.reload()" class="kt-menu__link pr-0">
-                                        <span class="kt-menu__link-text" style=" font-size: 14px; ">
-                                            <span class=" svg-icon svg-icon-primary " style="padding-top:2px;">
-                                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="30px" height="30px" viewBox="0 0 24 24" version="1.1">
-                                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                        <rect x="0" y="0" width="30" height="30" />
-                                                        <path d="M10.5,5 L19.5,5 C20.3284271,5 21,5.67157288 21,6.5 C21,7.32842712 20.3284271,8 19.5,8 L10.5,8 C9.67157288,8 9,7.32842712 9,6.5 C9,5.67157288 9.67157288,5 10.5,5 Z M10.5,10 L19.5,10 C20.3284271,10 21,10.6715729 21,11.5 C21,12.3284271 20.3284271,13 19.5,13 L10.5,13 C9.67157288,13 9,12.3284271 9,11.5 C9,10.6715729 9.67157288,10 10.5,10 Z M10.5,15 L19.5,15 C20.3284271,15 21,15.6715729 21,16.5 C21,17.3284271 20.3284271,18 19.5,18 L10.5,18 C9.67157288,18 9,17.3284271 9,16.5 C9,15.6715729 9.67157288,15 10.5,15 Z" fill="#003366" />
-                                                        <path d="M5.5,8 C4.67157288,8 4,7.32842712 4,6.5 C4,5.67157288 4.67157288,5 5.5,5 C6.32842712,5 7,5.67157288 7,6.5 C7,7.32842712 6.32842712,8 5.5,8 Z M5.5,13 C4.67157288,13 4,12.3284271 4,11.5 C4,10.6715729 4.67157288,10 5.5,10 C6.32842712,10 7,10.6715729 7,11.5 C7,12.3284271 6.32842712,13 5.5,13 Z M5.5,18 C4.67157288,18 4,17.3284271 4,16.5 C4,15.6715729 4.67157288,15 5.5,15 C6.32842712,15 7,15.6715729 7,16.5 C7,17.3284271 6.32842712,18 5.5,18 Z" fill="#003366" opacity="0.3" />
-                                                    </g>
-                                                </svg><!--end::Svg Icon-->
-                                            </span>
-                                        </span>
-                                    </a>
-                                    <a  class="kt-menu__link">
-                                        <span class="kt-menu__link-text" style=" font-size: 14px; ">
-                                            <span class="svg-icon svg-icon-primary" style="padding-top:2px;">
-                                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="30px" height="30px" viewBox="0 0 24 24" version="1.1">
-                                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                        <rect x="0" y="0" width="30" height="30" />
-                                                        <rect fill="#ffb822" opacity="0.3" x="4" y="4" width="4" height="4" rx="1" />
-                                                        <path d="M5,10 L7,10 C7.55228475,10 8,10.4477153 8,11 L8,13 C8,13.5522847 7.55228475,14 7,14 L5,14 C4.44771525,14 4,13.5522847 4,13 L4,11 C4,10.4477153 4.44771525,10 5,10 Z M11,4 L13,4 C13.5522847,4 14,4.44771525 14,5 L14,7 C14,7.55228475 13.5522847,8 13,8 L11,8 C10.4477153,8 10,7.55228475 10,7 L10,5 C10,4.44771525 10.4477153,4 11,4 Z M11,10 L13,10 C13.5522847,10 14,10.4477153 14,11 L14,13 C14,13.5522847 13.5522847,14 13,14 L11,14 C10.4477153,14 10,13.5522847 10,13 L10,11 C10,10.4477153 10.4477153,10 11,10 Z M17,4 L19,4 C19.5522847,4 20,4.44771525 20,5 L20,7 C20,7.55228475 19.5522847,8 19,8 L17,8 C16.4477153,8 16,7.55228475 16,7 L16,5 C16,4.44771525 16.4477153,4 17,4 Z M17,10 L19,10 C19.5522847,10 20,10.4477153 20,11 L20,13 C20,13.5522847 19.5522847,14 19,14 L17,14 C16.4477153,14 16,13.5522847 16,13 L16,11 C16,10.4477153 16.4477153,10 17,10 Z M5,16 L7,16 C7.55228475,16 8,16.4477153 8,17 L8,19 C8,19.5522847 7.55228475,20 7,20 L5,20 C4.44771525,20 4,19.5522847 4,19 L4,17 C4,16.4477153 4.44771525,16 5,16 Z M11,16 L13,16 C13.5522847,16 14,16.4477153 14,17 L14,19 C14,19.5522847 13.5522847,20 13,20 L11,20 C10.4477153,20 10,19.5522847 10,19 L10,17 C10,16.4477153 10.4477153,16 11,16 Z M17,16 L19,16 C19.5522847,16 20,16.4477153 20,17 L20,19 C20,19.5522847 19.5522847,20 19,20 L17,20 C16.4477153,20 16,19.5522847 16,19 L16,17 C16,16.4477153 16.4477153,16 17,16 Z" fill="#ffb822" />
-                                                    </g>
-                                                </svg><!--end::Svg Icon-->
-                                            </span>
-                                        </span>
-                                    </a>
-                                `
-            );
-            $("div.bos").html(`
-                    <a class="kt-menu__link pr-0">
-                                        <span class="kt-menu__link-text" style=" font-size: 14px; ">
-                                            <span class=" svg-icon svg-icon-primary " style="padding-top:2px;">
-                                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="30px" height="30px" viewBox="0 0 24 24" version="1.1">
-                                                    
-                                                </svg><!--end::Svg Icon-->
-                                            </span>
-                                        </span>
-                                    </a>
-                              `
-            );
+       
         
     } 
 };
+
 function getOrderProductsListViewCap(groupId, branchID) {
     debugger
     var table = $("#tablenewCap_" + groupId);
@@ -467,7 +427,7 @@ function getOrderProductsListViewCap(groupId, branchID) {
         "pageLength": 100,
         'stripeClasses': ['stripe1', 'stripe2'],
 
-        dom: `<'row'<'col-sm-12 mb-1 ml-0 text-left'<" toolbar">>>
+        dom: `
 			<'row'<'col-sm-12'tr>>
 			<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>
             `,
@@ -923,36 +883,7 @@ function getOrderProductsListViewCap(groupId, branchID) {
             BasketToCheck(false, id, discount.value);
         }
     });
-    $("div.toolbar").html(`
-                        
-                                    <a  class="kt-menu__link pr-0">
-                                        <span class="kt-menu__link-text" style=" font-size: 14px; ">
-                                            <span class=" svg-icon svg-icon-primary " style="padding-top:2px;">
-                                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="30px" height="30px" viewBox="0 0 24 24" version="1.1">
-                                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                        <rect x="0" y="0" width="30" height="30" />
-                                                        <path d="M10.5,5 L19.5,5 C20.3284271,5 21,5.67157288 21,6.5 C21,7.32842712 20.3284271,8 19.5,8 L10.5,8 C9.67157288,8 9,7.32842712 9,6.5 C9,5.67157288 9.67157288,5 10.5,5 Z M10.5,10 L19.5,10 C20.3284271,10 21,10.6715729 21,11.5 C21,12.3284271 20.3284271,13 19.5,13 L10.5,13 C9.67157288,13 9,12.3284271 9,11.5 C9,10.6715729 9.67157288,10 10.5,10 Z M10.5,15 L19.5,15 C20.3284271,15 21,15.6715729 21,16.5 C21,17.3284271 20.3284271,18 19.5,18 L10.5,18 C9.67157288,18 9,17.3284271 9,16.5 C9,15.6715729 9.67157288,15 10.5,15 Z" fill="#ffb822" />
-                                                        <path d="M5.5,8 C4.67157288,8 4,7.32842712 4,6.5 C4,5.67157288 4.67157288,5 5.5,5 C6.32842712,5 7,5.67157288 7,6.5 C7,7.32842712 6.32842712,8 5.5,8 Z M5.5,13 C4.67157288,13 4,12.3284271 4,11.5 C4,10.6715729 4.67157288,10 5.5,10 C6.32842712,10 7,10.6715729 7,11.5 C7,12.3284271 6.32842712,13 5.5,13 Z M5.5,18 C4.67157288,18 4,17.3284271 4,16.5 C4,15.6715729 4.67157288,15 5.5,15 C6.32842712,15 7,15.6715729 7,16.5 C7,17.3284271 6.32842712,18 5.5,18 Z" fill="#ffb822" opacity="0.3" />
-                                                    </g>
-                                                </svg><!--end::Svg Icon-->
-                                            </span>
-                                        </span>
-                                    </a>
-                                    <a  href="/Branch/NewOrder" onclick="window.location.reload()" class="kt-menu__link">
-                                        <span class="kt-menu__link-text" style=" font-size: 14px; ">
-                                            <span class="svg-icon svg-icon-primary" style="padding-top:2px;">
-                                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="30px" height="30px" viewBox="0 0 24 24" version="1.1">
-                                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                        <rect x="0" y="0" width="30" height="30" />
-                                                        <rect fill="#003366" opacity="0.3" x="4" y="4" width="4" height="4" rx="1" />
-                                                        <path d="M5,10 L7,10 C7.55228475,10 8,10.4477153 8,11 L8,13 C8,13.5522847 7.55228475,14 7,14 L5,14 C4.44771525,14 4,13.5522847 4,13 L4,11 C4,10.4477153 4.44771525,10 5,10 Z M11,4 L13,4 C13.5522847,4 14,4.44771525 14,5 L14,7 C14,7.55228475 13.5522847,8 13,8 L11,8 C10.4477153,8 10,7.55228475 10,7 L10,5 C10,4.44771525 10.4477153,4 11,4 Z M11,10 L13,10 C13.5522847,10 14,10.4477153 14,11 L14,13 C14,13.5522847 13.5522847,14 13,14 L11,14 C10.4477153,14 10,13.5522847 10,13 L10,11 C10,10.4477153 10.4477153,10 11,10 Z M17,4 L19,4 C19.5522847,4 20,4.44771525 20,5 L20,7 C20,7.55228475 19.5522847,8 19,8 L17,8 C16.4477153,8 16,7.55228475 16,7 L16,5 C16,4.44771525 16.4477153,4 17,4 Z M17,10 L19,10 C19.5522847,10 20,10.4477153 20,11 L20,13 C20,13.5522847 19.5522847,14 19,14 L17,14 C16.4477153,14 16,13.5522847 16,13 L16,11 C16,10.4477153 16.4477153,10 17,10 Z M5,16 L7,16 C7.55228475,16 8,16.4477153 8,17 L8,19 C8,19.5522847 7.55228475,20 7,20 L5,20 C4.44771525,20 4,19.5522847 4,19 L4,17 C4,16.4477153 4.44771525,16 5,16 Z M11,16 L13,16 C13.5522847,16 14,16.4477153 14,17 L14,19 C14,19.5522847 13.5522847,20 13,20 L11,20 C10.4477153,20 10,19.5522847 10,19 L10,17 C10,16.4477153 10.4477153,16 11,16 Z M17,16 L19,16 C19.5522847,16 20,16.4477153 20,17 L20,19 C20,19.5522847 19.5522847,20 19,20 L17,20 C16.4477153,20 16,19.5522847 16,19 L16,17 C16,16.4477153 16.4477153,16 17,16 Z" fill="#003366" />
-                                                    </g>
-                                                </svg><!--end::Svg Icon-->
-                                            </span>
-                                        </span>
-                                    </a>
-                                `
-    );
+   
 
 
 };
@@ -962,9 +893,7 @@ function getOrderProductsCap(groupId, branchID) {
     var date = $('#kt_datepicker_2').val();
     for (var i = 1; i < 5; i++) {
         var tables = $("#tablenewcapa" + i + "_" + groupId);
-        var toolbar = "bos";
-        if (i == 1)
-            toolbar = "toolbar"
+        
         var t = tables.DataTable({
             ajax: {
                 url: '/Order/GetOrderProducts' + i + '?groupId=' + groupId + '&branchCode=' + branchID + '&date=' + date,
@@ -978,7 +907,7 @@ function getOrderProductsCap(groupId, branchID) {
             "bSort": false,
             'stripeClasses': ['stripe1', 'stripe2'],
 
-            dom: `<'row'<'col-sm-12 mb-1 ml-0 text-left'<" ` + toolbar + `">>>
+            dom: `
 			<'row'<'col-sm-12'tr>>
 			<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>
             `,
@@ -1037,7 +966,7 @@ function getOrderProductsCap(groupId, branchID) {
 
                         var barcode = "";
                         if (full['DiscountProd'] != "") {
-                            barcode = `<div><i class="pr-2 icon-2x flaticon-add-label-button" style="font-size:15px;color:green;"></i> <span class="pb-1" style="color:green;">` + full['Code'] + `</span></div> `;
+                            barcode = `<i class="pr-2 icon-2x flaticon-add-label-button" style="font-size:15px;color:green;"></i> <span  style="color:green;">` + full['Code'] + `</span>`;
                         }
                         else
                             barcode = `<span class="" style="color:blue;">` + full['Code'] + `</span> `;
@@ -1128,7 +1057,7 @@ function getOrderProductsCap(groupId, branchID) {
                         else {
                             output = `
                                 <div id = "barcode_` + full['ID'] + `" class="" style="justify-content: center;width:100%;">
-                                    <input autocomplete="off" type="text"  placeholder="Açıklama" style="height:25px; min-width:100px;background-color:#fff0d0;border: 1px solid #c3c3c3;font-size: 11px;" type="text" class="form-control bootstrap-touchspin-vertical-btn" oninput= "UpdateOrderDet2(this.value,` + full['ID'] + `)" id = "comment">
+                                    <input autocomplete="off"  type="text"  placeholder="Açıklama" style="height:25px; min-width:100px;background-color:#fff0d0;border: 1px solid #c3c3c3;font-size: 11px;" type="text" class="form-control bootstrap-touchspin-vertical-btn" oninput= "UpdateOrderDet2(this.value,` + full['ID'] + `)" name ="comment" id = "comment">
                                 </div>
                   `;
                         }
@@ -1246,7 +1175,7 @@ function getOrderProductsCap(groupId, branchID) {
                                    <div class="row">
                                         
                                         <div class="col-12 " style="text-align:left;">
-                                       <span class="" style="color:blue;">` + barcode + ` - </span>   ` + colorUnit + unitweight + `
+                                       ` + barcode + ` - ` + colorUnit + unitweight + `
                                         </div>
                                         
                                      
@@ -1352,48 +1281,7 @@ function getOrderProductsCap(groupId, branchID) {
                 BasketToCheck(false, id, discount.value);
             }
         });
-        $("div.toolbar").html(`
-                        
-                                    <a href="/Branch/NewOrder?list" onclick="window.location.reload()" class="kt-menu__link pr-0">
-                                        <span class="kt-menu__link-text" style=" font-size: 14px; ">
-                                            <span class=" svg-icon svg-icon-primary " style="padding-top:2px;">
-                                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="30px" height="30px" viewBox="0 0 24 24" version="1.1">
-                                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                        <rect x="0" y="0" width="30" height="30" />
-                                                        <path d="M10.5,5 L19.5,5 C20.3284271,5 21,5.67157288 21,6.5 C21,7.32842712 20.3284271,8 19.5,8 L10.5,8 C9.67157288,8 9,7.32842712 9,6.5 C9,5.67157288 9.67157288,5 10.5,5 Z M10.5,10 L19.5,10 C20.3284271,10 21,10.6715729 21,11.5 C21,12.3284271 20.3284271,13 19.5,13 L10.5,13 C9.67157288,13 9,12.3284271 9,11.5 C9,10.6715729 9.67157288,10 10.5,10 Z M10.5,15 L19.5,15 C20.3284271,15 21,15.6715729 21,16.5 C21,17.3284271 20.3284271,18 19.5,18 L10.5,18 C9.67157288,18 9,17.3284271 9,16.5 C9,15.6715729 9.67157288,15 10.5,15 Z" fill="#003366" />
-                                                        <path d="M5.5,8 C4.67157288,8 4,7.32842712 4,6.5 C4,5.67157288 4.67157288,5 5.5,5 C6.32842712,5 7,5.67157288 7,6.5 C7,7.32842712 6.32842712,8 5.5,8 Z M5.5,13 C4.67157288,13 4,12.3284271 4,11.5 C4,10.6715729 4.67157288,10 5.5,10 C6.32842712,10 7,10.6715729 7,11.5 C7,12.3284271 6.32842712,13 5.5,13 Z M5.5,18 C4.67157288,18 4,17.3284271 4,16.5 C4,15.6715729 4.67157288,15 5.5,15 C6.32842712,15 7,15.6715729 7,16.5 C7,17.3284271 6.32842712,18 5.5,18 Z" fill="#003366" opacity="0.3" />
-                                                    </g>
-                                                </svg><!--end::Svg Icon-->
-                                            </span>
-                                        </span>
-                                    </a>
-                                    <a  class="kt-menu__link">
-                                        <span class="kt-menu__link-text" style=" font-size: 14px; ">
-                                            <span class="svg-icon svg-icon-primary" style="padding-top:2px;">
-                                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="30px" height="30px" viewBox="0 0 24 24" version="1.1">
-                                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                        <rect x="0" y="0" width="30" height="30" />
-                                                        <rect fill="#ffb822" opacity="0.3" x="4" y="4" width="4" height="4" rx="1" />
-                                                        <path d="M5,10 L7,10 C7.55228475,10 8,10.4477153 8,11 L8,13 C8,13.5522847 7.55228475,14 7,14 L5,14 C4.44771525,14 4,13.5522847 4,13 L4,11 C4,10.4477153 4.44771525,10 5,10 Z M11,4 L13,4 C13.5522847,4 14,4.44771525 14,5 L14,7 C14,7.55228475 13.5522847,8 13,8 L11,8 C10.4477153,8 10,7.55228475 10,7 L10,5 C10,4.44771525 10.4477153,4 11,4 Z M11,10 L13,10 C13.5522847,10 14,10.4477153 14,11 L14,13 C14,13.5522847 13.5522847,14 13,14 L11,14 C10.4477153,14 10,13.5522847 10,13 L10,11 C10,10.4477153 10.4477153,10 11,10 Z M17,4 L19,4 C19.5522847,4 20,4.44771525 20,5 L20,7 C20,7.55228475 19.5522847,8 19,8 L17,8 C16.4477153,8 16,7.55228475 16,7 L16,5 C16,4.44771525 16.4477153,4 17,4 Z M17,10 L19,10 C19.5522847,10 20,10.4477153 20,11 L20,13 C20,13.5522847 19.5522847,14 19,14 L17,14 C16.4477153,14 16,13.5522847 16,13 L16,11 C16,10.4477153 16.4477153,10 17,10 Z M5,16 L7,16 C7.55228475,16 8,16.4477153 8,17 L8,19 C8,19.5522847 7.55228475,20 7,20 L5,20 C4.44771525,20 4,19.5522847 4,19 L4,17 C4,16.4477153 4.44771525,16 5,16 Z M11,16 L13,16 C13.5522847,16 14,16.4477153 14,17 L14,19 C14,19.5522847 13.5522847,20 13,20 L11,20 C10.4477153,20 10,19.5522847 10,19 L10,17 C10,16.4477153 10.4477153,16 11,16 Z M17,16 L19,16 C19.5522847,16 20,16.4477153 20,17 L20,19 C20,19.5522847 19.5522847,20 19,20 L17,20 C16.4477153,20 16,19.5522847 16,19 L16,17 C16,16.4477153 16.4477153,16 17,16 Z" fill="#ffb822" />
-                                                    </g>
-                                                </svg><!--end::Svg Icon-->
-                                            </span>
-                                        </span>
-                                    </a>
-                                `
-        );
-        $("div.bos").html(`
-                    <a class="kt-menu__link pr-0">
-                                        <span class="kt-menu__link-text" style=" font-size: 14px; ">
-                                            <span class=" svg-icon svg-icon-primary " style="padding-top:2px;">
-                                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="30px" height="30px" viewBox="0 0 24 24" version="1.1">
-                                                    
-                                                </svg><!--end::Svg Icon-->
-                                            </span>
-                                        </span>
-                                    </a>
-                              `
-        );
+     
     }
 
 };
@@ -1412,7 +1300,7 @@ function getOrderProductsListView(groupId, branchID) {
         "pageLength": 100,
         'stripeClasses': ['stripe1', 'stripe2'],
 
-        dom: `<'row'<'col-sm-12 mb-1 ml-0 text-left'<"toolbar">>>
+        dom: `
 			<'row'<'col-sm-12'tr>>
 			<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>
             `,
@@ -1829,34 +1717,7 @@ function getOrderProductsListView(groupId, branchID) {
         "destroy": true,
 
     });
-    $("div.toolbar").html(`
-                    <a  class="kt-menu__link pr-0">
-                                        <span class="kt-menu__link-text" style=" font-size: 14px; ">
-                                            <span class=" svg-icon svg-icon-primary " style="padding-top:2px;">
-                                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="30px" height="30px" viewBox="0 0 24 24" version="1.1">
-                                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                        <rect x="0" y="0" width="30" height="30" />
-                                                        <path d="M10.5,5 L19.5,5 C20.3284271,5 21,5.67157288 21,6.5 C21,7.32842712 20.3284271,8 19.5,8 L10.5,8 C9.67157288,8 9,7.32842712 9,6.5 C9,5.67157288 9.67157288,5 10.5,5 Z M10.5,10 L19.5,10 C20.3284271,10 21,10.6715729 21,11.5 C21,12.3284271 20.3284271,13 19.5,13 L10.5,13 C9.67157288,13 9,12.3284271 9,11.5 C9,10.6715729 9.67157288,10 10.5,10 Z M10.5,15 L19.5,15 C20.3284271,15 21,15.6715729 21,16.5 C21,17.3284271 20.3284271,18 19.5,18 L10.5,18 C9.67157288,18 9,17.3284271 9,16.5 C9,15.6715729 9.67157288,15 10.5,15 Z" fill="#ffb822" />
-                                                        <path d="M5.5,8 C4.67157288,8 4,7.32842712 4,6.5 C4,5.67157288 4.67157288,5 5.5,5 C6.32842712,5 7,5.67157288 7,6.5 C7,7.32842712 6.32842712,8 5.5,8 Z M5.5,13 C4.67157288,13 4,12.3284271 4,11.5 C4,10.6715729 4.67157288,10 5.5,10 C6.32842712,10 7,10.6715729 7,11.5 C7,12.3284271 6.32842712,13 5.5,13 Z M5.5,18 C4.67157288,18 4,17.3284271 4,16.5 C4,15.6715729 4.67157288,15 5.5,15 C6.32842712,15 7,15.6715729 7,16.5 C7,17.3284271 6.32842712,18 5.5,18 Z" fill="#ffb822" opacity="0.3" />
-                                                    </g>
-                                                </svg><!--end::Svg Icon-->
-                                            </span>
-                                        </span>
-                                    </a>
-                                    <a href="/Branch/NewOrder" onclick="window.location.reload()" class="kt-menu__link">
-                                        <span class="kt-menu__link-text" style=" font-size: 14px; ">
-                                            <span class="svg-icon svg-icon-primary" style="padding-top:2px;">
-                                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="30px" height="30px" viewBox="0 0 24 24" version="1.1">
-                                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                        <rect x="0" y="0" width="30" height="30" />
-                                                        <rect fill="#003366" opacity="0.3" x="4" y="4" width="4" height="4" rx="1" />
-                                                        <path d="M5,10 L7,10 C7.55228475,10 8,10.4477153 8,11 L8,13 C8,13.5522847 7.55228475,14 7,14 L5,14 C4.44771525,14 4,13.5522847 4,13 L4,11 C4,10.4477153 4.44771525,10 5,10 Z M11,4 L13,4 C13.5522847,4 14,4.44771525 14,5 L14,7 C14,7.55228475 13.5522847,8 13,8 L11,8 C10.4477153,8 10,7.55228475 10,7 L10,5 C10,4.44771525 10.4477153,4 11,4 Z M11,10 L13,10 C13.5522847,10 14,10.4477153 14,11 L14,13 C14,13.5522847 13.5522847,14 13,14 L11,14 C10.4477153,14 10,13.5522847 10,13 L10,11 C10,10.4477153 10.4477153,10 11,10 Z M17,4 L19,4 C19.5522847,4 20,4.44771525 20,5 L20,7 C20,7.55228475 19.5522847,8 19,8 L17,8 C16.4477153,8 16,7.55228475 16,7 L16,5 C16,4.44771525 16.4477153,4 17,4 Z M17,10 L19,10 C19.5522847,10 20,10.4477153 20,11 L20,13 C20,13.5522847 19.5522847,14 19,14 L17,14 C16.4477153,14 16,13.5522847 16,13 L16,11 C16,10.4477153 16.4477153,10 17,10 Z M5,16 L7,16 C7.55228475,16 8,16.4477153 8,17 L8,19 C8,19.5522847 7.55228475,20 7,20 L5,20 C4.44771525,20 4,19.5522847 4,19 L4,17 C4,16.4477153 4.44771525,16 5,16 Z M11,16 L13,16 C13.5522847,16 14,16.4477153 14,17 L14,19 C14,19.5522847 13.5522847,20 13,20 L11,20 C10.4477153,20 10,19.5522847 10,19 L10,17 C10,16.4477153 10.4477153,16 11,16 Z M17,16 L19,16 C19.5522847,16 20,16.4477153 20,17 L20,19 C20,19.5522847 19.5522847,20 19,20 L17,20 C16.4477153,20 16,19.5522847 16,19 L16,17 C16,16.4477153 16.4477153,16 17,16 Z" fill="#003366" />
-                                                    </g>
-                                                </svg><!--end::Svg Icon-->
-                                            </span>
-                                        </span>
-                                    </a>`
-    );
+  
 
     table.on('change', '.SelectBranch', function () {
 
@@ -2968,25 +2829,59 @@ $('#categoryForOrder').change(function () {
 });
 $('#branch').change(function () {
     debugger
-    var id = this.value;
+    var branchID = this.value;
     var url = window.location.href;
-    var OrderCode = url.substring(url.lastIndexOf('/') + 1);
-    if (OrderCode == "NewOrder") {
-        $("#groupIds > option").each(function () {
-            getOrderProducts(this.value, id);
-        });
+    var OrderCode = url.substring(url.lastIndexOf('?') + 1);
+    var settings = $('#settings').val();
+    var settings2 = $('#settings2').val();
+
+    if (settings == "1" && settings2 == "1") {
+        if (OrderCode == "list") {
+            $("#groupIds > option").each(function () {
+                getOrderProductsListViewCap(this.value, branchID);
+            });
+        }
+        else {
+            $("#groupIds > option").each(function () {
+                getOrderProductsCap(this.value, branchID);
+            });
+        }
     }
     else {
+        if (OrderCode == "list") {
+            $("#groupIds > option").each(function () {
+                getOrderProductsListView(this.value, branchID);
 
-        $("#groupIds > option").each(function () {
-            getOrderProductsListView(this.value, id);
-        });
+
+
+            });
+            if (settings == "0") {
+
+                $("#groupIds > option").each(function () {
+                    debugger
+                    let group = Number(this.value);
+
+                    var table = $("#tablenew_" + group).DataTable();
+
+                    table.column(6).visible(false);
+                    table.column(7).visible(false);
+
+                });
+
+            }
+
+        }
+        else {
+            $("#groupIds > option").each(function () {
+                getOrderProducts(this.value, branchID);
+            });
+        }
     }
 });
 $('#branch').change(function () {
     
     var branchID = $('#branch').val();
-    ProductFormat(branchID);
+    //ProductFormat(branchID);
     orderAbsBranch(branchID);
     getOrderAbs(branchID);
 });
@@ -3194,6 +3089,28 @@ function getOrderAbs(branchID) {
                 });
             });
         },
+        drawCallback: function (settings) {
+            var api = this.api();
+            var rows = api.rows({ page: 'current' }).nodes();
+            var last = null;
+
+            api.column(1, { page: 'current' }).data().each(function (group, i) {
+                if (last !== group) {
+                    $(rows).eq(i).before(
+                        '<tr class="group "><td class="bg-primary" style="padding-left: 10px;height: 20px;font-weight: bolder;font-size: 12px;" colspan="20">' + group + '</td></tr>',
+                    );
+                    last = group;
+                }
+            });
+            //api.column(3, { page: 'current' }).data().each(function (group, i) {
+            //    if (last !== group) {
+            //        $(rows).eq(i).after(
+            //            '<tr class="group "><td class="bg-success" style="padding-left: 10px;height: 20px;font-weight: bolder;font-size: 12px;" colspan="20">' + + '</td></tr>',
+            //        );
+            //        last = group;
+            //    }
+            //});
+        },
         columns: [
             {
                 targets: 0,
@@ -3208,7 +3125,7 @@ function getOrderAbs(branchID) {
                 data: 'Group',
                 orderable: false,
                 width: '10%',
-
+                visible: false,
             },
             {
                 data: 'Code',
@@ -3268,7 +3185,11 @@ function getOrderAbs(branchID) {
                 targets: 4,
                 className: '',
                 render: function (data, type, full, meta) {
-                    var returnHtml = `<div style="text-transform: uppercase;"><b > ` + full['ProductUnitName'] + `</b></div> `;
+                    var returnHtml;
+                    if (full['ProductUnitName'] == "ADET")
+                        returnHtml = `<div style="text-transform: uppercase;color:red;"><b > ` + full['ProductUnitName'] + `</b></div> `;
+                    else
+                        returnHtml = `<div style="text-transform: uppercase;"><b > ` + full['ProductUnitName'] + `</b></div> `;
                     return returnHtml;
                 },
             },

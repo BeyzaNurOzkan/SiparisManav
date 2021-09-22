@@ -200,14 +200,14 @@ function getOrderProductsUpdate(groupId, branchID, id) {
                         if (name != null) {
                             output = `
                                <div class="" style="justify-content: center;width:100%;">
-                                 <input type="text" value="` + name + `" style="min-width:100px; height:25px;background-color: #fff0d0;     border: 1px solid #c3c3c3;font-size: 11px;" type="text" class="form-control bootstrap-touchspin-vertical-btn" oninput= "UpdateOrderDet2Update(this.value,` + full['ID'] + `,` + id + `)" id = "comment_` + full['ID'] + `" >
+                                 <input type="text" value="` + name + `" style="text-transform: uppercase;min-width:100px; height:25px;background-color: #fff0d0;     border: 1px solid #c3c3c3;font-size: 11px;" type="text" class="form-control bootstrap-touchspin-vertical-btn" oninput= "UpdateOrderDet2Update(this.value,` + full['ID'] + `,` + id + `)" id = "comment_` + full['ID'] + `" >
 
                                 </div>`;
                         }
                         else {
                             output = `
                                 <div id = "barcode_` + full['ID'] + `" class="" style="justify-content: center;width:100%;">
-                                    <input autocomplete="off" type="text"  placeholder="Açıklama" style="height:25px; min-width:100px;background-color:#fff0d0;border: 1px solid #c3c3c3;font-size: 11px;" type="text" class="form-control bootstrap-touchspin-vertical-btn" oninput= "UpdateOrderDet2Update(this.value,` + full['ID'] + `,` + id + `)" id = "comment">
+                                    <input autocomplete="off" type="text"  placeholder="Açıklama" style="text-transform: uppercase;height:25px; min-width:100px;background-color:#fff0d0;border: 1px solid #c3c3c3;font-size: 11px;" type="text" class="form-control bootstrap-touchspin-vertical-btn" oninput= "UpdateOrderDet2Update(this.value,` + full['ID'] + `,` + id + `)" id = "comment">
                                 </div>
                   `;
                         }
@@ -216,6 +216,12 @@ function getOrderProductsUpdate(groupId, branchID, id) {
                         var Prices = (x).toLocaleString('tr');
                         var returnHtml;
                         var colorUnit;
+                        var barcode = "";
+                        if (full['DiscountProd'] != "") {
+                            barcode = `<i class="pr-2 icon-2x flaticon-add-label-button" style="font-size:15px;color:green;"></i> <span  style="color:green;">` + full['Code'] + `</span>`;
+                        }
+                        else
+                            barcode = `<span class="" style="color:blue;">` + full['Code'] + `</span> `;
 
                         var settings = $('#settings').val();
                         if ((full['ProductUnitName']) == null) {
@@ -318,7 +324,7 @@ function getOrderProductsUpdate(groupId, branchID, id) {
                                                                <div class="col-12">
                                    <div class="row">
                                         <div class="col-12 ">
-                                       <span class="" style="color:blue;">` + full['Code'] + `     </span ` + colorUnit + unitweight + `
+                                       ` + barcode  + colorUnit + unitweight + `
                                         </div>
                                         
                                      
@@ -866,17 +872,24 @@ function getOrderProductsUpdateListViewCap(groupId, branchID, id) {
                 render: function (data, type, full, meta) {
                     var name = full['Comment'];
                     var output;
-                    if (name != null) {
+                    if ((full['MaxCapacity']) == 0) {
+                        output = `
+                                <div id = "barcode_` + full['ID'] + `" class="" style="justify-content: center;width:100%;">
+                                    <input disabled autocomplete="off" type="text"  value="" style="min-width:100px;background-color:#f5e9f0;border: 2px solid #ffd3e2;font-size: 11px;" type="text" class="form-control bootstrap-touchspin-vertical-btn" oninput= "UpdateOrderDet2(this.value,` + full['ID'] + `)" id = "comment">
+                                </div>
+                  `;
+                    }
+                    else if (name != null) {
                         output = `
                                <div class="" style="justify-content: center;width:100%;">
-                                 <input type="text" value="` + name + `" style="min-width:180px;background-color: #f5e9f0;     border: 2px solid #ffd3e2;font-size: 11px;" type="text" class="form-control bootstrap-touchspin-vertical-btn" oninput= "UpdateOrderDet2Update(this.value,` + full['ID'] + `,` + id + `)" id = "comment_` + full['ID'] + `" >
+                                 <input type="text" value="` + name + `" style="text-transform: uppercase;min-width:180px;background-color: #f5e9f0;     border: 2px solid #ffd3e2;font-size: 11px;" type="text" class="form-control bootstrap-touchspin-vertical-btn" oninput= "UpdateOrderDet2Update(this.value,` + full['ID'] + `,` + id + `)" id = "comment_` + full['ID'] + `" >
 
                                 </div>`;
                     }
                     else {
                         output = `
                                 <div id = "barcode_` + full['ID'] + `" class="" style="justify-content: center;width:100%;">
-                                    <input autocomplete="off" type="text"  value="" style="min-width:180px;background-color:#f5e9f0;border: 2px solid #ffd3e2;font-size: 11px;" type="text" class="form-control bootstrap-touchspin-vertical-btn" oninput= "UpdateOrderDet2Update(this.value,` + full['ID'] + `,` + id + `)" id = "comment">
+                                    <input autocomplete="off" type="text"  value="" style="text-transform: uppercase;min-width:180px;background-color:#f5e9f0;border: 2px solid #ffd3e2;font-size: 11px;" type="text" class="form-control bootstrap-touchspin-vertical-btn" oninput= "UpdateOrderDet2Update(this.value,` + full['ID'] + `,` + id + `)" id = "comment">
                                 </div>
                   `;
                     }
@@ -1347,14 +1360,14 @@ function getOrderProductsUpdateListView(groupId, branchID, id) {
                     if (name != null) {
                         output = `
                                <div class="" style="justify-content: center;width:100%;">
-                                 <input type="text" value="` + name + `" style="min-width:180px;background-color: #f5e9f0;     border: 2px solid #ffd3e2;font-size: 11px;" type="text" class="form-control bootstrap-touchspin-vertical-btn" oninput= "UpdateOrderDet2Update(this.value,` + full['ID'] + `,` + id + `)" id = "comment_` + full['ID'] + `" >
+                                 <input type="text" value="` + name + `" style="text-transform: uppercase;min-width:180px;background-color: #f5e9f0;     border: 2px solid #ffd3e2;font-size: 11px;" type="text" class="form-control bootstrap-touchspin-vertical-btn" oninput= "UpdateOrderDet2Update(this.value,` + full['ID'] + `,` + id + `)" id = "comment_` + full['ID'] + `" >
 
                                 </div>`;
                     }
                     else {
                         output = `
                                 <div id = "barcode_` + full['ID'] + `" class="" style="justify-content: center;width:100%;">
-                                    <input autocomplete="off" type="text"  value="" style="min-width:180px;background-color:#f5e9f0;border: 2px solid #ffd3e2;font-size: 11px;" type="text" class="form-control bootstrap-touchspin-vertical-btn" oninput= "UpdateOrderDet2Update(this.value,` + full['ID'] + `,` + id + `)" id = "comment">
+                                    <input autocomplete="off" type="text"  value="" style="text-transform: uppercase;min-width:180px;background-color:#f5e9f0;border: 2px solid #ffd3e2;font-size: 11px;" type="text" class="form-control bootstrap-touchspin-vertical-btn" oninput= "UpdateOrderDet2Update(this.value,` + full['ID'] + `,` + id + `)" id = "comment">
                                 </div>
                   `;
                     }
@@ -1534,7 +1547,7 @@ function getOrderProductsUpdateCap(groupId, branchID,id) {
 
                         var barcode = "";
                         if (full['DiscountProd'] != "") {
-                            barcode = `<div><i class="pr-2 icon-2x flaticon-add-label-button" style="font-size:15px;color:green;"></i> <span class="pb-1" style="color:green;">` + full['Code'] + `</span></div> `;
+                            barcode = `<i class="pr-2 icon-2x flaticon-add-label-button" style="font-size:15px;color:green;"></i> <span  style="color:green;">` + full['Code'] + `</span>`;
                         }
                         else
                             barcode = `<span class="" style="color:blue;">` + full['Code'] + `</span> `;
@@ -1618,14 +1631,14 @@ function getOrderProductsUpdateCap(groupId, branchID,id) {
                         else if (name != null) {
                             output = `
                                <div class="" style="justify-content: center;width:100%;">
-                                 <input type="text" value="` + name + `" style="min-width:100px; height:25px;background-color: #fff0d0;     border: 1px solid #c3c3c3;font-size: 11px;" type="text" class="form-control bootstrap-touchspin-vertical-btn" oninput= "UpdateOrderDet2Update(this.value,` + full['ID'] + `,` + id + `)"   id = "comment_` + full['ID'] + `" >
+                                 <input type="text" value="` + name + `" style="text-transform: uppercase;min-width:100px; height:25px;background-color: #fff0d0;     border: 1px solid #c3c3c3;font-size: 11px;" type="text" class="form-control bootstrap-touchspin-vertical-btn" oninput= "UpdateOrderDet2Update(this.value,` + full['ID'] + `,` + id + `)"   id = "comment_` + full['ID'] + `" >
 
                                 </div>`;
                         }
                         else {
                             output = `
                                 <div id = "barcode_` + full['ID'] + `" class="" style="justify-content: center;width:100%;">
-                                    <input autocomplete="off" type="text"  placeholder="Açıklama" style="height:25px; min-width:100px;background-color:#fff0d0;border: 1px solid #c3c3c3;font-size: 11px;" type="text" class="form-control bootstrap-touchspin-vertical-btn" oninput= "UpdateOrderDet2Update(this.value,` + full['ID'] + `,` + id + `)"   id = "comment">
+                                    <input autocomplete="off" type="text"  placeholder="Açıklama" style="text-transform: uppercase;height:25px; min-width:100px;background-color:#fff0d0;border: 1px solid #c3c3c3;font-size: 11px;" type="text" class="form-control bootstrap-touchspin-vertical-btn" oninput= "UpdateOrderDet2Update(this.value,` + full['ID'] + `,` + id + `)"   id = "comment">
                                 </div>
                   `;
                         }
@@ -1745,7 +1758,7 @@ function getOrderProductsUpdateCap(groupId, branchID,id) {
                                    <div class="row">
                                         
                                         <div class="col-12 " style="text-align:left;">
-                                       <span class="" style="color:blue;">` + barcode + ` - </span>   ` + colorUnit + unitweight + `
+                                       ` + barcode + ` -  ` + colorUnit + unitweight + `
                                         </div>
                                         
                                      
@@ -2676,6 +2689,29 @@ function getOrderAbsUpdate(id) {
                 });
             });
         },
+        drawCallback: function (settings) {
+            var api = this.api();
+            var rows = api.rows({ page: 'current' }).nodes();
+            var last = null;
+
+            api.column(1, { page: 'current' }).data().each(function (group, i) {
+                if (last !== group) {
+                    $(rows).eq(i).before(
+                        '<tr class="group "><td class="bg-primary" style="padding-left: 10px;height: 20px;font-weight: bolder;font-size: 12px;" colspan="20">' + group + '</td></tr>',
+                    );
+                    last = group;
+                }
+            });
+            //api.column(3, { page: 'current' }).data().each(function (group, i) {
+            //    if (last !== group) {
+            //        $(rows).eq(i).after(
+            //            '<tr class="group "><td class="bg-success" style="padding-left: 10px;height: 20px;font-weight: bolder;font-size: 12px;" colspan="20">' + + '</td></tr>',
+            //        );
+            //        last = group;
+            //    }
+            //});
+        },
+
         columns: [
             {
                 targets: 0,
@@ -2690,6 +2726,7 @@ function getOrderAbsUpdate(id) {
                 data: 'Group',
                 orderable: false,
                 width: '5%',
+                visible:false,
 
             },
             {
@@ -2751,7 +2788,12 @@ function getOrderAbsUpdate(id) {
                 targets: 4,
                 className: '',
                 render: function (data, type, full, meta) {
-                    var returnHtml = `<div style="text-transform: uppercase;"><b > ` + full['ProductUnitName'] + `</b></div> `;
+                    var returnHtml = " ";
+                    if (full['ProductUnitName']=="ADET")
+                        returnHtml = `<div style="text-transform: uppercase;color:red;"><b > ` + full['ProductUnitName'] + `</b></div> `;
+                    else
+                        returnHtml = `<div style="text-transform: uppercase;"><b > ` + full['ProductUnitName'] + `</b></div> `;
+
                     return returnHtml;
                 },
             },
