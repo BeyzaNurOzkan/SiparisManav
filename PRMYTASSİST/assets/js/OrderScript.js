@@ -2926,14 +2926,16 @@ function cancelToNewOrder() {
     });
 };
 function SaveAllForProductDet() {
-    
+    debugger
     var isVisible = $("#productModal #visibileForProductList").prop('checked');
     var prodID = $("#productModal #visibileForProductList").val();
     var Category3ID = $("#productModal #categoryForProductSelect").val();
+    var formData = new FormData();
+    formData.append("File", document.getElementById("ProductPhoto").files[0]);
 
     $.ajax({
         type: "POST",
-        url: '/Order/SaveAllForProductDet?prodID=' + prodID + '&isVisible=' + isVisible + '&Category3ID=' + Category3ID,
+        url: '/Order/SaveAllForProductDet?prodID=' + prodID + '&isVisible=' + isVisible + '&Category3ID=' + Category3ID + '&ProductPhoto=' + Category3ID,
         success: function (data) {
             swal.fire({
                 title: "Başarılı!",

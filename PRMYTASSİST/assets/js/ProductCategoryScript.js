@@ -182,12 +182,6 @@ function getCategoryForNewOne() {
                 width: '4%',
 
             },
-            {
-                data: 'ProfilePhoto',
-                orderable: false,
-                className: 'dt-center',
-
-            },
             { data: 'Code' },
             { data: 'Name' },
             {
@@ -210,7 +204,7 @@ function getCategoryForNewOne() {
 
             },
             {
-                targets: 3,
+                targets: 2,
                 render: function (data, type, full, meta) {
                     var name3 = "";
                     if (full['Name3'] != null)
@@ -220,7 +214,7 @@ function getCategoryForNewOne() {
 
             },
             {
-                targets: 2,
+                targets: 1,
                 render: function (data, type, full, meta) {
                     var code3 = "";
                    
@@ -233,53 +227,6 @@ function getCategoryForNewOne() {
                     return full['Code'] + `<span style="color:red; font-weight: bold;">`+ code3 +`</span> `;
                 }
                
-            },
-            {
-                targets: 1,
-                title: 'Görsel',
-                "width": "6%",
-                render: function (data, type, full, meta) {
-                    var id = full['ProfilePhoto'];
-                    var name = full['Name'];
-
-                    var output;
-                    if (id != null) {
-                        output = `
-                                <div style="justify-content: center;" class="kt-user-card-v2">
-                                    <div class="kt-user-card-v2__pic">
-                                        <img src="` + id + `" class="m-img-rounded kt-marginless" alt="photo">
-                                    </div>
-                                </div>`;
-                    }
-                    else {
-                        output = `
-                                <div style="justify-content: center;" class="kt-user-card-v2">
-                                    <div class="kt-user-card-v2__pic">
-                                        <img src="./assets/media/resim-yok.jpg " class="m-img-rounded kt-marginless" alt="photo">
-                                    </div>
-                                </div>`;
-                        //var stateNo = KTUtil.getRandomInt(0, 7);
-                        //var states = [
-                        //    'success',
-                        //    'brand',
-                        //    'danger',
-                        //    'success',
-                        //    'warning',
-                        //    'dark',
-                        //    'primary',
-                        //    'info'];
-                        //var state = states[stateNo];
-
-                        //output = `
-                        //        <div style="justify-content: center;" class="kt-user-card-v2">
-                        //            <div class="kt-user-card-v2__pic">
-                        //                <div class="kt-badge kt-badge--xl kt-badge--` + state + `"><span>` + name.substring(0, 1) + `</div>
-                        //            </div>
-                        //        </div>`;
-                    }
-
-                    return output;
-                },
             },
             {
                 targets: -1,
@@ -301,7 +248,7 @@ function getCategoryForNewOne() {
                 }
             },
             {
-                targets: 4,
+                targets: 3,
                 title: "Oluşturma Tarihi",
                 render: function (data, type, full, meta) {
                     debugger

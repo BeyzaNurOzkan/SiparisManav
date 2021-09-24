@@ -116,7 +116,7 @@ function getEditLogoCompany() {
             swal.fire("Hata!", "Bir sorun ile karşılaşıldı!", "error");
         }
     });
-};
+}; 
 
 $('#companyLogoInput').change(function myfunction() {
     debugger
@@ -126,7 +126,13 @@ $('#companyLogoInput').change(function myfunction() {
     $('#kt_apps_user_add_avatar').append('<div id="backgroundImage" class="kt-avatar__holder" style="background-image: url(' + fakeLogo + ');width: 250px; background-position: center; "></div>');
 });
 
-function getEditLogoCompany1() {
+$('#ProductPhoto').change(function myfunction() {
+    debugger
+    var fakeLogo = URL.createObjectURL(event.target.files[0]);
+    $('#backgroundImage').closest('div').remove();
+    $('#kt_apps_user_add_avatar').append('<div id="backgroundImage" class="kt-avatar__holder" style="background-image: url(' + fakeLogo + ');width: 250px; background-position: center; "></div>');
+});
+function getEditLogoCompany1() { 
     companyLogoCode = 50598;
     debugger
     $.ajax({

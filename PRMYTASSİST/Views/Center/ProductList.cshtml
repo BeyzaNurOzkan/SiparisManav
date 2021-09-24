@@ -5,6 +5,7 @@
     List<Product> products = Query.Product();
 }
 
+
 <div class="kt-content  kt-grid__item kt-grid__item--fluid" id="kt_content" style="padding-top: 5%;">
     <div class="kt-portlet kt-portlet--mobile">
         <div class="kt-portlet__head kt-portlet__head--lg">
@@ -92,191 +93,205 @@
                             <!--Begin:: Tab Content-->
                             <div class="tab-pane active" id="kt_apps_contacts_view_tab_1" role="tabpanel">
                                 <!--begin::Form-->
-                                <form class="kt-form kt-form--label-right">
-                                    <div class="kt-portlet__body">
-                                        <div class="row">
-                                            <div class="col-lg-9">
-                                                <div class="form-group row form-group-marginless kt-margin-t-1">
-                                                    <label class="col-lg-2 col-form-label" style=" align-self: center"><b>Stok Kodu</b></label>
-                                                    <div class="col-lg-5 mb-1" style=" align-self: center">
-                                                        <input type="text" id="ProductKodu" class="form-control" disabled>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row form-group-marginless kt-margin-t-1">
-                                                    <label class="col-lg-2 col-form-label" style=" align-self: center"><b>Barkodu</b></label>
-                                                    <div class="col-lg-5 mb-1" style=" align-self: center">
-                                                        <input type="text" id="Barkod" class="form-control" disabled>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row form-group-marginless kt-margin-t-1">
-                                                    <label class="col-lg-2 col-form-label" style=" align-self: center"><b>Ürün Adı</b></label>
-                                                    <div class="col-lg-10 mb-1" style=" align-self: center">
-                                                        <input type="email" id="ProductName" class="form-control" disabled style="color:blue;">
-                                                    </div>
-                                                </div>
-                                                <!--Beyzanın tasarımı bilginize-->
-                                                <div class="form-group row form-group-marginless kt-margin-t-1">
-                                                    <label class="col-lg-2 col-form-label" style=" align-self: center"><b>Yabancı Adı</b></label>
-                                                    <div class="col-lg-10 mb-1" style=" align-self: center">
-                                                        <input type="email" id="ProductForeignKey" class="form-control" disabled>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row form-group-marginless kt-margin-t-1">
-                                                    <label class="col-lg-2 col-form-label" style=" align-self: center"><b>Kısa Tanım</b></label>
-                                                    <div class="col-lg-5 mb-1" style=" align-self: center">
-                                                        <input type="email" id="ShortName" class="form-control" disabled>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group pl-3 row form-group-marginless kt-margin-t-1">
-                                                    <label class="col-lg-2 col-form-label" style=" align-self: center"><b>Ürün Grubu</b></label>
-                                                    <select id="categoryForProductSelect" class="custom-select form-control form-control kt-selectpicker col-lg-10" name="categoryForProductSelect" data-live-search="true">
-                                                        <option id="selectProductCategory" value=""></option>
-                                                        @foreach (var item in productGroup3s.Where(q => q.isVisible == true))
-                                                        {
-                                                            <option data-content="" value="@item.ID">@item.ProductGroups2.ProductGroups.Name.ToUpper(), @item.ProductGroups2.Name.ToUpper(), @item.Name.ToUpper()</option>
-                                                        }
-                                                    </select>
-                                                </div>
-                                                <div class="kt-separator kt-separator--border-dashed kt-separator--space-lg kt-separator--portlet-fit"></div>
-                                                <div class="form-group row form-group-marginless kt-margin-t-1">
-                                                    <label class="col-lg-2 col-form-label" style=" align-self: center"><b>Toplam KDV</b></label>
-                                                    <div class="col-lg-4 mb-1" style=" align-self: center">
-                                                        <div class="kt-input-icon">
-                                                            <input type="text" id="WholeSaleTaxPercentage" class="form-control" disabled>
+                                <form action="/GeneralSettings/AddProductPhoto" method="post" enctype="multipart/form-data" class="kt-form kt-form--label-right">
+                                        <div class="kt-portlet__body">
+                                            <div class="row">
+                                                <div class="col-lg-9">
+                                                    <div class="form-group row form-group-marginless kt-margin-t-1">
+                                                        <label class="col-lg-2 col-form-label" style=" align-self: center"><b>Stok Kodu</b></label>
+                                                        <div class="col-lg-5 mb-1" style=" align-self: center">
+                                                            <input type="text" id="ProductKodu" class="form-control" disabled>
+                                                            <input hidden type="text" value="5" class="form-control" disabled>
+
                                                         </div>
                                                     </div>
-                                                    <label class="col-lg-2 col-form-label" style=" align-self: center"><b>Perakende KDV</b></label>
-                                                    <div class="col-lg-4 mb-1" style=" align-self: center">
-                                                        <div class="kt-input-icon">
-                                                            <input type="text" id="RetailTaxPercentage" class="form-control" disabled>
+                                                    <div class="form-group row form-group-marginless kt-margin-t-1">
+                                                        <label class="col-lg-2 col-form-label" style=" align-self: center"><b>Barkodu</b></label>
+                                                        <div class="col-lg-5 mb-1" style=" align-self: center">
+                                                            <input type="text" id="Barkod" class="form-control" disabled>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row form-group-marginless kt-margin-t-1">
+                                                        <label class="col-lg-2 col-form-label" style=" align-self: center"><b>Ürün Adı</b></label>
+                                                        <div class="col-lg-10 mb-1" style=" align-self: center">
+                                                            <input type="email" id="ProductName" class="form-control" disabled style="color:blue;">
+                                                        </div>
+                                                    </div>
+                                                    <!--Beyzanın tasarımı bilginize-->
+                                                    <div class="form-group row form-group-marginless kt-margin-t-1">
+                                                        <label class="col-lg-2 col-form-label" style=" align-self: center"><b>Yabancı Adı</b></label>
+                                                        <div class="col-lg-10 mb-1" style=" align-self: center">
+                                                            <input type="email" id="ProductForeignKey" class="form-control" disabled>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row form-group-marginless kt-margin-t-1">
+                                                        <label class="col-lg-2 col-form-label" style=" align-self: center"><b>Kısa Tanım</b></label>
+                                                        <div class="col-lg-5 mb-1" style=" align-self: center">
+                                                            <input type="email" id="ShortName" class="form-control" disabled>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group pl-3 row form-group-marginless kt-margin-t-1">
+                                                        <label class="col-lg-2 col-form-label" style=" align-self: center"><b>Ürün Grubu</b></label>
+                                                        <select id="categoryForProductSelect" class="custom-select form-control form-control kt-selectpicker col-lg-10" name="categoryForProductSelect" data-live-search="true">
+                                                            <option id="selectProductCategory" value=""></option>
+                                                            @foreach (var item in productGroup3s.Where(q => q.isVisible == true))
+                                                            {
+                                                                <option data-content="" value="@item.ID">@item.ProductGroups2.ProductGroups.Name.ToUpper(), @item.ProductGroups2.Name.ToUpper(), @item.Name.ToUpper()</option>
+                                                            }
+                                                        </select>
+                                                    </div>
+                                                    <div class="kt-separator kt-separator--border-dashed kt-separator--space-lg kt-separator--portlet-fit"></div>
+                                                    <div class="form-group row form-group-marginless kt-margin-t-1">
+                                                        <label class="col-lg-2 col-form-label" style=" align-self: center"><b>Toplam KDV</b></label>
+                                                        <div class="col-lg-4 mb-1" style=" align-self: center">
+                                                            <div class="kt-input-icon">
+                                                                <input type="text" id="WholeSaleTaxPercentage" class="form-control" disabled>
+                                                            </div>
+                                                        </div>
+                                                        <label class="col-lg-2 col-form-label" style=" align-self: center"><b>Perakende KDV</b></label>
+                                                        <div class="col-lg-4 mb-1" style=" align-self: center">
+                                                            <div class="kt-input-icon">
+                                                                <input type="text" id="RetailTaxPercentage" class="form-control" disabled>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row form-group-marginless kt-margin-t-1">
+                                                        <label class="col-lg-2 col-form-label" style=" align-self: center"><b>Döviz Cinsi</b></label>
+                                                        <div class="col-lg-4 mb-1" style=" align-self: center">
+                                                            <div class="kt-input-icon">
+                                                                <input type="text" class="form-control" disabled>
+                                                            </div>
+                                                        </div>
+                                                        <label class="col-lg-2 col-form-label" style=" align-self: center"><b>Cinsi</b></label>
+                                                        <div class="col-lg-4 mb-1" style=" align-self: center">
+                                                            <div class="kt-input-icon">
+                                                                <input type="text" class="form-control" disabled>
+                                                                <!--Örnek:Ticari mall vb-->
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="form-group row form-group-marginless kt-margin-t-1">
-                                                    <label class="col-lg-2 col-form-label" style=" align-self: center"><b>Döviz Cinsi</b></label>
-                                                    <div class="col-lg-4 mb-1" style=" align-self: center">
-                                                        <div class="kt-input-icon">
-                                                            <input type="text" class="form-control" disabled>
+                                                <div class="col-lg-3">
+                                                    <div class="kt-dropzone dropzone m-dropzone--success pt-2" id="" style=" height: 80%;">
+                                                        <div class="kt-dropzone__msg dz-message needsclick">
+                                                            <h5 class="kt-dropzone__msg-title"> Dosyayı Tıklayarak Yükleyiniz.</h5>
+                                                            <span class="kt-dropzone__msg-desc">Sadece Görsel (.jpg .png) Yüklemenize İzin Verilmektedir.</span>
                                                         </div>
-                                                    </div>
-                                                    <label class="col-lg-2 col-form-label" style=" align-self: center"><b>Cinsi</b></label>
-                                                    <div class="col-lg-4 mb-1" style=" align-self: center">
-                                                        <div class="kt-input-icon">
-                                                            <input type="text" class="form-control" disabled>
-                                                            <!--Örnek:Ticari mall vb-->
+                                                        <div class="kt-avatar kt-avatar--outline " id="kt_apps_user_add_avatar" style="float: right;">
+                                                            <label class="kt-avatar__upload " data-toggle="kt-tooltip" title="" data-original-title="Fotoğraf Değiştir">
+                                                                <i class="fa fa-pen"></i>
+                                                                <input type="file" name="Image" accept=".png, .jpg, .jpeg" id="ProductPhoto">
+                                                            </label>
+                                                        </div>
+                                                        <div class="kt-avatar kt-avatar--outline pl-4 " id="kt_apps_user_add_avatar" style="float: left;">
+                                                            <label class="kt-avatar__upload " data-toggle="" title="" data-original-title="Fotoğrafı Sil">
+                                                                <i class="fa fa-times"></i>
+                                                                <input type="file" name="Image" accept=".png, .jpg, .jpeg" id="ProductPhoto">
+                                                            </label>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-3">
-                                                <div class="kt-dropzone dropzone m-dropzone--success pt-2" action="inc/api/dropzone/upload.php" id="m-dropzone-three">
-                                                    <div class="kt-dropzone__msg dz-message needsclick">
-                                                        <h5 class="kt-dropzone__msg-title">Sürükleyerek Dosyayı Bırakınız ya da Tıklayarak Yükleyiniz.</h5>
-                                                        <span class="kt-dropzone__msg-desc">Sadece Görsel (.jpg .png) Yüklemenize İzin Verilmektedir.</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="kt-separator kt-separator--border-dashed kt-separator--space-lg kt-separator--portlet-fit"></div>
-                                        <div id="kt_repeater_1">
-                                            <div class="form-group form-group-last row" id="kt_repeater_1">
-                                                <label class="col-lg-1 col-form-label" style="align-self: flex-end; "><b>Birim</b></label>
-                                                <div data-repeater-list="" class="col-lg-10">
-                                                    <div data-repeater-item class="form-group row align-items-center">
-                                                        <div class="col-md-3" style=" align-self: center">
-                                                            <div class="kt-form__group--inline">
-                                                                <div class="kt-form__label">
-                                                                    <label><b>Birim Adı</b></label>
-                                                                </div>
-                                                                <div class="kt-form__control">
+                                            <div class="kt-separator kt-separator--border-dashed kt-separator--space-lg kt-separator--portlet-fit"></div>
+                                            <div id="kt_repeater_1">
+                                                <div class="form-group form-group-last row" id="kt_repeater_1">
+                                                    <label class="col-lg-1 col-form-label" style="align-self: flex-end; "><b>Birim</b></label>
+                                                    <div data-repeater-list="" class="col-lg-10">
+                                                        <div data-repeater-item class="form-group row align-items-center">
+                                                            <div class="col-md-3" style=" align-self: center">
+                                                                <div class="kt-form__group--inline">
+                                                                    <div class="kt-form__label">
+                                                                        <label><b>Birim Adı</b></label>
+                                                                    </div>
                                                                     <div class="kt-form__control">
-                                                                        <input type="email" id="UnitName" class="form-control" disabled>
+                                                                        <div class="kt-form__control">
+                                                                            <input type="email" id="UnitName" class="form-control" disabled>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
+                                                                <div class="d-md-none kt-margin-b-10"></div>
                                                             </div>
-                                                            <div class="d-md-none kt-margin-b-10"></div>
-                                                        </div>
 
-                                                        <div class="col-md-8" style=" align-self: center">
-                                                            <div class="row">
-                                                                <div class="col-md-2">
-                                                                    <div class="kt-form__group--inline">
-                                                                        <div class="kt-form__label">
-                                                                            <label class="kt-label m-label--single"><b>Katsayı</b></label>
+                                                            <div class="col-md-8" style=" align-self: center">
+                                                                <div class="row">
+                                                                    <div class="col-md-2">
+                                                                        <div class="kt-form__group--inline">
+                                                                            <div class="kt-form__label">
+                                                                                <label class="kt-label m-label--single"><b>Katsayı</b></label>
+                                                                            </div>
+                                                                            <div class="kt-form__control">
+                                                                                <input type="email" id="Factor" class="form-control" disabled>
+                                                                            </div>
                                                                         </div>
-                                                                        <div class="kt-form__control">
-                                                                            <input type="email" id="Factor" class="form-control" disabled>
-                                                                        </div>
+                                                                        <div class="d-md-none kt-margin-b-10"></div>
                                                                     </div>
-                                                                    <div class="d-md-none kt-margin-b-10"></div>
-                                                                </div>
-                                                                <div class="col-md-2" style=" align-self: center">
-                                                                    <div class="kt-form__group--inline">
-                                                                        <div class="kt-form__label">
-                                                                            <label><b>Net Ağırlık</b></label>
+                                                                    <div class="col-md-2" style=" align-self: center">
+                                                                        <div class="kt-form__group--inline">
+                                                                            <div class="kt-form__label">
+                                                                                <label><b>Net Ağırlık</b></label>
+                                                                            </div>
+                                                                            <div class="kt-form__control">
+                                                                                <input type="email" id="Weight" class="form-control" disabled>
+                                                                            </div>
                                                                         </div>
-                                                                        <div class="kt-form__control">
-                                                                            <input type="email" id="Weight" class="form-control" disabled>
-                                                                        </div>
+                                                                        <div class="d-md-none kt-margin-b-10"></div>
                                                                     </div>
-                                                                    <div class="d-md-none kt-margin-b-10"></div>
-                                                                </div>
-                                                                <div class="col-md-2" style=" align-self: center">
-                                                                    <div class="kt-form__group--inline">
-                                                                        <div class="kt-form__label">
-                                                                            <label><b>Dara</b></label>
+                                                                    <div class="col-md-2" style=" align-self: center">
+                                                                        <div class="kt-form__group--inline">
+                                                                            <div class="kt-form__label">
+                                                                                <label><b>Dara</b></label>
+                                                                            </div>
+                                                                            <div class="kt-form__control">
+                                                                                <input type="email" class="form-control" disabled>
+                                                                            </div>
                                                                         </div>
-                                                                        <div class="kt-form__control">
-                                                                            <input type="email" class="form-control" disabled>
-                                                                        </div>
+                                                                        <div class="d-md-none kt-margin-b-10"></div>
                                                                     </div>
-                                                                    <div class="d-md-none kt-margin-b-10"></div>
-                                                                </div>
-                                                                <div class="col-md-2" style=" align-self: center">
-                                                                    <div class="kt-form__group--inline">
-                                                                        <div class="kt-form__label">
-                                                                            <label><b>Genişlik</b></label>
+                                                                    <div class="col-md-2" style=" align-self: center">
+                                                                        <div class="kt-form__group--inline">
+                                                                            <div class="kt-form__label">
+                                                                                <label><b>Genişlik</b></label>
+                                                                            </div>
+                                                                            <div class="kt-form__control">
+                                                                                <input type="email" class="form-control" disabled>
+                                                                            </div>
                                                                         </div>
-                                                                        <div class="kt-form__control">
-                                                                            <input type="email" class="form-control" disabled>
-                                                                        </div>
+                                                                        <div class="d-md-none kt-margin-b-10"></div>
                                                                     </div>
-                                                                    <div class="d-md-none kt-margin-b-10"></div>
-                                                                </div>
-                                                                <div class="col-md-2" style=" align-self: center">
-                                                                    <div class="kt-form__group--inline">
-                                                                        <div class="kt-form__label">
-                                                                            <label><b>Boy</b></label>
+                                                                    <div class="col-md-2" style=" align-self: center">
+                                                                        <div class="kt-form__group--inline">
+                                                                            <div class="kt-form__label">
+                                                                                <label><b>Boy</b></label>
+                                                                            </div>
+                                                                            <div class="kt-form__control">
+                                                                                <input type="email" class="form-control" disabled>
+                                                                            </div>
                                                                         </div>
-                                                                        <div class="kt-form__control">
-                                                                            <input type="email" class="form-control" disabled>
-                                                                        </div>
+                                                                        <div class="d-md-none kt-margin-b-10"></div>
                                                                     </div>
-                                                                    <div class="d-md-none kt-margin-b-10"></div>
-                                                                </div>
-                                                                <div class="col-md-2" style=" align-self: center">
-                                                                    <div class="kt-form__group--inline">
-                                                                        <div class="kt-form__label">
-                                                                            <label><b>Yükseklik</b></label>
+                                                                    <div class="col-md-2" style=" align-self: center">
+                                                                        <div class="kt-form__group--inline">
+                                                                            <div class="kt-form__label">
+                                                                                <label><b>Yükseklik</b></label>
+                                                                            </div>
+                                                                            <div class="kt-form__control">
+                                                                                <input type="email" class="form-control" disabled>
+                                                                            </div>
                                                                         </div>
-                                                                        <div class="kt-form__control">
-                                                                            <input type="email" class="form-control" disabled>
-                                                                        </div>
+                                                                        <div class="d-md-none kt-margin-b-10"></div>
                                                                     </div>
-                                                                    <div class="d-md-none kt-margin-b-10"></div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
+
                                         </div>
+                                    </form>
 
-                                    </div>
-                                </form>
-
-                                <!--end::Form-->
-                            </div>
+                                    <!--end::Form-->
+</div>
                             <!--End:: Tab Content-->
                             <!--Begin:: Tab Content-->
                             <div class="tab-pane" id="kt_apps_contacts_view_tab_2" role="tabpanel">
@@ -619,3 +634,4 @@
         getProducts();
     });
 </script>
+
