@@ -4,8 +4,8 @@
     List<Branch> branches = Query.Branches().Where(x => x.ID == CurrentUser.CurrentBranch).ToList();
     int curreCurrentUserID = CurrentUser.ID;
     Branch brnc = Query.Branches().Where(q => q.ID == CurrentUser.CurrentBranch).FirstOrDefault();
-    List<User> users = Query.Users(); 
-   
+    List<User> users = Query.Users();
+
 
 }
 <!DOCTYPE html>
@@ -178,7 +178,7 @@ License: You must have a valid license purchased only from themeforest(the above
                         </a>
                     </div>
                     <div class="kt-aside__brand-tools">
-                        <button class="kt-aside__brand-aside-toggler" id="kt_aside_toggler">
+                        <button class="kt-aside__brand-aside-toggler" id="kt_aside_toggler" onclick="openaside()">
                             <span>
                                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon">
                                     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -214,7 +214,8 @@ License: You must have a valid license purchased only from themeforest(the above
                             {
                                 <li class="kt-menu__item  kt-menu__item--submenu kt-menu__item--open" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
                                     <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
-                                        <span class="kt-menu__link-icon">
+                                        <span class="kt-menu__link-icon kt-header__topbar-icon kt-pulse kt-pulse--warning pr-3" style="justify-content:center;">
+                                            <span id="ringCenter" class=""></span>
                                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon">
                                                 <!-- İcon -->
                                                 <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -228,7 +229,18 @@ License: You must have a valid license purchased only from themeforest(the above
                                     <div class="kt-menu__submenu ">
                                         <span class="kt-menu__arrow"></span>
                                         <ul class="kt-menu__subnav">
-                                            <li class="kt-menu__item " aria-haspopup="true"><a href="/Center/StateOrderList" class="kt-menu__link "><i class="kt-menu__link-bullet flaticon2-right-arrow" style="color:#ffba2a; font-size:8px;"><span></span></i><span style="font-size: 1.12rem;" class="kt-menu__link-text">Hal Sipariş Listesi</span><span style=" align-self: center; " class="kt-nav__link-badge"><span id="waitingOrderCount" class="kt-badge kt-badge--success kt-badge--md"></span></a></li>
+                                            <li class="kt-menu__item " aria-haspopup="true">
+                                                <a href="/Center/StateOrderList" class="kt-menu__link ">
+                                                    <i class="kt-menu__link-bullet flaticon2-right-arrow" style="color:#ffba2a; font-size:8px;"><span></span></i><span style="font-size: 1.12rem;" class="kt-menu__link-text">Hal Sipariş Listesi</span>
+
+                                                    <div class="kt-header__topbar-wrapper" aria-expanded="true">
+                                                        <span class="kt-header__topbar-icon kt-pulse kt-pulse--success mr-5" title="Bildirimler">
+                                                            <span id="waitingOrderCount" class="kt-badge kt-badge--success kt-badge--md kt-font-bold" style="position: fixed;margin-top: 10px; margin-left:8px;">0</span>
+                                                            <span id="waitingOrderCountring" class="kt-pulse__ring mt-1"></span>
+                                                        </span>
+                                                    </div>
+                                                </a>
+                                            </li>
                                             <li class="kt-menu__item " aria-haspopup="true"><a href="/Center/StateOrderReport" class="kt-menu__link "><i class="kt-menu__link-bullet flaticon2-right-arrow" style="color: #ffba2a; font-size: 8px;"><span></span></i><span style="font-size: 1.12rem;" class="kt-menu__link-text">Hal Sipariş Raporu</span></a></li>
                                             <li class="kt-menu__item " aria-haspopup="true"><a href="/Center/OrderShipmentSummary" class="kt-menu__link "><i class="kt-menu__link-bullet flaticon2-right-arrow" style="color: #ffba2a; font-size: 8px;"><span></span></i><span style="font-size: 1.12rem;" class="kt-menu__link-text">Sipariş Sevkiyat Özeti</span></a></li>
                                             <li class="kt-menu__item " aria-haspopup="true"><a href="/Center/OrderShipmentDistributions" class="kt-menu__link "><i class="kt-menu__link-bullet flaticon2-right-arrow" style="color: #ffba2a; font-size: 8px;"><span></span></i><span style="font-size: 1.12rem;" class="kt-menu__link-text">Sipariş Sevkiyat Dağılımları</span></a></li>
@@ -242,7 +254,8 @@ License: You must have a valid license purchased only from themeforest(the above
                                 </li>
                                 <li class="kt-menu__item  kt-menu__item--submenu" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
                                     <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
-                                        <span class="kt-menu__link-icon">
+                                        <span class="kt-menu__link-icon pr-3" style="justify-content:center;">
+                                        <span></span>
                                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon">
                                                 <!-- İcon -->
                                                 <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -268,7 +281,7 @@ License: You must have a valid license purchased only from themeforest(the above
                             {
                                 <li class="kt-menu__item  kt-menu__item--submenu kt-menu__item--open" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
                                     <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
-                                        <span class="kt-menu__link-icon">
+                                        <span class="kt-menu__link-icon pr-3" style="justify-content:center;">
                                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon">
                                                 <!-- İcon -->
                                                 <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -460,7 +473,7 @@ License: You must have a valid license purchased only from themeforest(the above
 
                             </ul>
                         }
-                        
+
                     </div>
 
                 </div>
@@ -540,7 +553,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                             <rect x="0" y="0" width="24" height="24"></rect>
                                             <path style="fill:#fc9c3c" d="M12.3740377,19.9389434 L18.2226499,11.1660251 C18.4524142,10.8213786 18.3592838,10.3557266 18.0146373,10.1259623 C17.8914367,10.0438285 17.7466809,10 17.5986122,10 L13,10 L13,4.47708173 C13,4.06286817 12.6642136,3.72708173 12.25,3.72708173 C11.9992351,3.72708173 11.7650616,3.85240758 11.6259623,4.06105658 L5.7773501,12.8339749 C5.54758575,13.1786214 5.64071616,13.6442734 5.98536267,13.8740377 C6.10856331,13.9561715 6.25331908,14 6.40138782,14 L11,14 L11,19.5229183 C11,19.9371318 11.3357864,20.2729183 11.75,20.2729183 C12.0007649,20.2729183 12.2349384,20.1475924 12.3740377,19.9389434 Z" fill="#fc9c3c"></path>
                                         </g>
-                                    </svg> <span class="kt-pulse__ring"></span>
+                                    </svg> <span id="NotificationCountring" class="kt-pulse__ring"></span>
                                     <span id="NotificationCount" class="kt-badge kt-badge--success kt-font-bold" style="position: fixed;margin-top: 16px; margin-left: 20px;">0</span>
                                 </span>
                             </div>
@@ -994,7 +1007,6 @@ License: You must have a valid license purchased only from themeforest(the above
                             <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right dropdown-menu-anim dropdown-menu-top-unround dropdown-menu-xl">
 
                                 <!--begin: Head -->
-                               
                                 <!--end: Head -->
                                 <!--begin: Navigation -->
                                 <!--<div class="kt-notification">
@@ -1053,10 +1065,10 @@ License: You must have a valid license purchased only from themeforest(the above
 
                                     <div class="kt-notification__custom kt-space-between">
                                         <a href="/Login/Logout/@CurrentUser.ID" class="btn btn-label btn-label-brand btn-sm btn-bold">Çıkış Yap</a>-->
-                                        @*<a href="demo1/custom/user/login-v2.html" target="_blank" class="btn btn-clean btn-sm btn-bold">Upgrade Plan</a>*@
-                                    <!--</div>
+                                @*<a href="demo1/custom/user/login-v2.html" target="_blank" class="btn btn-clean btn-sm btn-bold">Upgrade Plan</a>*@
+                                <!--</div>
                                 </div>-->
-                                <!--end: Navigation -->
+                                  <!--end: Navigation -->
                             </div>
                             <!--Bu kısım şuan aktif olmayacak-->
                         </div>

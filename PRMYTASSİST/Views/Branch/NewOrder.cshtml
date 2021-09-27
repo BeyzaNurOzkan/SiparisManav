@@ -190,17 +190,17 @@
 
                                 @foreach (var items in productGroup2s.OrderBy(q => q.ID))
                                 {
-
+                                    int count= products.Where(z=>z.Visible==false && z.ProductGroup2ID==items.ID).Count();
                                     if (i == 0)
                                     {
                                         <li class="nav-item mt-1 mb-2" style=" border: 1px solid #003366; background-color: #ffb82236; border-radius: 0.25rem;">
-                                            <a class="nav-link active" style="min-width: 100px; text-align: center;" id="profile-tab" data-toggle="tab" href="#TabPanel_@items.CodeRand" role="tab" aria-controls="profile" aria-selected="false"><b>@items.Name.ToUpper()</b></a>
+                                            <a class="nav-link active" style="min-width: 100px; text-align: center;" id="profile-tab" data-toggle="tab" href="#TabPanel_@items.CodeRand" role="tab" aria-controls="profile" aria-selected="false"><b>@items.Name.ToUpper() (@count)</b></a>
                                         </li>
                                     }
                                     else
                                     {
                                         <li class="nav-item mt-1 mb-2" style=" border: 1px solid #003366; background-color: #ffb82236; border-radius: 0.25rem;">
-                                            <a class="nav-link" style="min-width: 100px; text-align: center;" id="profile-tab" data-toggle="tab" href="#TabPanel_@items.CodeRand" role="tab" aria-controls="profile" aria-selected="false"><b>@items.Name.ToUpper()</b></a>
+                                            <a class="nav-link" style="min-width: 100px; text-align: center;" id="profile-tab" data-toggle="tab" href="#TabPanel_@items.CodeRand" role="tab" aria-controls="profile" aria-selected="false"><b>@items.Name.ToUpper() (@count)</b></a>
                                         </li>
                                     }
                                     i++;

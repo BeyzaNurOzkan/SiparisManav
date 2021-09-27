@@ -14,6 +14,12 @@
                 $('#NotificationBodyChange').empty();
                 for (var i = 0; i < c; i++) {
                     $('#NotificationCount').text(data[i]['notReadCount']);
+                    var notification = data[i]['notReadCount'];
+                    if (notification == 0) {                       
+                        $('#NotificationCountring').removeClass('kt-pulse__ring');
+                    }
+
+                    
                     if (data[i]['Control'] == 0) {
                         List = List + `<a href="/Branch/UpdateOrder?id=` + data[i]['OrderID'] + `" class="kt-notification__item">
                                         <div class="kt-notification__item-icon">
