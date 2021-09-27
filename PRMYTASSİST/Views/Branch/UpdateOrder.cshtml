@@ -56,16 +56,16 @@
                             <input hidden type="text" id="settings" readonly placeholder="" value=@settings2 style=" font-size: 12px; color: red; text-align: center; " />
                             <input hidden type="text" id="settings2" readonly placeholder="" value=@settings3 style=" font-size: 12px; color: red; text-align: center; " />
 
-                            <select disabled id="branch" class="custom-select form-control pl-2 pr-1" name="BranchCode" style="color: red; font-weight: bold; ">
-                                @if (branches.Where(x => x.ID == CurrentUser.CurrentBranch && x.isMaster == false).FirstOrDefault() != null)
+                            <select disabled id="branch" class="custom-select form-control pl-2 pr-1 selectpicker" name="BranchCode">
+                                @if (branches.Where(x => x.ID == CurrentUser.CurrentBranch && x.isMaster == false && x.Visible == true).FirstOrDefault() != null)
                                 {
-                                <option value="@branches.Where(x => (x.ID == CurrentUser.CurrentBranch && x.isMaster ==false) ).DefaultIfEmpty().First().ID">@branches.Where(x => x.ID == CurrentUser.CurrentBranch && x.isMaster == false).DefaultIfEmpty().First().BranchName.ToUpper() (@branchFormats.Where(q => branches.Where(x => (x.ID == CurrentUser.CurrentBranch && x.isMaster == false)).Select(z=>z.FormatID).FirstOrDefault() == q.ID).Select(Q => Q.FormatName).FirstOrDefault())</option>
+                                    <option value="@branches.Where(x => (x.ID == CurrentUser.CurrentBranch && x.isMaster ==false) ).DefaultIfEmpty().First().ID" data-content="<span style='color:red; font-weight: bold; font-size:12px; '>@branches.Where(x => x.ID == CurrentUser.CurrentBranch && x.isMaster == false).DefaultIfEmpty().First().BranchName.ToUpper()</span>  <span style='color:green;font-weight: bold; font-size:12px;'>(@branchFormats.Where(q => branches.Where(x => (x.ID == CurrentUser.CurrentBranch && x.isMaster == false)).Select(z => z.FormatID).FirstOrDefault() == q.ID).Select(Q => Q.FormatName).FirstOrDefault())</span>"></option>
                                 }
                                 @foreach (var item in CurrentUser.Branches.OrderBy(z => z.BranchName))
                                 {
-                                    if (item.ID != branches.Where(x => (x.ID == CurrentUser.CurrentBranch)).FirstOrDefault().ID && item.isMaster == false)
+                                    if (item.ID != branches.Where(x => (x.ID == CurrentUser.CurrentBranch)).FirstOrDefault().ID && item.isMaster == false && item.Visible == true)
                                     {
-                                        <option value="@item.ID">@item.BranchName.ToUpper() (@branchFormats.Where(q => item.FormatID == q.ID).Select(Q => Q.FormatName).FirstOrDefault())</option>
+                                        <option value="@item.ID" data-content="<span style='color:red; font-weight: bold; font-size:12px; '>@item.BranchName.ToUpper()</span> <span style='color:green; font-weight: bold; font-size:12px; '>(@branchFormats.Where(q => item.FormatID == q.ID).Select(Q => Q.FormatName).FirstOrDefault())</span>"> </option>
                                     }
                                 }
                             </select>
@@ -101,8 +101,8 @@
                                 Vazgeç
                             </a>
 
-                            <button type="submit" class="btn btn-warning" onclick="" id="btn15">
-                                <i class="la la-save"></i>
+                            <button type="submit" class="btn btn-warning" style="color:white;" onclick="" id="btn15">
+                                <i class="la la-save" ></i>
                                 Kaydet
                             </button>
                         </div>

@@ -160,6 +160,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="assets\croppie\croppie.css" />
+    <Content Include="assets\croppie\croppie.js" />
+    <Content Include="assets\croppie\croppie.min.js" />
+    <Content Include="assets\css\croppie.css" />
     <Content Include="assets\css\demo1\pages\general\error\error-1.css" />
     <Content Include="assets\css\demo1\pages\general\error\error-1.min.css" />
     <Content Include="assets\css\demo1\pages\general\error\error-1.rtl.css" />
@@ -384,6 +388,7 @@
     <Content Include="assets\css\demo9\style.bundle.min.css" />
     <Content Include="assets\css\demo9\style.bundle.rtl.css" />
     <Content Include="assets\css\demo9\style.bundle.rtl.min.css" />
+    <Content Include="assets\css\Site.css" />
     <Content Include="assets\Deneme\jquery.bootstrap-touchspin.js" />
     <Content Include="assets\Deneme\jquery.bootstrap-touchspin.min.js" />
     <Content Include="assets\js\ChatScript.js" />
@@ -2680,6 +2685,10 @@
     <Content Include="assets\js\deneme.js" />
     <Content Include="assets\js\BranchScript.js" />
     <Content Include="assets\js\OrderScript.js" />
+    <None Include=".bin\node.cmd" />
+    <Content Include="assets\croppie\LICENSE" />
+    <Content Include="assets\croppie\package.json" />
+    <Content Include="assets\croppie\README.md" />
     <None Include="assets\vendors\general\bootstrap-table-master\dist\data.json" />
     <Content Include="assets\vendors\general\bootstrap-table-master\dist\bootstrap-table.min.css" />
     <Content Include="assets\vendors\general\bootstrap-table-master\dist\bootstrap-table.min.js" />
@@ -6590,6 +6599,7 @@
     <Content Include="assets\vendors\general\waypoints\test\waypoint-spec.js" />
     <Content Include="assets\vendors\general\wnumb\test.html" />
     <Content Include="assets\vendors\general\wnumb\wNumb.js" />
+    <Content Include="Scripts\croppie.js" />
     <Content Include="Views\Center\Content\bootstrap-grid.css" />
     <Content Include="Views\Center\Content\bootstrap-grid.min.css" />
     <Content Include="Views\Center\Content\bootstrap-grid.rtl.css" />
@@ -7583,6 +7593,7 @@
     <Content Include="assets\vendors\general\bootstrap-table-master\src\vue\BootstrapTable.vue" />
     <Content Include="assets\vendors\general\bootstrap-table-master\tools\README.md" />
     <Content Include="assets\vendors\general\bootstrap-table-master\_config.yml" />
+    <Content Include="package.json" />
     <None Include="Scripts\jquery-3.6.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.6.0.js" />
     <Content Include="Scripts\jquery-3.6.0.min.js" />

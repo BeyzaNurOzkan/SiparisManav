@@ -4,6 +4,10 @@
     List<ProductGroup3> productGroup3s = Query.ProductGroup3s();
     List<Product> products = Query.Product();
 }
+<link href="~/assets/css/croppie.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/croppie.js"></script>
+<link href="~/assets/css/Site.css" rel="stylesheet" />
 
 <div class="kt-content  kt-grid__item kt-grid__item--fluid" id="kt_content" style="padding-top: 5%;">
     <div class="kt-portlet kt-portlet--mobile">
@@ -168,14 +172,77 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-3">
-                                                <div class="kt-dropzone dropzone m-dropzone--success pt-2" action="inc/api/dropzone/upload.php" id="m-dropzone-three">
-                                                    <div class="kt-dropzone__msg dz-message needsclick">
-                                                        <h5 class="kt-dropzone__msg-title">Sürükleyerek Dosyayı Bırakınız ya da Tıklayarak Yükleyiniz.</h5>
-                                                        <span class="kt-dropzone__msg-desc">Sadece Görsel (.jpg .png) Yüklemenize İzin Verilmektedir.</span>
-                                                    </div>
+                                            <div>
+                                                <label for="btnSelectImage">Choose a picture:</label>
+                                                <br />
+                                                <input type="file" id="btnSelectImage" />
+
+                                                <div class="demo-wrapper">
+                                                    <div class="demo"></div>
                                                 </div>
+
+                                                <button id="btnCropHtml">Crop Html</button>
+                                                <button id="btnCropBase64">Crop Base64</button>
+
+                                                <h3>BASE64 Çıktı:</h3>
+                                                <div id="resultBase64"></div>
+
+                                                <div id="saveForm" style="display:none">
+                                                    @using (Html.BeginForm("SaveImage", "Home", FormMethod.Post))
+                                                    {
+                                                        @Html.AntiForgeryToken()
+                                                        @Html.Hidden("ImgBase64")
+                                                        <button>Upload the cropped Image</button>}
+                                                </div>
+
+                                                <h3>HTML Çıktı:</h3>
+                                                <div id="resultHtml"></div>
+
+
+                                                <script>
+            var demo = $('.demo').croppie({
+                 url: '@Url.Content("~/assets/media/Sebze/erik.png")'
+            });
+
+            $("#btnCropBase64").click(function () {
+                demo.croppie('result', {
+                    type: "base64",
+                    size: { width:200, height: 200}
+                }).then(function (base64) {
+                    var img = $("<img/>").attr("src", base64);
+                    $("#resultBase64").html(img);
+                    $("#ImgBase64").val(base64);
+                    $("#saveForm").show();
+                });
+            });
+
+            $("#btnCropHtml").click(function () {
+                demo.croppie('result', 'html').then(function (html) {
+                    $("#resultHtml").html(html);
+                });
+            });
+
+            function readURL(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        demo.croppie('bind', {
+                            url: e.target.result
+                        }).then(function () {
+                            console.log('jQuery bind complete');
+                        });
+                    }
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+
+            $("#btnSelectImage").change(function () {
+                readURL(this);
+            });
+                                                </script>
                                             </div>
+
                                         </div>
                                         <div class="kt-separator kt-separator--border-dashed kt-separator--space-lg kt-separator--portlet-fit"></div>
                                         <div id="kt_repeater_1">

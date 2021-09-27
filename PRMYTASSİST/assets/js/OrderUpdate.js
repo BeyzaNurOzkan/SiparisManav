@@ -242,7 +242,7 @@ function getOrderProductsUpdate(groupId, branchID, id) {
                         if (full['quantity'] != "") {
 
                             returnHtml = `
-                            <div class="row pl-3" style="min-width: 155px;">
+                            <div class="row"  style="justify-content:center; min-width: 155px;">
                                    <input type="button" class="btn btn-outline-brand btn-elevate" style="padding: 0.0rem 0.6rem; height: 2rem;font-size: 14px;" value="-" onclick="QuantityClickNegUpdate(` + full["ID"] + `,` + id + `,` + discount + `)"   id="subTotalNeg_` + full['ID'] + `"/>
                                     <input ` + Required + `  type="text" style="width: 45px;padding: 0rem 0.7rem;border-color: #dbeeff; border-radius: 4px 0px 0px 4px; height:2rem;background-color: #dbeeff;text-align: center; font-size: 1.2rem;   color: #002952;" value="` + full['quantity'] + `" onkeydown="UpDownKey(event)" oninput="QuantityClickInputUpdate(` + full["ID"] + `,` + id + `,` + discount + `)"  class="form-control" id="subTotal_` + full['ID'] + `" />
                                     <input hidden type="text" style="width: 45px;text-align: center;padding: 0rem 0.7rem;border-color: #ffe8d6;border-radius: 4px 0px 0px 4px; height:2rem; color: #000000;;background-color: #ffe8d6;font-size: 1.2rem;" value="` + discount + `"class="form-control" id="discount_` + full['ID'] + `">
@@ -251,7 +251,7 @@ function getOrderProductsUpdate(groupId, branchID, id) {
                         }
                         else {
                             returnHtml = `
-                            <div class="row pl-3" style="min-width:155px;">
+                            <div class="row" style="justify-content:center; min-width:155px;">
                                    <input type="button" class="btn btn-outline-brand btn-elevate" style="padding: 0.0rem 0.6rem; height: 2rem;font-size: 14px;" value="-"  onclick="QuantityClickNegUpdate(` + full["ID"] + `,` + id + `,` + discount + `)"  id="subTotalNeg_` + full['ID'] + `"/>
                                     <input ` + Required + `  type="text"  style="width: 45px;padding: 0rem 0.7rem;border-color: #dbeeff; border-radius: 4px 0px 0px 4px;height:2rem;background-color: #dbeeff;text-align: center; font-size: 1.2rem;   color: #002952;" value="" onkeydown="UpDownKey(event)" oninput="QuantityClickInputUpdate(` + full["ID"] + `,` + id + `,` + discount + `)"  class="form-control" id="subTotal_` + full['ID'] + `"  >
                                     <input hidden type="text" style="width: 45px;text-align: center;padding: 0rem 0.7rem;border-color: #ffe8d6;border-radius: 4px 0px 0px 4px; height:2rem; color: #000000;;background-color: #ffe8d6;font-size: 1.2rem;" value="` + discount + `"class="form-control" id="discount_` + full['ID'] + `">
@@ -276,7 +276,7 @@ function getOrderProductsUpdate(groupId, branchID, id) {
                         var control;
                         if (x == 0) {
                             control = `<input hidden id = "OrderControl_` + full["ID"] + `" style="padding-top: 0;margin-top: 0; font-size: 1.2rem;background-color: transparent;width:100%;text-align: center;border: 0px;color:green;" type="text" class="pl-0 ml-0  form-control bootstrap-touchspin-vertical-btn MaxCapacity" value="` + x + `" name="demo0" placeholder="">
-<input disabled id="OrderControlPoint_` + full["ID"] + `" style = "font-size: 1.2rem;background-color: transparent;width:100%;text-align: center;border: 0px; color:red;" type = "text" class=" pl-0 ml-0 mr-0 pr-0 form-control bootstrap-touchspin-vertical-btn MaxCapacity" value = "` + x + `" name = "demo0" placeholder = "" >
+<input disabled id="OrderControlPoint_` + full["ID"] + `" style = "font-size: 1rem;background-color: transparent;width:100%;text-align: left;border: 0px; color:red;" type = "text" class=" pl-0 ml-0 mr-0 pr-0 form-control bootstrap-touchspin-vertical-btn MaxCapacity" value = "` + x + `" name = "demo0" placeholder = "" >
 `;
 
                         }
@@ -285,7 +285,7 @@ function getOrderProductsUpdate(groupId, branchID, id) {
                             var lastx = (totalPrintFormatx).toLocaleString('tr');
                             control = `
                             <input hidden id = "OrderControl_` + full["ID"] + `" style="padding-top: 0;margin-top: 0; font-size: 1.2rem;background-color: transparent;width:100%;text-align: center;border: 0px; color:blue;" type="text" class="pl-0 ml-0  form-control bootstrap-touchspin-vertical-btn MaxCapacity" value="+` + x + `" name="demo0" placeholder="">
-<input disabled id="OrderControlPoint_` + full["ID"] + `" style = "font-size: 1.2rem;background-color: transparent;width:100%;text-align: center;border: 0px; color:red;" type = "text" class=" pl-0 ml-0 mr-0 pr-0 form-control bootstrap-touchspin-vertical-btn MaxCapacity" value = "+` + lastx + `" name = "demo0" placeholder = "" >
+<input disabled id="OrderControlPoint_` + full["ID"] + `" style = "font-size: 1rem;background-color: transparent;width:100%;text-align: left;border: 0px; color:red;" type = "text" class=" pl-0 ml-0 mr-0 pr-0 form-control bootstrap-touchspin-vertical-btn MaxCapacity" value = "+` + lastx + `" name = "demo0" placeholder = "" >
 `;
 
                         }
@@ -293,7 +293,7 @@ function getOrderProductsUpdate(groupId, branchID, id) {
                             var lastx = (x).toLocaleString('tr');
 
                             control = `
-<input disabled id="OrderControlPoint_` + full["ID"] + `" style = "padding-bottom: 0;padding-left: 0;padding-top: 0;margin-top: 0; font-size: 1.2rem;background-color: transparent;width:100%;text-align: center;border: 0px; color:red;" type = "text" class=" pt-0 mt-0 pl-0 ml-0  form-control bootstrap-touchspin-vertical-btn MaxCapacity" value = "` + lastx + `" name = "demo0" placeholder = "" >
+<input disabled id="OrderControlPoint_` + full["ID"] + `" style = "padding-bottom: 0;padding-left: 0;padding-top: 0;margin-top: 0; font-size: 1rem;background-color: transparent;width:100%;text-align: left;border: 0px; color:red;" type = "text" class=" pt-0 mt-0 pl-0 ml-0  form-control bootstrap-touchspin-vertical-btn MaxCapacity" value = "` + lastx + `" name = "demo0" placeholder = "" >
                             <input hidden id="OrderControl_` + full["ID"] + `" style = "font-size: 1.2rem;background-color: transparent;width:100%;text-align: center;border: 0px; color:red;" type = "text" class=" pl-0 ml-0 mr-0 pr-0 form-control bootstrap-touchspin-vertical-btn MaxCapacity" value = "` + x + `" name = "demo0" placeholder = "" >`;
 
                         }
@@ -301,12 +301,12 @@ function getOrderProductsUpdate(groupId, branchID, id) {
 
                             control = `
                             <input hidden id = "OrderControl_` + full["ID"] + `" style="padding-bottom: 0;padding-left: 0;padding-top: 0;margin-top: 0; font-size: 1.2rem;background-color: transparent;width:100%;text-align: center;border: 0px; color:green;" type="text" class=" pl-0 ml-0  form-control bootstrap-touchspin-vertical-btn MaxCapacity" value="` + x + `" name="demo0" placeholder="">
-<input disabled id="OrderControlPoint_` + full["ID"] + `" style = "font-size: 1.2rem;background-color: transparent;width:100%;text-align: center;border: 0px; color:red;" type = "text" class=" pl-0 ml-0 mr-0 pr-0 form-control bootstrap-touchspin-vertical-btn MaxCapacity" value = "` + x + `" name = "demo0" placeholder = "" >
+<input disabled id="OrderControlPoint_` + full["ID"] + `" style = "font-size: 1rem;background-color: transparent;width:100%;text-align: left;border: 0px; color:red;" type = "text" class=" pl-0 ml-0 mr-0 pr-0 form-control bootstrap-touchspin-vertical-btn MaxCapacity" value = "` + x + `" name = "demo0" placeholder = "" >
 `;
 
                         }
                         var capacity = `
-                            <input disabled style="padding-bottom: 0;padding-left: 0;padding-top: 0;margin-top: 0; font-size: 1.2rem;   background-color: transparent;border: 0px;" type="text" class="form-control bootstrap-touchspin-vertical-btn" value="` + capacityval + `"  name="demo0" placeholder="">
+                            <span  name="demo0" placeholder="">` + capacityval + `</span>
 
                             <input hidden id = "MaxCapacity_` + full["ID"] + `" style="padding-bottom: 0;padding-left: 0;padding-top: 0;margin-top: 0; font-size: 1.2rem;   background-color: transparent;width:100%;text-align: center;border: 0px;" type="text" class="form-control bootstrap-touchspin-vertical-btn" value="` + full['MaxCapacity'] + `"  name="demo0" placeholder="">
 `;
@@ -333,7 +333,7 @@ function getOrderProductsUpdate(groupId, branchID, id) {
                                 
                                 <div class="col-12">
                                     <div class="row">
-                                        <div class="col-5" style="text-align:center;">
+                                        <div class="col-5 pl-5" style="text-align:left;">
                                             <label>Eldeki Stok</label>
                                         </div>
                                         <div class="col-5" style="text-align:center;">
@@ -346,7 +346,7 @@ function getOrderProductsUpdate(groupId, branchID, id) {
                                 </div>
                                 <div class="col-12">
                                     <div class="row">
-                                        <div class="col-5 pl-4" >
+                                        <div class="col-5 pl-0" >
                                         ` + returnHtml + `
                                         </div>
                                         <div class="col-5 pl-4">
@@ -361,17 +361,15 @@ function getOrderProductsUpdate(groupId, branchID, id) {
                         if (settings == "1") {
                             last += `<div class="col-12">
                             <div class="row">
-                                <div class="col-3 pr-0 mr-0" style="align-self: center; text-align:right;" >
-                                    <label>Kapasite:</label>
+                                <div class="col-4 pr-0 mr-0" style="align-self: center; text-align:center;" >
+                                    <label>Kapasite: ` + capacity + `</label>
                                 </div>
-                                <div class="col-2 pl-2 ml-0" >
-                                    <label>  ` + capacity + `</label>
-                                </div>
-                                <div class="col-4 pr-0 mr-0" style="align-self: center;text-align:right;"  >
+                                
+                                <div class="col-5 pr-0 mr-0" style="align-self: center;text-align:right;"  >
                                     <label>Sipariş Kontrol:</label>
 
                                 </div>
-                                <div class="col-2 pl-2 ml-0 mr-0 pr-0" >
+                                <div class="col-3 pl-2 ml-0 mr-0 pr-0" >
                                     <label>` + control + `</label>
 
                                 </div>
@@ -1659,7 +1657,7 @@ function getOrderProductsUpdateCap(groupId, branchID,id) {
                         var control;
                         if (x == 0) {
                             control = `<input hidden id = "OrderControl_` + full["ID"] + `" style="padding-top: 0;margin-top: 0; font-size: 1.2rem;background-color: transparent;width:100%;text-align: center;border: 0px;color:green;" type="text" class="pl-0 ml-0  form-control bootstrap-touchspin-vertical-btn MaxCapacity" value="` + x + `" name="demo0" placeholder="">
-<input disabled id="OrderControlPoint_` + full["ID"] + `" style = "font-size: 1.2rem;background-color: transparent;width:100%;text-align: left;border: 0px; color:red;" type = "text" class=" pl-0 ml-0 mr-0 pr-0 form-control bootstrap-touchspin-vertical-btn MaxCapacity" value = "` + x + `" name = "demo0" placeholder = "" >
+<input disabled id="OrderControlPoint_` + full["ID"] + `" style = "font-size: 1rem;background-color: transparent;width:100%;text-align: left;border: 0px; color:red;" type = "text" class=" pl-0 ml-0 mr-0 pr-0 form-control bootstrap-touchspin-vertical-btn MaxCapacity" value = "` + x + `" name = "demo0" placeholder = "" >
 `;
 
                         }
@@ -1668,7 +1666,7 @@ function getOrderProductsUpdateCap(groupId, branchID,id) {
                             var lastx = (totalPrintFormatx).toLocaleString('tr');
                             control = `
                             <input hidden id = "OrderControl_` + full["ID"] + `" style="padding-top: 0;margin-top: 0; font-size: 1.2rem;background-color: transparent;width:100%;text-align: center;border: 0px; color:blue;" type="text" class="pl-0 ml-0  form-control bootstrap-touchspin-vertical-btn MaxCapacity" value="+` + x + `" name="demo0" placeholder="">
-<input disabled id="OrderControlPoint_` + full["ID"] + `" style = "font-size: 1.2rem;background-color: transparent;width:100%;text-align: left;border: 0px; color:red;" type = "text" class=" pl-0 ml-0 mr-0 pr-0 form-control bootstrap-touchspin-vertical-btn MaxCapacity" value = "` + lastx + `" name = "demo0" placeholder = "" >
+<input disabled id="OrderControlPoint_` + full["ID"] + `" style = "font-size: 1rem;background-color: transparent;width:100%;text-align: left;border: 0px; color:red;" type = "text" class=" pl-0 ml-0 mr-0 pr-0 form-control bootstrap-touchspin-vertical-btn MaxCapacity" value = "` + lastx + `" name = "demo0" placeholder = "" >
 `;
 
                         }
@@ -1676,15 +1674,15 @@ function getOrderProductsUpdateCap(groupId, branchID,id) {
                             var lastx = (x).toLocaleString('tr');
 
                             control = `
-<input disabled id="OrderControlPoint_` + full["ID"] + `" style = "font-size: 1.2rem;background-color: transparent;width:100%;text-align: left;border: 0px; color:red;" type = "text" class=" pl-0 ml-0 mr-0 pr-0 form-control bootstrap-touchspin-vertical-btn MaxCapacity" value = "` + lastx + `" name = "demo0" placeholder = "" >
-                            <input hidden id="OrderControl_` + full["ID"] + `" style = "font-size: 1.2rem;background-color: transparent;width:100%;text-align: center;border: 0px; color:red;" type = "text" class=" pl-0 ml-0 mr-0 pr-0 form-control bootstrap-touchspin-vertical-btn MaxCapacity" value = "` + x + `" name = "demo0" placeholder = "" >`;
+<input disabled id="OrderControlPoint_` + full["ID"] + `" style = "font-size: 1rem;background-color: transparent;width:100%;text-align: left;border: 0px; color:red;" type = "text" class=" pl-0 ml-0 mr-0 pr-0 form-control bootstrap-touchspin-vertical-btn MaxCapacity" value = "` + lastx + `" name = "demo0" placeholder = "" >
+                            <input hidden id="OrderControl_` + full["ID"] + `" style = "font-size: 1rem;background-color: transparent;width:100%;text-align: center;border: 0px; color:red;" type = "text" class=" pl-0 ml-0 mr-0 pr-0 form-control bootstrap-touchspin-vertical-btn MaxCapacity" value = "` + x + `" name = "demo0" placeholder = "" >`;
 
                         }
                         else {
 
                             control = `
                             <input hidden id = "OrderControl_` + full["ID"] + `" style="padding-bottom: 0;padding-left: 0;padding-top: 0;margin-top: 0; font-size: 1.2rem;background-color: transparent;width:100%;text-align: center;border: 0px; color:green;" type="text" class=" pl-0 ml-0  form-control bootstrap-touchspin-vertical-btn MaxCapacity" value="` + x + `" name="demo0" placeholder="">
-<input disabled id="OrderControlPoint_` + full["ID"] + `" style = "font-size: 1.2rem;background-color: transparent;width:100%;text-align: left;border: 0px; color:red;" type = "text" class=" pl-0 ml-0 mr-0 pr-0 form-control bootstrap-touchspin-vertical-btn MaxCapacity" value = "` + x + `" name = "demo0" placeholder = "" >
+<input disabled id="OrderControlPoint_` + full["ID"] + `" style = "font-size: 1rem;background-color: transparent;width:100%;text-align: left;border: 0px; color:red;" type = "text" class=" pl-0 ml-0 mr-0 pr-0 form-control bootstrap-touchspin-vertical-btn MaxCapacity" value = "` + x + `" name = "demo0" placeholder = "" >
 `;
 
                         }
@@ -1720,7 +1718,7 @@ function getOrderProductsUpdateCap(groupId, branchID,id) {
                                 QuantityReturn = `
                             <div class="row" style="justify-content: center;min-width: 155px;">
                                    <input disabled type="button" class="btn btn-outline-brand btn-elevate" style="padding: 0.0rem 0.6rem; height: 2rem;font-size: 14px;" value="-"    id="subTotalNeg_` + full['ID'] + `"/>
-                                    <input disabled ` + Required + ` type="text" style="width: 45px;padding: 0rem 0.7rem;border-color: #f0f8ff; border-radius: 4px 0px 0px 4px; height:2rem;background-color: aliceblue;text-align: center; font-size: 1.2rem;   color: red;" value="` + full['quantity'] + `" onkeydown="UpDownKey(event)" oninput="QuantityClickInputUpdateCap(` + full["ID"] + `,` + id + `,` + discount3 + `)" class="form-control" id="subTotal_` + full['ID'] + `" />
+                                    <input disabled ` + Required + ` type="text" style="width: 45px;padding: 0rem 0.7rem;border-color: #dbeeff; border-radius: 4px 0px 0px 4px; height:2rem;background-color: #dbeeff;text-align: center; font-size: 1.2rem;   color: red;" value="` + full['quantity'] + `" onkeydown="UpDownKey(event)" oninput="QuantityClickInputUpdateCap(` + full["ID"] + `,` + id + `,` + discount3 + `)" class="form-control" id="subTotal_` + full['ID'] + `" />
                                     <input disabled type="button" class="btn btn-outline-brand btn-elevate" style="padding: 0.0rem 0.4rem; height: 2rem;font-size: 14px;" value="+"  id="subTotalPlus_` + full['ID'] + `"/>
                             </div>`;
                             }
@@ -1728,7 +1726,7 @@ function getOrderProductsUpdateCap(groupId, branchID,id) {
                                 QuantityReturn = `
                             <div class="row" style="justify-content: center;min-width: 155px;">
                                    <input type="button" class="btn btn-outline-brand btn-elevate" style="padding: 0.0rem 0.6rem; height: 2rem;font-size: 14px;" value="-" onclick="QuantityClickNegUpdateCap(` + full["ID"] + `,` + id + `,` + discount3 + `)"id="subTotalNeg_` + full['ID'] + `"/>
-                                    <input ` + Required + `  type="text" style="width: 45px;padding: 0rem 0.7rem;border-color: #f0f8ff; border-radius: 4px 0px 0px 4px; height:2rem;background-color: aliceblue;text-align: center; font-size: 1.2rem;   color: #002952;" value="` + full['quantity'] + `" onkeydown="UpDownKey(event)" oninput="QuantityClickInputUpdateCap(` + full["ID"] + `,` + id + `,` + discount3 + `)"  class="form-control" id="subTotal_` + full['ID'] + `" />
+                                    <input ` + Required + `  type="text" style="width: 45px;padding: 0rem 0.7rem;border-color: #dbeeff; border-radius: 4px 0px 0px 4px; height:2rem;background-color: #dbeeff;text-align: center; font-size: 1.2rem;   color: #002952;" value="` + full['quantity'] + `" onkeydown="UpDownKey(event)" oninput="QuantityClickInputUpdateCap(` + full["ID"] + `,` + id + `,` + discount3 + `)"  class="form-control" id="subTotal_` + full['ID'] + `" />
                                     <input hidden type="text" style="width: 45px;text-align: center;padding: 0rem 0.7rem;border-color: #ffe8d6;border-radius: 4px 0px 0px 4px; height:2rem; color: #000000;;background-color: #ffe8d6;font-size: 1.2rem;" value="` + discount3 + `"class="form-control" id="discount_` + full['ID'] + `">
                                     <input type="button" class="btn btn-outline-brand btn-elevate" style="padding: 0.0rem 0.4rem; height: 2rem;font-size: 14px;" value="+" onclick="QuantityClickPosUpdateCap(` + full["ID"] + `,` + id + `,` + discount3 + `)"id="subTotalPlus_` + full['ID'] + `"/>
                             </div>`;
@@ -1737,7 +1735,7 @@ function getOrderProductsUpdateCap(groupId, branchID,id) {
                             QuantityReturn = `
                             <div class="row" style="justify-content: center;min-width:155px;">
                                    <input type="button" class="btn btn-outline-brand btn-elevate" style="padding: 0.0rem 0.6rem; height: 2rem;font-size: 14px;" value="-" onclick="QuantityClickNegUpdateCap(` + full["ID"] + `,` + id + `,` + discount3 + `)"id="subTotalNeg_` + full['ID'] + `"/>
-                                    <input ` + Required + `  type="text"  style="width: 45px;padding: 0rem 0.7rem;border-color: #f0f8ff; border-radius: 4px 0px 0px 4px;height:2rem;background-color: aliceblue;text-align: center; font-size: 1.2rem;   color: #002952;" value="" onkeydown="UpDownKey(event)" oninput="QuantityClickInputUpdateCap(` + full["ID"] + `,` + id + `,` + discount3 + `)" class="form-control" id="subTotal_` + full['ID'] + `"  >
+                                    <input ` + Required + `  type="text"  style="width: 45px;padding: 0rem 0.7rem;border-color: #dbeeff; border-radius: 4px 0px 0px 4px;height:2rem;background-color: #dbeeff;text-align: center; font-size: 1.2rem;   color: #002952;" value="" onkeydown="UpDownKey(event)" oninput="QuantityClickInputUpdateCap(` + full["ID"] + `,` + id + `,` + discount3 + `)" class="form-control" id="subTotal_` + full['ID'] + `"  >
                                     <input hidden type="text" style="width: 45px;text-align: center;padding: 0rem 0.7rem;border-color: #ffe8d6;border-radius: 4px 0px 0px 4px; height:2rem; color: #000000;;background-color: #ffe8d6;font-size: 1.2rem;" value="` + discount3 + `"class="form-control" id="discount_` + full['ID'] + `">
                                     <input type="button" class="btn btn-outline-brand btn-elevate" style="padding: 0.0rem 0.4rem; height: 2rem;font-size: 14px;" value="+" onclick="QuantityClickPosUpdateCap(` + full["ID"] + `,` + id + `,` + discount3 + `)" id="subTotalPlus_` + full['ID'] + `"/>
                             </div>`;
@@ -1767,7 +1765,7 @@ function getOrderProductsUpdateCap(groupId, branchID,id) {
                                 
                                 <div class="col-12">
                                     <div class="row">
-                                        <div class="col-6 pr-5 mr-0">
+                                        <div class="col-6 pl-5 mr-0" style="text-align:left;">
                                             <label>Eldeki Stok</label>
                                         </div>
                                         <div class="col-4 pr-0" style="text-align:left;">
@@ -1780,7 +1778,7 @@ function getOrderProductsUpdateCap(groupId, branchID,id) {
                                 </div>
                                 <div class="col-12">
                                     <div class="row">
-                                        <div class="col-5">
+                                        <div class="col-5 pl-0">
                                         ` + QuantityReturn + `
                                         </div>
                                         <div class="col-5">
@@ -1793,15 +1791,15 @@ function getOrderProductsUpdateCap(groupId, branchID,id) {
                                 </div>
                                     <div class="col-12">
                                     <div class="row">
-                                        <div class="col-6 pr-0 mr-0" style="align-self: center; text-align:center;" >
+                                        <div class="col-4 pr-0 mr-0" style="align-self: center; text-align:center;" >
                                             <label>Kapasite: ` + capacity + `</label>
                                         </div>
                                         
-                                       <div class="col-4 pr-0 mr-0" style="align-self: center;text-align:left;"  >
+                                       <div class="col-5 pr-0 mr-0" style="align-self: center;text-align:right;"  >
                                     <label>Sipariş Kontrol:</label>
 
                                 </div>
-                                <div class="col-2" style="align-self: center;text-align:left;" >
+                                <div class="col-3 pl-1 ml-0" style="align-self: center;text-align:left;" >
                                     <label>` + control + `</label>
 
                                 </div>

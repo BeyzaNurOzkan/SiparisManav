@@ -184,6 +184,9 @@ function SaveUnit(unit, id) {
 };
 
 function EditProduct(id) {
+    debugger
+
+    
     if (id!=0) {
         $.ajax({
             type: "POST",
