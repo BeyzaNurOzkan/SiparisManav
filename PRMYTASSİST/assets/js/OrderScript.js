@@ -114,14 +114,14 @@ function getOrderProducts(groupId, branchID) {
                         var returnHtml2 = "";
                         if (Check == "True")
                             returnHtml2 = `
-                                        <label class="kt-checkbox kt-checkbox--single kt-checkbox--solid kt-checkbox--danger"><b hidden style=" width:300px;  color:red;"> a </b> 
+                                        <label class="kt-checkbox kt-checkbox--single kt-checkbox--solid kt-checkbox--danger mt-0"><b hidden style=" width:300px;  color:red;"> a </b>
                                             <input checked id="SelectBranch` + full['ID'] + `"  name="SelectBranch" type="checkbox" value="` + full['ID'] + `" class="m-checkable SelectBranch">
                                             <span></span>
                                         </label>`;
                         else
 
                             returnHtml2 = `
-                                        <label class="kt-checkbox kt-checkbox--single kt-checkbox--solid kt-checkbox--danger"><b hidden style=" width:300px;  color:red;"> a </b> 
+                                        <label class="kt-checkbox kt-checkbox--single kt-checkbox--solid kt-checkbox--danger mt-0"><b hidden style=" width:300px;  color:red;"> a </b>
                                             <input  id="SelectBranch` + full['ID'] + `"  name="SelectBranch" type="checkbox" value="` + full['ID'] + `" class="m-checkable SelectBranch">
                                             <span></span>
                                         </label>`;
@@ -973,21 +973,21 @@ function getOrderProductsCap(groupId, branchID) {
                         var checkbox = "";
                         if (Check == "True")
                             checkbox = `
-                                        <label class="kt-checkbox kt-checkbox--single kt-checkbox--solid kt-checkbox--danger"><b hidden style=" width:300px;  color:red;"> a </b> 
+                                        <label class="kt-checkbox kt-checkbox--single kt-checkbox--solid kt-checkbox--danger mt-0"><b hidden style=" width:300px;  color:red;"> a </b> 
                                             <input checked id="SelectBranch` + full['ID'] + `"  name="SelectBranch" type="checkbox" value="` + full['ID'] + `" class="m-checkable SelectBranch">
                                             <span></span>
                                         </label>`;
                         else {
                             if ((full['MaxCapacity']) == 0) {
                                 checkbox = `
-                                        <label class="kt-checkbox kt-checkbox--single kt-checkbox--solid kt-checkbox--danger"><b hidden style=" width:300px;  color:red;"> b </b> 
+                                        <label class="kt-checkbox kt-checkbox--single kt-checkbox--solid kt-checkbox--danger mt-0"><b hidden style=" width:300px;  color:red;"> b </b>
                                             <input disabled id="SelectBranch` + full['ID'] + `"  name="SelectBranch" type="checkbox" value="` + full['ID'] + `" class="m-checkable SelectBranch">
                                             <span></span>
                                         </label>`;
                             }
                             else
                                 checkbox = `
-                                        <label class="kt-checkbox kt-checkbox--single kt-checkbox--solid kt-checkbox--danger"><b hidden style=" width:300px;  color:red;"> a </b> 
+                                        <label class="kt-checkbox kt-checkbox--single kt-checkbox--solid kt-checkbox--danger mt-0"><b hidden style=" width:300px;  color:red;"> a </b>
                                             <input  id="SelectBranch` + full['ID'] + `"  name="SelectBranch" type="checkbox" value="` + full['ID'] + `" class="m-checkable SelectBranch">
                                             <span></span>
                                         </label>`;
@@ -2924,14 +2924,16 @@ function cancelToNewOrder() {
     });
 };
 function SaveAllForProductDet() {
-    
+    debugger
     var isVisible = $("#productModal #visibileForProductList").prop('checked');
     var prodID = $("#productModal #visibileForProductList").val();
     var Category3ID = $("#productModal #categoryForProductSelect").val();
+    var formData = new FormData();
+    formData.append("File", document.getElementById("ProductPhoto").files[0]);
 
     $.ajax({
         type: "POST",
-        url: '/Order/SaveAllForProductDet?prodID=' + prodID + '&isVisible=' + isVisible + '&Category3ID=' + Category3ID,
+        url: '/Order/SaveAllForProductDet?prodID=' + prodID + '&isVisible=' + isVisible + '&Category3ID=' + Category3ID + '&ProductPhoto=' + Category3ID,
         success: function (data) {
             swal.fire({
                 title: "Başarılı!",

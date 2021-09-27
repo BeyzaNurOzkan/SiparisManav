@@ -30045,8 +30045,8 @@ strong {
         position: absolute;
         top: 1px;
         left: 0;
-        height: 18px;
-        width: 18px;
+        height: 20px;
+        width: 20px;
     }
 
         .kt-checkbox > span:after {
@@ -32224,7 +32224,7 @@ td > .kt-radio.kt-radio--single {
         width: 40px;
         position: absolute;
         -webkit-animation: kt-pulse 3.5s ease-out;
-        animation: kt-pulse 3.5s ease-out;
+        animation: kt-pulse 2s ease-out;
         -webkit-animation-iteration-count: infinite;
         animation-iteration-count: infinite;
         opacity: 0;
@@ -50111,4 +50111,44 @@ body {
                 padding-left: 0;
                 margin-left: 0;
             }
+}
+.containerb {
+    height: 100vh;
+}
+
+.pulseb {
+    overflow: visible;
+    position: relative;
+}
+
+    .pulseb:before {
+        content: '';
+        display: block;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background-color: inherit;
+        border-radius: inherit;
+        transition: opacity .3s, transform .3s;
+        animation: pulse-animation 1s cubic-bezier(0.24, 0, 0.38, 1) infinite;
+        z-index: -1;
+    }
+
+@keyframes pulseb-animation {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0;
+        transform: scale(1.5);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(1.5);
+    }
 }

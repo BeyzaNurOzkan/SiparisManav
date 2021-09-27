@@ -127,7 +127,7 @@ namespace PRMYTASSİST.Controllers
             return Json(ProductQuantityList, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult SaveAllForProductDet(int prodID, bool isVisible, int Category3ID)
+        public JsonResult SaveAllForProductDet(int prodID, bool isVisible, int Category3ID, HttpPostedFileBase ProductPhoto)
         {
             string result = "";
             try

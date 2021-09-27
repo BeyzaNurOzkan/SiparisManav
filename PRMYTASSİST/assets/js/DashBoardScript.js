@@ -352,15 +352,23 @@ function waitingOrderCountScrpt() {
         type: "POST",
         url: '/Definition/GetOrderCountByWaiting',
         success: function (data) {
+            debugger
+
             if (data['OrderCountW8'] != 0) {
+                debugger
                 $('#waitingOrderCount').text(data['OrderCountW8']);
                 $('#waitingOrderCount').addClass('kt-badge--success');
                 $('#waitingOrderCount').removeClass('kt-badge--zero');
+                $('#ringCenter').addClass('kt-pulse__ring');
+
             }
             else {
+                $('#waitingOrderCountring').removeClass('kt-pulse__ring');
                 $('#waitingOrderCount').text(data['OrderCountW8']);
                 $('#waitingOrderCount').removeClass('kt-badge--success');
                 $('#waitingOrderCount').addClass('kt-badge--zero');
+
+
             }
         },
         error: function (request, status, error) {
@@ -368,7 +376,17 @@ function waitingOrderCountScrpt() {
         }
     });
 };
+function openaside() {
+    debugger
 
+    var a =$('#kt_aside_toggler')[0].className;
+    if (a == "kt-aside__brand-aside-toggler")
+        $('#ringCenter').removeClass('kt-pulse__ring');
+    else
+        $('#ringCenter').addClass('kt-pulse__ring');
+
+
+};
 function getOrderDescForDashBoard() {
     $.ajax({
         type: "POST",

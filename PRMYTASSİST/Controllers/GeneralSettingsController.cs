@@ -131,7 +131,18 @@ namespace PRMYTASSİST.Controllers
             db.SaveChanges();
             return RedirectToAction("CompanyLogo", "GeneralSettings");
         }
+        public ActionResult AddProductPhoto(HttpPostedFileBase ProductPhoto, string productId)
+        {
+          
+            if (ProductPhoto != null)
+            {
+                Product product = db.Products.Find(productId);
+                product.RayonCode = ImageUploader.UploadSingleImage("/assets/media/logos/", ProductPhoto);
 
+            }          
+            db.SaveChanges();
+            return RedirectToAction("ProductList", "Center");
+        }
         public JsonResult getLayoutCompanyName(int compantNameCode)
         {
             string[] array = new string[1];

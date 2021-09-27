@@ -165,14 +165,14 @@ function getOrderProductsUpdate(groupId, branchID, id) {
                         var returnHtml2 = "";
                         if (Check == "True")
                             returnHtml2 = `
-                                        <label class="kt-checkbox kt-checkbox--single kt-checkbox--solid kt-checkbox--danger"><b hidden style=" width:300px;  color:red;"> a </b> 
+                                        <label class="kt-checkbox kt-checkbox--single kt-checkbox--solid kt-checkbox--danger mt-0"><b hidden style=" width:300px;  color:red;"> a </b>
                                             <input checked id="SelectBranchUpdate` + full['ID'] + `"  name="SelectBranchUpdate" type="checkbox" value="` + full['ID'] + `" class="m-checkable SelectBranchUpdate">
                                             <span></span>
                                         </label>`;
                         else
 
                             returnHtml2 = `
-                                        <label class="kt-checkbox kt-checkbox--single kt-checkbox--solid kt-checkbox--danger"><b hidden style=" width:300px;  color:red;"> a </b> 
+                                        <label class="kt-checkbox kt-checkbox--single kt-checkbox--solid kt-checkbox--danger mt-0"><b hidden style=" width:300px;  color:red;"> a </b>
                                             <input  id="SelectBranchUpdate` + full['ID'] + `"  name="SelectBranchUpdate" type="checkbox" value="` + full['ID'] + `" class="m-checkable SelectBranchUpdate">
                                             <span></span>
                                         </label>`;
