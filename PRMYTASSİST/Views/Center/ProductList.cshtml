@@ -22,6 +22,7 @@
                 </h5>
             </div>
         </div>
+
         <div class="kt-portlet kt-portlet--mobile pt-2">
             <div class="kt-portlet__body">
                 <!--begin: Datatable -->
@@ -174,7 +175,7 @@
                                                 </div>
                                             </div>
                                             <div>
-                                                <label for="btnSelectImage">Choose a picture:</label>
+                                                <label for="btnSelectImage">Görsel Seçiniz:</label>
                                                 <br />
                                                 <input type="file" id="btnSelectImage" />
 
@@ -182,10 +183,8 @@
                                                     <div class="demo"></div>
                                                 </div>
 
-                                                <button id="btnCropHtml">Crop Html</button>
-                                                <button id="btnCropBase64">Crop Base64</button>
+                                                <button id="btnCropBase64">Kaydet</button>
 
-                                                <h3>BASE64 Çıktı:</h3>
                                                 <div id="resultBase64"></div>
 
                                                 <div id="saveForm" style="display:none">
@@ -196,13 +195,12 @@
                                                         <button>Upload the cropped Image</button>}
                                                 </div>
 
-                                                <h3>HTML Çıktı:</h3>
-                                                <div id="resultHtml"></div>
+                                               
 
 
                                                 <script>
             var demo = $('.demo').croppie({
-                 url: '@Url.Content("~/assets/media/Sebze/erik.png")'
+                 url: '@Url.Content("~/assets/media/Sebze/barbunya.jpg")'
             });
 
             $("#btnCropBase64").click(function () {
