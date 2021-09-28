@@ -68,6 +68,10 @@
     <Compile Include="Migrations\202109011400144_Mig-00001.designer.cs">
       <DependentUpon>202109011400144_Mig-00001.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202109281251069_Mig-00002.cs" />
+    <Compile Include="Migrations\202109281251069_Mig-00002.designer.cs">
+      <DependentUpon>202109281251069_Mig-00002.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Notification.cs" />
     <Compile Include="UnitFormat.cs" />
@@ -180,6 +184,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202109011400144_Mig-00001.resx">
       <DependentUpon>202109011400144_Mig-00001.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202109281251069_Mig-00002.resx">
+      <DependentUpon>202109281251069_Mig-00002.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

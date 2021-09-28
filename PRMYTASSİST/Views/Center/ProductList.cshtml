@@ -22,6 +22,84 @@
                 </h5>
             </div>
         </div>
+        @*<div class="col-3" style="text-align: -webkit-center;">
+            <label for="btnSelectImage" style="font-size:15px;float: left;margin-left: 50px;"><b>Lütfen Görsel Seçiniz:</b></label>
+            <br />
+
+            <a id="btnCropBase64" class="btn btn-secondary mb-2 " style="background: #ffb822; color: #ffffff; background-color: #ffad00; float: right; margin-right: 45px;">Önizle</a>
+            <a id="btnSelectImagePath" class="btn btn-secondary mb-2 mr-4" style="background: #ffb822; color: #ffffff; background-color: #ffad00;">Dosya Seç</a>
+
+            <br />
+            <input hidden type="file" id="btnSelectImage" />
+            <div class="demo-wrapper" style="width: 69%;">
+                <div class="demo"></div>
+            </div>
+
+            <div id="resultBase64"></div>
+
+            <div id="saveForm" style="display:none">
+                @using (Html.BeginForm("SaveImage", "Home", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.Hidden("ImgBase64")
+                    <button type="submit" id="button1" name="button1" formaction='@Url.Action("abc", "Order")'>Save</button>
+
+                    <button class="btn btn-secondary " style="background: #ffb822; color: #ffffff; background-color: #ffad00; float: right; margin-right: 45px;">Ekle</button>}
+            </div>
+
+
+
+
+            <script>
+                                                    $("#btnSelectImagePath").click(function () {
+                                                        $('#btnSelectImage').trigger('click');
+                                                        debugger
+                                                    });
+
+            var demo = $('.demo').croppie({
+                 url: '@Url.Content("~/assets/media/Sebze/barbunya.jpg")'
+            });
+
+            $("#btnCropBase64").click(function () {
+                demo.croppie('result', {
+                    type: "base64",
+                    size: { width:200, height: 200}
+                }).then(function (base64) {
+                    var img = $("<img/>").attr("src", base64);
+
+                    $("#resultBase64").html(img);
+                    $("#ImgBase64").val(base64);
+                    $("#saveForm").show(); debugger
+                });
+            });
+
+            $("#btnCropHtml").click(function () {
+                demo.croppie('result', 'html').then(function (html) {
+                    $("#resultHtml").html(html);
+                });
+            });
+
+                                                    function readURL(input) {
+                                                        debugger
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        demo.croppie('bind', {
+                            url: e.target.result
+                        }).then(function () {
+                            console.log('jQuery bind complete');
+                        });
+                    }
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+
+            $("#btnSelectImage").change(function () {
+                readURL(this);
+            });
+            </script>
+        </div>*@
 
         <div class="kt-portlet kt-portlet--mobile pt-2">
             <div class="kt-portlet__body">
@@ -273,6 +351,8 @@
                                                 <a id="btnSelectImagePath" class="btn btn-secondary mb-2 mr-4" style="background: #ffb822; color: #ffffff; background-color: #ffad00;">Dosya Seç</a>
 
                                                 <br />
+                                                <input hidden type="text" id="productphoto" />
+
                                                 <input hidden type="file" id="btnSelectImage" />
                                                 <div class="demo-wrapper" style="width: 69%;">
                                                     <div class="demo"></div>
@@ -285,19 +365,26 @@
                                                     {
                                                         @Html.AntiForgeryToken()
                                                         @Html.Hidden("ImgBase64")
-                                                        <a class="btn btn-secondary " style="background: #ffb822; color: #ffffff; background-color: #ffad00; float: right; margin-right: 45px;">Ekle</a>}
+                                                        <button class="btn btn-secondary " style="background: #ffb822; color: #ffffff; background-color: #ffad00; float: right; margin-right: 45px;">Ekle</button>}
                                                 </div>
 
 
 
 
                                                 <script>
+                                                    function abc(photo) {
+                                                        debugger
+                                                        var demo = $('#productModal .demo').croppie({
+                 url: '@Url.Content("~/assets/media/Sebze/barbunya.jpg")'
+            });
+                                                    }
                                                     $("#btnSelectImagePath").click(function () {
                                                         $('#btnSelectImage').trigger('click');
                                                         debugger
                                                     });
+            var prodID = $("#productModal #productphoto").val();
 
-            var demo = $('.demo').croppie({
+                                                    var demo = $('#productModal .demo').croppie({
                  url: '@Url.Content("~/assets/media/Sebze/barbunya.jpg")'
             });
 

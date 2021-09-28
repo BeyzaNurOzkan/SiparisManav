@@ -7664,6 +7664,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="assets\media\productPhoto\" />
     <Folder Include="Views\Order\" />
   </ItemGroup>
   <ItemGroup>

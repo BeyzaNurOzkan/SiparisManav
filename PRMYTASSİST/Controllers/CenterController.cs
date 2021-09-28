@@ -354,6 +354,7 @@ namespace PRMYTASSİST.Controllers
                     UnitName = Name,
                     Factor = factor,
                     Weight = Weight,
+                    Photo=product.Photo
                 };
                 return Json(prdct, JsonRequestBehavior.AllowGet);
 
@@ -393,7 +394,8 @@ namespace PRMYTASSİST.Controllers
                     Weight = Weight,
                     ProductGroupName = productGroup.Name.ToUpper() + ", " + productGroup2.Name.ToUpper() + ", " + productGroup3.Name.ToUpper(),
                     ProductGroup3Id = productGroup3.ID,
-                    ProductGroup2Id = productGroup2.ID
+                    ProductGroup2Id = productGroup2.ID,
+                    Photo = product.Photo
 
 
                 };

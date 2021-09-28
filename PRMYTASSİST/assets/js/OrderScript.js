@@ -2928,12 +2928,19 @@ function SaveAllForProductDet() {
     var isVisible = $("#productModal #visibileForProductList").prop('checked');
     var prodID = $("#productModal #visibileForProductList").val();
     var Category3ID = $("#productModal #categoryForProductSelect").val();
-    var formData = new FormData();
-    formData.append("File", document.getElementById("ProductPhoto").files[0]);
-
+    var ProductPhoto = $("#productModal #resultBase64")[0].innerHTML;
+    ProductPhoto = ProductPhoto.split('"');
+    var z = ProductPhoto[1];
     $.ajax({
         type: "POST",
-        url: '/Order/SaveAllForProductDet?prodID=' + prodID + '&isVisible=' + isVisible + '&Category3ID=' + Category3ID + '&ProductPhoto=' + Category3ID,
+        url: '/Order/SaveAllForProductDet'/*?prodID=' + prodID + '&isVisible=' + isVisible + '&Category3ID=' + Category3ID + '&ProductPhoto=' + z*/,
+        data: {
+            prodID: prodID,
+            isVisible: isVisible,
+            Category3ID: Category3ID,
+            ProductPhoto:z,
+            __RequestVerificationToken: $('[name="__RequestVerificationToken"]').val()
+        },
         success: function (data) {
             swal.fire({
                 title: "Başarılı!",

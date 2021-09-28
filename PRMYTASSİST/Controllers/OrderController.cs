@@ -1,6 +1,7 @@
 ﻿ using Entity;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -126,8 +127,9 @@ namespace PRMYTASSİST.Controllers
             };
             return Json(ProductQuantityList, JsonRequestBehavior.AllowGet);
         }
-
-        public JsonResult SaveAllForProductDet(int prodID, bool isVisible, int Category3ID, HttpPostedFileBase ProductPhoto)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public JsonResult SaveAllForProductDet(int prodID, bool isVisible, int Category3ID, string ProductPhoto)
         {
             string result = "";
             try
@@ -137,6 +139,14 @@ namespace PRMYTASSİST.Controllers
                 product.Visible = isVisible;
                 product.ProductGroup3ID = Category3ID;
                 product.ProductGroup2ID = group2;
+              
+                byte[] data = Convert.FromBase64String(ProductPhoto.Substring(22));
+                string fileName = Guid.NewGuid() + ".jpg";
+                string savePath = Path.Combine(
+                   Server.MapPath("~/assets/media/productPhoto"), fileName
+                );
+                System.IO.File.WriteAllBytes(savePath, data);
+                product.Photo = "/assets/media/productPhoto/"+fileName;
                 db.SaveChanges();
                 result = "Ürün Güncellemeleri Tamamlandı...";
             }
@@ -146,6 +156,8 @@ namespace PRMYTASSİST.Controllers
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+
+
         public JsonResult GetOrderDetails(int OrderId, int basketId)
         {
             var DetailsList = new

@@ -34,17 +34,20 @@ namespace PRMYTASSİST.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult SaveImage(string ImgBase64)
+        public JsonResult SaveImage(string ImgBase64)
         {
             byte[] data = Convert.FromBase64String(ImgBase64.Substring(22));
             string fileName = Guid.NewGuid() + ".jpg";
             string savePath = Path.Combine(
-               Server.MapPath("~/Upload"), fileName
+               Server.MapPath("~/assets/css"), fileName
             );
             System.IO.File.WriteAllBytes(savePath, data);
 
-            return RedirectToAction("ShowImage", new { FileName = fileName });
-        }
+            //return RedirectToAction("ShowImage", new { FileName = fileName });
+            string result = "Ürün Güncellemeleri Tamamlandı...";
+        
+            return Json(result, JsonRequestBehavior.AllowGet);
+}
 
         public ActionResult ShowImage(string fileName)
         {

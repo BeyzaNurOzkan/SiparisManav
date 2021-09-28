@@ -69,7 +69,7 @@ namespace Entity
         public string CategoryCode { get; set; }
         public string MainGroupCode { get; set; }
         public string SubGroupCode { get; set; }
-        //public string Photo { get; set; }
+        public string Photo { get; set; }
         public string SectionCode { get; set; }
         public string QualintyControlCode { get; set; }
         public int Shelflife { get; set; }

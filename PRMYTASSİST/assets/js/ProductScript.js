@@ -234,8 +234,8 @@ function EditProduct(id) {
                     $("#productModal #visibileForProductList").val(id);
                 }
 
-
-
+                abc(data['photo']);
+                $("#productModal #productphoto").val(data['photo']);
                 var select = document.getElementById('selectProductCategory');
                 debugger
                 select.value = data['ProductGroup3Id'];
