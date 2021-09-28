@@ -266,15 +266,17 @@
                                                 </div>
                                             </div>
                                             <div class="col-3" style="text-align: -webkit-center;">
-                                                <label for="btnSelectImage">Görsel Seçiniz:</label>
+                                                <label for="btnSelectImage" style="font-size:15px;float: left;margin-left: 50px;"><b>Lütfen Görsel Seçiniz:</b></label>
+                                                <br />
+
+                                                <a id="btnCropBase64" class="btn btn-secondary mb-2 " style="background: #ffb822; color: #ffffff; background-color: #ffad00; float: right; margin-right: 45px;">Önizle</a>
+                                                <a id="btnSelectImagePath" class="btn btn-secondary mb-2 mr-4" style="background: #ffb822; color: #ffffff; background-color: #ffad00;">Dosya Seç</a>
+
                                                 <br />
                                                 <input hidden type="file" id="btnSelectImage" />
                                                 <div class="demo-wrapper" style="width: 69%;">
                                                     <div class="demo"></div>
                                                 </div>
-
-                                                <a id="btnCropBase64" class="btn btn-secondary " style="background: #ffb822; color: #000000; background-color: #ffad00; float: right; margin-right: 45px;">Önizle</a>
-                                                <a id="" class="btn btn-secondary " style="background: #ffb822; color: #ffffff; background-color: #ffad00; float: right; margin-right: 45px;">Önizle</a>
 
                                                 <div id="resultBase64"></div>
 
@@ -290,6 +292,11 @@
 
 
                                                 <script>
+                                                    $("#btnSelectImagePath").click(function () {
+                                                        $('#btnSelectImage').trigger('click');
+                                                        debugger
+                                                    });
+
             var demo = $('.demo').croppie({
                  url: '@Url.Content("~/assets/media/Sebze/barbunya.jpg")'
             });
@@ -816,8 +823,8 @@
                     <div class="row" style="width:100%;">
 
                         <div class="col-3">
-                            <button type="button" value"" onclick="EditProduct(this.value)" id="back" class="btn btn-secondary " style="background:#ffb822; color:#000000; background-color:#ffad00;"><i class="icon flaticon2-back"></i>Geri</button>
-                            <button type="button" value"" onclick="EditProduct(this.value)" id="next" class="btn btn-secondary " style="background:#ffb822; color:#000000; background-color:#ffad00;">İleri<i class="icon pl-2 pr-0 flaticon2-next"></i></button>
+                            <button type="button" value"" onclick="EditProduct(this.value)" id="back" class="btn btn-secondary " style="background:#ffb822; color:#ffffff; background-color:#ffad00;"><i class="icon flaticon2-back"></i>Geri</button>
+                            <button type="button" value"" onclick="EditProduct(this.value)" id="next" class="btn btn-secondary " style="background: #ffb822; color: #ffffff; background-color: #ffad00;">İleri<i class="icon pl-2 pr-0 flaticon2-next"></i></button>
                         </div>
                         <div class="col-6" style="text-align: center;align-self: center;">
                             <label class="pr-1 "><b>Kayıt:</b></label>
@@ -829,7 +836,7 @@
                         </div>
                         <div class="col-3" style="text-align:right;">
                             <button type="button" class="btn btn-danger " data-dismiss="modal">Vazgeç</button>
-                            <button type="button" value"" onclick="SaveAllForProductDet()" id="SaveAllForProductDetButton" class="btn btn-secondary " style="background:#ffb822; color:#000000; background-color:#ffad00;">Kaydet</button>
+                            <button type="button" value"" onclick="SaveAllForProductDet()" id="SaveAllForProductDetButton" class="btn btn-secondary " style="background:#ffb822; color:#ffffff; background-color:#ffad00;">Kaydet</button>
                         </div>
                     </div>
                 </div>
