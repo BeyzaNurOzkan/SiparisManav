@@ -374,9 +374,7 @@
                                                 <script>
                                                     function abc(photo) {
                                                         debugger
-                                                        var demo = $('#productModal .demo').croppie({
-                 url: '@Url.Content("~/assets/media/Sebze/barbunya.jpg")'
-            });
+                                                      
                                                     }
                                                     $("#btnSelectImagePath").click(function () {
                                                         $('#btnSelectImage').trigger('click');
@@ -385,7 +383,8 @@
             var prodID = $("#productModal #productphoto").val();
 
                                                     var demo = $('#productModal .demo').croppie({
-                 url: '@Url.Content("~/assets/media/Sebze/barbunya.jpg")'
+                                                        
+                 url: './assets/media/Sebze/barbunya.jpg'
             });
 
             $("#btnCropBase64").click(function () {
