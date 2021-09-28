@@ -66,7 +66,6 @@
         columnDefs: [
             {
                 targets: 3,
-                orderable: false,
                 render: function (data, type, full, meta) {
                     var id = full['Name'];
                     var id = full['ID'];
