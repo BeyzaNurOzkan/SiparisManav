@@ -324,10 +324,6 @@ input[type="checkbox"] {
 }
 
 input[type="button"],
-
-input[type="file"]{
-    color:aqua;
-}
 input[type="time"],
 input[type="datetime-local"],
 input[type="month"] {
