@@ -68,6 +68,11 @@
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" data-toggle="tab" href="#kt_apps_contacts_view_tab_2" role="tab">
+                                        <i class="flaticon2-time"></i> Resim Ekle
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#kt_apps_contacts_view_tab_2" role="tab">
                                         <i class="flaticon2-time"></i> Detaylar
                                     </a>
                                 </li>
@@ -173,29 +178,115 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <div data-repeater-item class="form-group row align-items-center pl-5 ml-5 mt-5">
+                                                    <div class="col-md-3" style=" align-self: center">
+                                                        <div class="kt-form__group--inline">
+                                                            <div class="kt-form__label">
+                                                                <label><b>Birim Adı</b></label>
+                                                            </div>
+                                                            <div class="kt-form__control">
+                                                                <div class="kt-form__control">
+                                                                    <input type="email" id="UnitName" class="form-control" disabled>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="d-md-none kt-margin-b-10"></div>
+                                                    </div>
+
+                                                    <div class="col-md-8" style=" align-self: center">
+                                                        <div class="row">
+                                                            <div class="col-md-2">
+                                                                <div class="kt-form__group--inline">
+                                                                    <div class="kt-form__label">
+                                                                        <label class="kt-label m-label--single"><b>Katsayı</b></label>
+                                                                    </div>
+                                                                    <div class="kt-form__control">
+                                                                        <input type="email" id="Factor" class="form-control" disabled>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="d-md-none kt-margin-b-10"></div>
+                                                            </div>
+                                                            <div class="col-md-2" style=" align-self: center">
+                                                                <div class="kt-form__group--inline">
+                                                                    <div class="kt-form__label">
+                                                                        <label><b>Net Ağırlık</b></label>
+                                                                    </div>
+                                                                    <div class="kt-form__control">
+                                                                        <input type="email" id="Weight" class="form-control" disabled>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="d-md-none kt-margin-b-10"></div>
+                                                            </div>
+                                                            <div class="col-md-2" style=" align-self: center">
+                                                                <div class="kt-form__group--inline">
+                                                                    <div class="kt-form__label">
+                                                                        <label><b>Dara</b></label>
+                                                                    </div>
+                                                                    <div class="kt-form__control">
+                                                                        <input type="email" class="form-control" disabled>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="d-md-none kt-margin-b-10"></div>
+                                                            </div>
+                                                            <div class="col-md-2" style=" align-self: center">
+                                                                <div class="kt-form__group--inline">
+                                                                    <div class="kt-form__label">
+                                                                        <label><b>Genişlik</b></label>
+                                                                    </div>
+                                                                    <div class="kt-form__control">
+                                                                        <input type="email" class="form-control" disabled>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="d-md-none kt-margin-b-10"></div>
+                                                            </div>
+                                                            <div class="col-md-2" style=" align-self: center">
+                                                                <div class="kt-form__group--inline">
+                                                                    <div class="kt-form__label">
+                                                                        <label><b>Boy</b></label>
+                                                                    </div>
+                                                                    <div class="kt-form__control">
+                                                                        <input type="email" class="form-control" disabled>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="d-md-none kt-margin-b-10"></div>
+                                                            </div>
+                                                            <div class="col-md-2" style=" align-self: center">
+                                                                <div class="kt-form__group--inline">
+                                                                    <div class="kt-form__label">
+                                                                        <label><b>Yükseklik</b></label>
+                                                                    </div>
+                                                                    <div class="kt-form__control">
+                                                                        <input type="email" class="form-control" disabled>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="d-md-none kt-margin-b-10"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div>
+                                            <div class="col-3" style="text-align: -webkit-center;">
                                                 <label for="btnSelectImage">Görsel Seçiniz:</label>
                                                 <br />
                                                 <input type="file" id="btnSelectImage" />
 
-                                                <div class="demo-wrapper">
+                                                <div class="demo-wrapper" style="width: 69%;">
                                                     <div class="demo"></div>
                                                 </div>
 
-                                                <button id="btnCropBase64">Kaydet</button>
+                                                <a id="btnCropBase64" class="btn btn-secondary " style="background: #ffb822; color: #000000; background-color: #ffad00; float: right; margin-right: 45px;">Önizle</a>
 
-                                                <div id="resultBase64"></div>
+                                                <div id="resultBase64" ></div>
 
                                                 <div id="saveForm" style="display:none">
                                                     @using (Html.BeginForm("SaveImage", "Home", FormMethod.Post))
                                                     {
                                                         @Html.AntiForgeryToken()
                                                         @Html.Hidden("ImgBase64")
-                                                        <button>Upload the cropped Image</button>}
+                                                        <a  class="btn btn-secondary " style="background: #ffb822; color: #000000; background-color: #ffad00; float: right; margin-right: 45px;">Ekle</a>}
                                                 </div>
 
-                                               
+
 
 
                                                 <script>
@@ -209,9 +300,10 @@
                     size: { width:200, height: 200}
                 }).then(function (base64) {
                     var img = $("<img/>").attr("src", base64);
-                    $("#resultBase64").html(img);
+                    
+                    $("#resultBase64").html(img);                   
                     $("#ImgBase64").val(base64);
-                    $("#saveForm").show();
+                    $("#saveForm").show(); debugger
                 });
             });
 
@@ -221,7 +313,8 @@
                 });
             });
 
-            function readURL(input) {
+                                                    function readURL(input) {
+                                                        debugger
                 if (input.files && input.files[0]) {
                     var reader = new FileReader();
 
@@ -243,106 +336,12 @@
                                             </div>
 
                                         </div>
-                                        <div class="kt-separator kt-separator--border-dashed kt-separator--space-lg kt-separator--portlet-fit"></div>
-                                        <div id="kt_repeater_1">
-                                            <div class="form-group form-group-last row" id="kt_repeater_1">
-                                                <label class="col-lg-1 col-form-label" style="align-self: flex-end; "><b>Birim</b></label>
-                                                <div data-repeater-list="" class="col-lg-10">
-                                                    <div data-repeater-item class="form-group row align-items-center">
-                                                        <div class="col-md-3" style=" align-self: center">
-                                                            <div class="kt-form__group--inline">
-                                                                <div class="kt-form__label">
-                                                                    <label><b>Birim Adı</b></label>
-                                                                </div>
-                                                                <div class="kt-form__control">
-                                                                    <div class="kt-form__control">
-                                                                        <input type="email" id="UnitName" class="form-control" disabled>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="d-md-none kt-margin-b-10"></div>
-                                                        </div>
+                                     
+                                    </div>
+                                </form>
 
-                                                            <div class="col-md-8" style=" align-self: center">
-                                                                <div class="row">
-                                                                    <div class="col-md-2">
-                                                                        <div class="kt-form__group--inline">
-                                                                            <div class="kt-form__label">
-                                                                                <label class="kt-label m-label--single"><b>Katsayı</b></label>
-                                                                            </div>
-                                                                            <div class="kt-form__control">
-                                                                                <input type="email" id="Factor" class="form-control" disabled>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="d-md-none kt-margin-b-10"></div>
-                                                                    </div>
-                                                                    <div class="col-md-2" style=" align-self: center">
-                                                                        <div class="kt-form__group--inline">
-                                                                            <div class="kt-form__label">
-                                                                                <label><b>Net Ağırlık</b></label>
-                                                                            </div>
-                                                                            <div class="kt-form__control">
-                                                                                <input type="email" id="Weight" class="form-control" disabled>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="d-md-none kt-margin-b-10"></div>
-                                                                    </div>
-                                                                    <div class="col-md-2" style=" align-self: center">
-                                                                        <div class="kt-form__group--inline">
-                                                                            <div class="kt-form__label">
-                                                                                <label><b>Dara</b></label>
-                                                                            </div>
-                                                                            <div class="kt-form__control">
-                                                                                <input type="email" class="form-control" disabled>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="d-md-none kt-margin-b-10"></div>
-                                                                    </div>
-                                                                    <div class="col-md-2" style=" align-self: center">
-                                                                        <div class="kt-form__group--inline">
-                                                                            <div class="kt-form__label">
-                                                                                <label><b>Genişlik</b></label>
-                                                                            </div>
-                                                                            <div class="kt-form__control">
-                                                                                <input type="email" class="form-control" disabled>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="d-md-none kt-margin-b-10"></div>
-                                                                    </div>
-                                                                    <div class="col-md-2" style=" align-self: center">
-                                                                        <div class="kt-form__group--inline">
-                                                                            <div class="kt-form__label">
-                                                                                <label><b>Boy</b></label>
-                                                                            </div>
-                                                                            <div class="kt-form__control">
-                                                                                <input type="email" class="form-control" disabled>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="d-md-none kt-margin-b-10"></div>
-                                                                    </div>
-                                                                    <div class="col-md-2" style=" align-self: center">
-                                                                        <div class="kt-form__group--inline">
-                                                                            <div class="kt-form__label">
-                                                                                <label><b>Yükseklik</b></label>
-                                                                            </div>
-                                                                            <div class="kt-form__control">
-                                                                                <input type="email" class="form-control" disabled>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="d-md-none kt-margin-b-10"></div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </form>
-
-                                    <!--end::Form-->
-</div>
+                                <!--end::Form-->
+                            </div>
                             <!--End:: Tab Content-->
                             <!--Begin:: Tab Content-->
                             <div class="tab-pane" id="kt_apps_contacts_view_tab_2" role="tabpanel">
@@ -481,6 +480,170 @@
 
                             <!--End:: Tab Content-->
                             <!--Begin:: Tab Content-->
+                            <div class="tab-pane" id="kt_apps_contacts_view_tab_3" role="tabpanel">
+                                <form class="kt-form kt-form--label-right" action="">
+                                    <div class="kt-form__body">
+                                        <div class="kt-section kt-section--first">
+                                            <div class="kt-section__body">
+                                                <div class="form-group row mb-1">
+                                                    <div class="col-lg-2">
+                                                    </div>
+                                                    <div class="col-lg-2">
+                                                        <label class="col-xl-6 col-lg-6 col-form-label" style="text-align: center;">Kodu</label>
+                                                    </div>
+                                                    <div class="col-lg-2">
+                                                        <label class="col-xl-6 col-lg-6 col-form-label" style="text-align: center;">Adı</label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row mb-1">
+                                                    <label class="col-xl-2 col-lg-3 col-form-label">Ana Grup</label>
+                                                    <div class="col-lg-2" style="align-self: center">
+                                                        <input type="email" id="MainGroupCode" class="form-control" disabled>
+                                                    </div>
+                                                    <div class="col-lg-5" style="align-self: center">
+                                                        <input type="email" id="MainGroupCode" class="form-control" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row mb-1">
+                                                    <label class="col-xl-2 col-lg-3 col-form-label">Alt Grup</label>
+                                                    <div class="col-lg-2" style="align-self: center">
+                                                        <input type="email" id="SubGroupCode" class="form-control" disabled>
+                                                    </div>
+                                                    <div class="col-lg-5" style="align-self: center">
+                                                        <input type="email" id="SubGroupCode" class="form-control" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row mb-1" style="align-self: center">
+                                                    <label class="col-xl-2 col-lg-3 col-form-label">Ana Sağlayıcı</label>
+                                                    <div class="col-lg-2" style="align-self: center">
+                                                        <input type="email" class="form-control" disabled>
+                                                    </div>
+                                                    <div class="col-lg-5" style="align-self: center">
+                                                        <input type="email" class="form-control" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row mb-1">
+                                                    <label class="col-xl-2 col-lg-3 col-form-label">Ürün</label>
+                                                    <div class="col-lg-2" style="align-self: center">
+                                                        <input type="email" id="ManufacturerCode" class="form-control" disabled>
+                                                    </div>
+                                                    <div class="col-lg-5" style="align-self: center">
+                                                        <input type="email" id="ManufacturerCode" class="form-control" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row mb-1">
+                                                    <label class="col-xl-2 col-lg-3 col-form-label">Reyon</label>
+                                                    <div class="col-lg-2" style="align-self: center">
+                                                        <input type="email" id="SectionCode" class="form-control" disabled>
+                                                    </div>
+                                                    <div class="col-lg-5" style="align-self: center">
+                                                        <input type="email" id="SectionCode" class="form-control" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row mb-1" style="align-self: center">
+                                                    <label class="col-xl-2 col-lg-3 col-form-label">Ambalaj</label>
+                                                    <div class="col-lg-2" style="align-self: center">
+                                                        <input type="email" class="form-control" disabled>
+                                                    </div>
+                                                    <div class="col-lg-5" style="align-self: center">
+                                                        <input type="email" class="form-control" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row mb-1">
+                                                    <label class="col-xl-2 col-lg-3 col-form-label">Marka</label>
+                                                    <div class="col-lg-2" style="align-self: center">
+                                                        <input type="email" id="BrandCode" class="form-control" disabled>
+                                                    </div>
+                                                    <div class="col-lg-5" style="align-self: center">
+                                                        <input type="email" id="BrandCode" class="form-control" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row mb-1">
+                                                    <label class="col-xl-2 col-lg-3 col-form-label">Muhasebe Grup</label>
+                                                    <div class="col-lg-2" style="align-self: center">
+                                                        <input type="email" class="form-control" disabled>
+                                                    </div>
+                                                    <div class="col-lg-5" style="align-self: center">
+                                                        <input type="email" class="form-control" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row mb-1">
+                                                    <label class="col-xl-2 col-lg-3 col-form-label">Sektör</label>
+                                                    <div class="col-lg-2" style="align-self: center">
+                                                        <input type="email" id="SectorCode" class="form-control" disabled>
+                                                    </div>
+                                                    <div class="col-lg-5" style="align-self: center">
+                                                        <input type="email" id="SectorCode" class="form-control" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row mb-1">
+                                                    <label class="col-xl-2 col-lg-3 col-form-label">Ürüm Sorumlusu</label>
+                                                    <div class="col-lg-2" style="align-self: center">
+                                                        <input type="email" class="form-control" disabled>
+                                                    </div>
+                                                    <div class="col-lg-5" style="align-self: center">
+                                                        <input type="email" class="form-control" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row mb-1">
+                                                    <label class="col-xl-2 col-lg-3 col-form-label">Kalite Kontrol</label>
+                                                    <div class="col-lg-2" style="align-self: center">
+                                                        <input type="email" class="form-control" disabled>
+                                                    </div>
+                                                    <div class="col-lg-5" style="align-self: center">
+                                                        <input type="email" class="form-control" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row mb-1">
+                                                    <label class="col-xl-2 col-lg-3 col-form-label">Model</label>
+                                                    <div class="col-lg-2" style="align-self: center">
+                                                        <input type="email" id="ModelCode" class="form-control" disabled>
+                                                    </div>
+                                                    <div class="col-lg-5" style="align-self: center">
+                                                        <input type="email" id="ModelCode" class="form-control" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row mb-1">
+                                                    <label class="col-xl-2 col-lg-3 col-form-label">Yıl ve Sezon</label>
+                                                    <div class="col-lg-2" style="align-self: center">
+                                                        <input type="email" class="form-control" disabled>
+                                                    </div>
+                                                    <div class="col-lg-5" style="align-self: center">
+                                                        <input type="email" class="form-control" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row mb-1">
+                                                    <label class="col-xl-2 col-lg-3 col-form-label">Anahammedde</label>
+                                                    <div class="col-lg-2" style="align-self: center">
+                                                        <input type="email" class="form-control" disabled>
+                                                    </div>
+                                                    <div class="col-lg-5" style="align-self: center">
+                                                        <input type="email" class="form-control" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row mb-1">
+                                                    <label class="col-xl-2 col-lg-3 col-form-label">Kategori</label>
+                                                    <div class="col-lg-2" style="align-self: center">
+                                                        <input type="email" id="CategoryCode" class="form-control" disabled>
+                                                    </div>
+                                                    <div class="col-lg-5" style="align-self: center">
+                                                        <input type="email" id="CategoryCode" class="form-control" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row mb-1">
+                                                    <label class="col-xl-2 col-lg-3 col-form-label">Prim Grup</label>
+                                                    <div class="col-lg-2" style="align-self: center">
+                                                        <input type="email" class="form-control" disabled>
+                                                    </div>
+                                                    <div class="col-lg-5" style="align-self: center">
+                                                        <input type="email" class="form-control" disabled>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
                             <div class="tab-pane" id="kt_apps_contacts_view_tab_3" role="tabpanel">
                                 <form class="kt-form kt-form--label-right" action="">
                                     <div class="kt-form__body">
