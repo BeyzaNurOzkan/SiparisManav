@@ -268,22 +268,22 @@
                                             <div class="col-3" style="text-align: -webkit-center;">
                                                 <label for="btnSelectImage">Görsel Seçiniz:</label>
                                                 <br />
-                                                <input type="file" id="btnSelectImage" />
-
+                                                <input hidden type="file" id="btnSelectImage" />
                                                 <div class="demo-wrapper" style="width: 69%;">
                                                     <div class="demo"></div>
                                                 </div>
 
                                                 <a id="btnCropBase64" class="btn btn-secondary " style="background: #ffb822; color: #000000; background-color: #ffad00; float: right; margin-right: 45px;">Önizle</a>
+                                                <a id="" class="btn btn-secondary " style="background: #ffb822; color: #ffffff; background-color: #ffad00; float: right; margin-right: 45px;">Önizle</a>
 
-                                                <div id="resultBase64" ></div>
+                                                <div id="resultBase64"></div>
 
                                                 <div id="saveForm" style="display:none">
                                                     @using (Html.BeginForm("SaveImage", "Home", FormMethod.Post))
                                                     {
                                                         @Html.AntiForgeryToken()
                                                         @Html.Hidden("ImgBase64")
-                                                        <a  class="btn btn-secondary " style="background: #ffb822; color: #000000; background-color: #ffad00; float: right; margin-right: 45px;">Ekle</a>}
+                                                        <a class="btn btn-secondary " style="background: #ffb822; color: #ffffff; background-color: #ffad00; float: right; margin-right: 45px;">Ekle</a>}
                                                 </div>
 
 
@@ -300,8 +300,8 @@
                     size: { width:200, height: 200}
                 }).then(function (base64) {
                     var img = $("<img/>").attr("src", base64);
-                    
-                    $("#resultBase64").html(img);                   
+
+                    $("#resultBase64").html(img);
                     $("#ImgBase64").val(base64);
                     $("#saveForm").show(); debugger
                 });
