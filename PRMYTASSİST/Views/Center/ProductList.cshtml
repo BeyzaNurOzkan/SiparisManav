@@ -372,10 +372,7 @@
 
 
                                                 <script>
-                                                    function abc(photo) {
-                                                        debugger
-                                                      
-                                                    }
+                                                    
                                                     $("#btnSelectImagePath").click(function () {
                                                         $('#btnSelectImage').trigger('click');
                                                         debugger
@@ -384,8 +381,13 @@
 
                                                     var demo = $('#productModal .demo').croppie({
                                                         
-                 url: './assets/media/Sebze/barbunya.jpg'
-            });
+                                                        viewport: {
+                                                            width: 100,
+                                                            height: 100
+                                                        }, 
+                                                    });
+                                                        
+           
 
             $("#btnCropBase64").click(function () {
                 demo.croppie('result', {
@@ -393,10 +395,12 @@
                     size: { width:200, height: 200}
                 }).then(function (base64) {
                     var img = $("<img/>").attr("src", base64);
+                    $("#resultBase64").show();
 
                     $("#resultBase64").html(img);
                     $("#ImgBase64").val(base64);
-                    $("#saveForm").show(); debugger
+                    $("#saveForm").show();
+                    debugger
                 });
             });
 
@@ -405,7 +409,14 @@
                     $("#resultHtml").html(html);
                 });
             });
+                                                    function abc(photo) {
+                                                        debugger
+                                                        $("#resultBase64").hide();
+                                                        demo.croppie('bind',{
 
+                                                            url: "."+ photo,
+                                                        });
+                                                    }
                                                     function readURL(input) {
                                                         debugger
                 if (input.files && input.files[0]) {

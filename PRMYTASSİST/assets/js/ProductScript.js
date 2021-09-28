@@ -234,13 +234,18 @@ function EditProduct(id) {
                     $("#productModal #visibileForProductList").val(id);
                 }
 
-                abc(data['photo']);
+                
                 $("#productModal #productphoto").val(data['photo']);
                 var select = document.getElementById('selectProductCategory');
                 debugger
                 select.value = data['ProductGroup3Id'];
                 select.text = data['ProductGroupName'];
                 $('#productModal').modal();
+                if (data['Photo'] != undefined) {
+                    abc(data['Photo']);
+                } else {
+                    abc("/assets/media/resim-yok.jpg")
+                }
             },
             error: function (request, status, error) {
                 swal.fire("Hata!", "Önceki/Sonraki Sipariş Yok", "error");
