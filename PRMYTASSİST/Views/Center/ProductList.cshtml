@@ -347,7 +347,7 @@
                                                 <label for="btnSelectImage" style="font-size:15px;float: left;margin-left: 50px;"><b>Lütfen Görsel Seçiniz:</b></label>
                                                 <br />
 
-                                                <a id="btnCropBase64" class="btn btn-secondary mb-2 " style="background: #ffb822; color: #ffffff; background-color: #ffad00; float: right; margin-right: 45px;">Önizle</a>
+                                                <a  id="btnCropBase64" class="btn btn-secondary mb-2 " style="background: #ffb822; color: #ffffff; background-color: #ffad00; float: right; margin-right: 45px;">Önizle</a>
                                                 <a id="btnSelectImagePath" class="btn btn-secondary mb-2 mr-4" style="background: #ffb822; color: #ffffff; background-color: #ffad00;">Dosya Seç</a>
 
                                                 <br />
@@ -360,13 +360,13 @@
 
                                                 <div id="resultBase64"></div>
 
-                                                <div id="saveForm" style="display:none">
+                                                @*<div id="saveForm" style="display:none">
                                                     @using (Html.BeginForm("SaveImage", "Home", FormMethod.Post))
                                                     {
                                                         @Html.AntiForgeryToken()
                                                         @Html.Hidden("ImgBase64")
                                                         <button class="btn btn-secondary " style="background: #ffb822; color: #ffffff; background-color: #ffad00; float: right; margin-right: 45px;">Ekle</button>}
-                                                </div>
+                                                </div>*@
 
 
 
@@ -399,7 +399,7 @@
 
                     $("#resultBase64").html(img);
                     $("#ImgBase64").val(base64);
-                    $("#saveForm").show();
+                    //$("#saveForm").show();
                     debugger
                 });
             });
@@ -411,7 +411,9 @@
             });
                                                     function abc(photo) {
                                                         debugger
+                                                        $("#btnCropBase64").hide();
                                                         $("#resultBase64").hide();
+
                                                         demo.croppie('bind',{
 
                                                             url: "."+ photo,
@@ -430,7 +432,9 @@
                         });
                     }
                     reader.readAsDataURL(input.files[0]);
-                }
+                                                        }
+                                                        $("#btnCropBase64").show();
+
             }
 
             $("#btnSelectImage").change(function () {
