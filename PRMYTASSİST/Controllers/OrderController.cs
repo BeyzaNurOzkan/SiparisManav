@@ -139,14 +139,14 @@ namespace PRMYTASSİST.Controllers
                 product.Visible = isVisible;
                 product.ProductGroup3ID = Category3ID;
                 product.ProductGroup2ID = group2;
-              
+                if (ProductPhoto != null) { 
                 byte[] data = Convert.FromBase64String(ProductPhoto.Substring(22));
                 string fileName = Guid.NewGuid() + ".jpg";
                 string savePath = Path.Combine(
                    Server.MapPath("~/assets/media/productPhoto"), fileName
                 );
                 System.IO.File.WriteAllBytes(savePath, data);
-                product.Photo = "/assets/media/productPhoto/"+fileName;
+                product.Photo = "/assets/media/productPhoto/"+fileName;}
                 db.SaveChanges();
                 result = "Ürün Güncellemeleri Tamamlandı...";
             }
