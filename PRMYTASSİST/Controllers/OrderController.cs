@@ -367,7 +367,7 @@ namespace PRMYTASSİST.Controllers
                            CheckBox = orderDet.CheckBox.ToString(),
                            DiscountProd = DiscountBranch.productID.ToString(),
                            Coefficient = discount.Coefficient.ToString(),
-                           GroupImage = Group3.Photo,
+                           GroupImage = product.Photo,
 
 
                        }
@@ -434,7 +434,7 @@ namespace PRMYTASSİST.Controllers
                            CheckBox = orderDet.CheckBox.ToString(),
                            DiscountProd = DiscountBranch.productID.ToString(),
                            Coefficient = discount.Coefficient.ToString(),
-                           GroupImage = Group3.Photo,
+                           GroupImage = product.Photo,
 
 
                        }
@@ -507,7 +507,7 @@ namespace PRMYTASSİST.Controllers
                            CheckBox = orderDet.CheckBox.ToString(),
                            DiscountProd = DiscountBranch.productID.ToString(),
                            Coefficient = discount.Coefficient.ToString(),
-                           GroupImage = Group3.Photo,
+                           GroupImage = product.Photo,
 
 
                        }
@@ -581,7 +581,7 @@ namespace PRMYTASSİST.Controllers
                            CheckBox = orderDet.CheckBox.ToString(),
                            DiscountProd = DiscountBranch.productID.ToString(),
                            Coefficient = discount.Coefficient.ToString(),
-                           GroupImage = Group3.Photo,
+                           GroupImage = product.Photo,
 
 
                        }
@@ -647,7 +647,7 @@ namespace PRMYTASSİST.Controllers
                            CheckBox = basketPro.CheckBox.ToString(),
                            DiscountProd = DiscountBranch.productID.ToString(),
                            Coefficient = discount.Coefficient.ToString(),
-                           GroupImage=Group3.Photo,
+                           GroupImage= product.Photo,
                            settings=settings.Value
                           
 
@@ -727,7 +727,7 @@ namespace PRMYTASSİST.Controllers
                            CheckBox = basketPro.CheckBox.ToString(),
                            DiscountProd = DiscountBranch.productID.ToString(),
                            Coefficient = discount.Coefficient.ToString(),
-                           GroupImage = Group3.Photo,
+                           GroupImage = product.Photo,
                            settings = settings.Value
 
 
@@ -810,7 +810,7 @@ namespace PRMYTASSİST.Controllers
                            CheckBox = basketPro.CheckBox.ToString(),
                            DiscountProd = DiscountBranch.productID.ToString(),
                            Coefficient = discount.Coefficient.ToString(),
-                           GroupImage = Group3.Photo,
+                           GroupImage = product.Photo,
                            settings = settings.Value
 
 
@@ -896,7 +896,7 @@ namespace PRMYTASSİST.Controllers
                            CheckBox = basketPro.CheckBox.ToString(),
                            DiscountProd = DiscountBranch.productID.ToString(),
                            Coefficient = discount.Coefficient.ToString(),
-                           GroupImage = Group3.Photo,
+                           GroupImage = product.Photo,
                            settings = settings.Value
 
 

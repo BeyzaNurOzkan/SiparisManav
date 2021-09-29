@@ -4,10 +4,7 @@
     List<ProductGroup3> productGroup3s = Query.ProductGroup3s();
     List<Product> products = Query.Product();
 }
-<link href="~/assets/css/croppie.css" rel="stylesheet" />
-<script src="~/Scripts/jquery-3.4.1.min.js"></script>
-<script src="~/Scripts/croppie.js"></script>
-<link href="~/assets/css/Site.css" rel="stylesheet" />
+
 
 
 <div class="kt-content  kt-grid__item kt-grid__item--fluid" id="kt_content" style="padding-top: 5%;">
@@ -221,7 +218,7 @@
                                                         <option id="selectProductCategory" value=""></option>
                                                         @foreach (var item in productGroup3s.Where(q => q.isVisible == true))
                                                         {
-                                                        <option data-content="" value="@item.ID">@item.ProductGroups2.ProductGroups.Name.ToUpper(), @item.ProductGroups2.Name.ToUpper(), @item.Name.ToUpper()</option>
+                                                            <option data-content="" value="@item.ID">@item.ProductGroups2.ProductGroups.Name.ToUpper(), @item.ProductGroups2.Name.ToUpper(), @item.Name.ToUpper()</option>
                                                         }
                                                     </select>
                                                 </div>
@@ -362,7 +359,6 @@
                                                 </div>
 
                                                 <div id="resultBase64"></div>
-
                                                 <div hidden id="saveForm" style="display:none">
                                                     @using (Html.BeginForm("SaveImage", "Home", FormMethod.Post))
                                                     {
@@ -374,76 +370,7 @@
 
 
 
-                                                <script>
 
-                                                    $("#btnSelectImagePath").click(function () {
-                                                        $('#btnSelectImage').trigger('click');
-                                                        debugger
-                                                    });
-                                                    var prodID = $("#productModal #productphoto").val();
-
-                                                    var demo = $('#productModal .demo').croppie({
-
-                                                        viewport: {
-                                                            width: 100,
-                                                            height: 100
-                                                        },
-                                                    });
-
-
-
-                                                    $("#btnCropBase64").click(function () {
-                                                        demo.croppie('result', {
-                                                            type: "base64",
-                                                            size: { width: 200, height: 200 }
-                                                        }).then(function (base64) {
-                                                            var img = $("<img/>").attr("src", base64);
-                                                            $("#resultBase64").show();
-
-                                                            $("#resultBase64").html(img);
-                                                            $("#ImgBase64").val(base64);
-                                                            //$("#saveForm").show();
-                                                            debugger
-                                                        });
-                                                    });
-
-                                                    $("#btnCropHtml").click(function () {
-                                                        demo.croppie('result', 'html').then(function (html) {
-                                                            $("#resultHtml").html(html);
-                                                        });
-                                                    });
-                                                    function abc(photo) {
-                                                        debugger
-                                                        $("#btnCropBase64").hide();
-                                                        $("#resultBase64").hide();
-
-                                                        demo.croppie('bind', {
-
-                                                            url: "." + photo,
-                                                        });
-                                                    }
-                                                    function readURL(input) {
-                                                        debugger
-                                                        if (input.files && input.files[0]) {
-                                                            var reader = new FileReader();
-
-                                                            reader.onload = function (e) {
-                                                                demo.croppie('bind', {
-                                                                    url: e.target.result
-                                                                }).then(function () {
-                                                                    console.log('jQuery bind complete');
-                                                                });
-                                                            }
-                                                            reader.readAsDataURL(input.files[0]);
-                                                        }
-                                                        $("#btnCropBase64").show();
-
-                                                    }
-
-                                                    $("#btnSelectImage").change(function () {
-                                                        readURL(this);
-                                                    });
-                                                </script>
                                             </div>
 
                                         </div>
@@ -949,10 +876,80 @@
         </div>
     </div>
 </div>
-
+<link href="~/assets/css/croppie.css" rel="stylesheet" />
+<link href="~/assets/css/Site.css" rel="stylesheet" />
+<script src="./assets/vendors/general/jquery/dist/jquery.js" type="text/javascript"></script>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/croppie.js"></script>
 <!--end::Modal-->
 <!--begin:: Global Mandatory Vendors -->
-<script src="./assets/vendors/general/jquery/dist/jquery.js" type="text/javascript"></script>
+<script>
+
+    $("#btnSelectImagePath").click(function () {
+        $('#btnSelectImage').trigger('click');
+        debugger
+    });
+    var prodID = $("#productModal #productphoto").val();
+
+    var demo = $('#productModal .demo').croppie({
+
+        viewport: {
+            width: 100,
+            height: 100
+        },
+    });
+
+    $("#btnCropBase64").click(function () {
+        demo.croppie('result', {
+            type: "base64",
+            size: { width: 200, height: 200 }
+        }).then(function (base64) {
+            var img = $("<img/>").attr("src", base64);
+            $("#resultBase64").show();
+            $("#resultBase64").html(img);
+            $("#ImgBase64").val(base64);
+            //$("#saveForm").show();
+            debugger
+        });
+    });
+
+    $("#btnCropHtml").click(function () {
+        demo.croppie('result', 'html').then(function (html) {
+            $("#resultHtml").html(html);
+        });
+    });
+    function abc(photo) {
+        debugger
+        $("#btnCropBase64").hide();
+        $("#resultBase64").hide();
+
+        demo.croppie('bind', {
+
+            url: "." + photo,
+        });
+    }
+    function readURL(input) {
+        debugger
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                demo.croppie('bind', {
+                    url: e.target.result
+                }).then(function () {
+                    console.log('jQuery bind complete');
+                });
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+        $("#btnCropBase64").show();
+
+    }
+
+    $("#btnSelectImage").change(function () {
+        readURL(this);
+    });
+</script>
 
 <script>
     $(document).ready(function () {
