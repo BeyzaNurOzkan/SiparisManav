@@ -634,7 +634,7 @@ namespace PRMYTASSİST.Controllers
             return Json(StatementDetailList, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult getProductsReportHorizontal(string dateforSOR, int format, int region)
+        public JsonResult getProductsReportHorizontal(string dateforSOR/*, int format, int region*/)
         {
             DateTime date;
             DateTime date2;
@@ -669,7 +669,7 @@ namespace PRMYTASSİST.Controllers
             {
 
                 data = from product in db.Products
-                       from orderdetail in db.OrderDetails.Where(q => (db.Orders.Where(z => z.ID == q.OrderID && db.Branchs.Where(y => y.ID == z.BranchCode && y.isMaster == false && ((region != 0 && y.RegionID == region) || region == 0) && ((format != 0 && y.FormatID == format) || format == 0)).Select(y => y.ID).FirstOrDefault() == z.BranchCode).Select(h => h.ApprovalStatus).FirstOrDefault()) == 1 && q.CreateDate >= date && q.CreateDate < date2 && q.ProductID == product.ID).Select(t => t.ProductID).Distinct()
+                       from orderdetail in db.OrderDetails.Where(q => (db.Orders.Where(z => z.ID == q.OrderID && db.Branchs.Where(y => y.ID == z.BranchCode && y.isMaster == false /*&& ((region != 0 && y.RegionID == region) || region == 0) && ((format != 0 && y.FormatID == format) || format == 0)*/).Select(y => y.ID).FirstOrDefault() == z.BranchCode).Select(h => h.ApprovalStatus).FirstOrDefault()) == 1 && q.CreateDate >= date && q.CreateDate < date2 && q.ProductID == product.ID).Select(t => t.ProductID).Distinct()
 
                        from unit in db.Units.Where(q => product.ProductCode == q.StockCode && q.UnitCode == 2).DefaultIfEmpty()
                        from ProductGroup3s in db.ProductGroup3s.Where(q => product.ProductGroup3ID == q.ID).DefaultIfEmpty()

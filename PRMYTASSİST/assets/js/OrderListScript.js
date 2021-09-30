@@ -2723,10 +2723,46 @@ function UpdateSubtotal(value, id, productId, count) {
             sonuc.value = Number(sonuc.value) - 1;
         }
     }
+    else {
+        var sonuc = document.getElementById(`subTotalstate_` + productId);
+        sonuc.value = value
+    }
 
+    var capacity = document.getElementById(`MaxCapacity_` + productId);
+    var control = document.getElementById(`OrderControl_` + productId);
+    if (control) {
+    var c = parseInt(sonuc.value) + parseInt(count) - parseInt(capacity.value);
+    if (c >= 0 || c < 0) {
+
+    }
+    else {
+        c = count;
+    }
+    if (control.value == undefined) {
+        var control2 = $('#OrderControl_' + productId);
+        control2.removeClass();
+        if (c < 0) {
+            control.style.color = "red";
+        }
+        else {
+            control.style.color = "green";
+        }
+        control2.text(c);
+
+    }
+    else {
+        if (c < 0) {
+            control.style.color = "red";
+        }
+        else {
+            control.style.color = "green";
+        }
+        control.value = c;
+    }
+    }
     $.ajax({
         type: 'POST',
-        url: '/Order/ToBasketOtoOrderUpdate?productId=' + productId + '&OrderID=' + id + '&subTotal=' + count + '&count=' + value,
+        url: '/Order/ToBasketOtoOrderUpdate?productId=' + productId + '&OrderID=' + id + '&subTotal=' + count + '&count=' + sonuc.value,
         dataType: "json",
         dataType: "json",
         success: function (Total) {
@@ -2982,11 +3018,8 @@ function ShowBranchOrderListOffForBranch(id) {
                     var returnHtml = ``;
                     var subtotal = full['SubTotal'];
 
-                    if (full['SubTotal'] == 0) {
-                        var a = full['MaxCapacity'] - full['Quantity'];
-                        if (a == 0)
-                            subtotal = 0;
-                        else
+                    if (full['CheckBox'] == 1) {
+                       
                             subtotal = "Yok"
 
                     }

@@ -166,7 +166,7 @@
                                         <div class="tab-pane fade show active" id="TabPanel_@items.CodeRand" role="tabpanel" aria-labelledby="kt_tab_pane_2">
                                             <div class="kt-content  kt-grid__item kt-grid__item--fluid pt-2 mt-2 pl-0 ml-0 mr-0 pr-0" id="kt_content">
 
-                                                <table class="table table-striped- table-bordered table-hover table-checkable" id="table_@items.ID">
+                                                <table class="table table-striped- table-bordered table-hover table-checkable" id="table_@items.ID" data-name="mytable">
                                                     <thead>
                                                         <tr>
                                                             <th>Barkod</th>
@@ -190,7 +190,7 @@
                                         <div class="tab-pane fade" id="TabPanel_@items.CodeRand" role="tabpanel" aria-labelledby="kt_tab_pane_2">
                                             <div class="kt-content  kt-grid__item kt-grid__item--fluid pt-2 mt-2 pl-0 ml-0 mr-0 pr-0" id="kt_content">
 
-                                                <table class="table table-striped- table-bordered table-hover table-checkable" id="table1_@items.ID">
+                                                <table class="table table-striped- table-bordered table-hover table-checkable" id="table1_@items.ID" data-name="mytable">
                                                     <thead>
                                                         <tr>
                                                             <th>Barkod</th>
@@ -640,7 +640,14 @@
             alltables.forEach(function (table) {
                 tr = table.getElementsByTagName("tr");
                 for (i = 0; i < tr.length; i++) {
-                    td = tr[i].getElementsByTagName("td")[0];
+                    var url = window.location.href;
+                    var OrderCode = url.substring(url.lastIndexOf('?') + 1);
+                    if (OrderCode == "list") {
+                        td = tr[i].getElementsByTagName("td")[1];
+                    }
+                    else
+                        td = tr[i].getElementsByTagName("td")[0];
+
                     if (td) {
                         if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
                             tr[i].style.display = "";
