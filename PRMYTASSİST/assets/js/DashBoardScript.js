@@ -369,6 +369,7 @@ function waitingOrderCountScrpt() {
                 $('#waitingOrderCount').addClass('kt-badge--zero');
 
 
+
             }
         },
         error: function (request, status, error) {

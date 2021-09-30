@@ -136,9 +136,17 @@ namespace PRMYTASSİST.Controllers
             {
                 Product product = db.Products.Find(prodID);
                 int group2 = db.ProductGroup3s.Find(Category3ID).ProductGroup2ID;
+                if(product.Visible!=isVisible || ProductPhoto != null || product.ProductGroup3ID!=Category3ID)
+                {
+                User CurrentUser = Session["CurrentUser"] as User;
+                product.LastUpdateDate = DateTime.Now;
+                product.LastUpdateUserID = CurrentUser.ID;
+                }
                 product.Visible = isVisible;
                 product.ProductGroup3ID = Category3ID;
                 product.ProductGroup2ID = group2;
+                
+
                 if (ProductPhoto != null) { 
                 byte[] data = Convert.FromBase64String(ProductPhoto.Substring(22));
                 string fileName = Guid.NewGuid() + ".jpg";
@@ -1043,10 +1051,10 @@ namespace PRMYTASSİST.Controllers
             int subTotal2 = 0;
             int count2 = 0;
 
-            if (subTotal != "")
+            if (subTotal != " ")
                 subTotal2 = Convert.ToInt32(subTotal);
 
-            if (count != "")
+            if (count != " ")
                 count2 = Convert.ToInt32(count);
 
             if (bp == null)

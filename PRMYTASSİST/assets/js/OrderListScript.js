@@ -2465,13 +2465,9 @@ function ShowBranchOrderListOff(id) {
                 render: function (data, type, full, meta) {
                     var returnHtml = ``;
                     var subtotal = full['SubTotal'];
-                    if (full['SubTotal'] == 0) {
-                        var a = full['MaxCapacity'] - full['Quantity'];
-                        if (a == 0)
-                            subtotal = 0;
-                        else
-                            subtotal = "Yok"
-                    }
+                    if (full['CheckBox'] == 1 && full['SubTotal'] == 0)
+                        subtotal = "Yok";
+                   
                     if (full['SubTotal'] != "" && subtotal != "Yok") {
                         var totalPrintFormat = full['SubTotal'].toString();
                         var last = "";
@@ -2483,18 +2479,18 @@ function ShowBranchOrderListOff(id) {
                         }
                         returnHtml = `
                             <div class="row" style="justify-content: center;min-width:155px;">
-                                   <input type="button" class="btn btn-outline-brand btn-elevate" style="padding: 0.0rem 0.6rem; height: 2rem;font-size: 14px;" value="-" onclick="UpdateStateSubtotalneg(value,` + id + `,` + full['ID'] + `,` + full['Quantity'] + `)" id="subTotalstateneg_` + full['ID'] + `"/>
-                                   <input type="text" style="width: 90px;text-align: center;padding: 0rem 0.7rem;border-color: #ffe8d6;border-radius: 0px 0px 0px 0px; height:2rem; color:red;background-color: #ffe8d6;font-size: 1.3rem;" value="`+ last + `"  oninput="UpdateStateSubtotal(value,` + id + `,` + full['ID'] + `,` + full['Quantity'] + `)" class="form-control" id="subTotalstate_` + full['ID'] + `" />
-                                   <input type="button" class="btn btn-outline-brand btn-elevate" style="padding: 0.0rem 0.4rem; height: 2rem;font-size: 14px;" value="+" onclick="UpdateStateSubtotalplus(value,` + id + `,` + full['ID'] + `,` + full['Quantity'] + `)" id="subTotalstateplus_` + full['ID'] + `"/>
+                                   <input type="button" class="btn btn-outline-brand btn-elevate" style="padding: 0.0rem 0.6rem; height: 2rem;font-size: 14px;" value="-" onclick="UpdateSubtotal(value,` + id + `,` + full['ID'] + `,` + full['Quantity'] + `)" id="subTotalstateneg_` + full['ID'] + `"/>
+                                   <input type="text" style="width: 90px;text-align: center;padding: 0rem 0.7rem;border-color: #ffe8d6;border-radius: 0px 0px 0px 0px; height:2rem; color:red;background-color: #ffe8d6;font-size: 1.3rem;" value="`+ last + `"  oninput="UpdateSubtotal(value,` + id + `,` + full['ID'] + `,` + full['Quantity'] + `)" class="form-control" id="subTotalstate_` + full['ID'] + `" />
+                                   <input type="button" class="btn btn-outline-brand btn-elevate" style="padding: 0.0rem 0.4rem; height: 2rem;font-size: 14px;" value="+" onclick="UpdateSubtotal(value,` + id + `,` + full['ID'] + `,` + full['Quantity'] + `)" id="subTotalstateplus_` + full['ID'] + `"/>
 
                             </div>`;
                     }
                     else {
                         returnHtml = `
                             <div class="row" style="justify-content: center;min-width:155px;">
-                                   <input type="button" class="btn btn-outline-brand btn-elevate" style="padding: 0.0rem 0.6rem; height: 2rem;font-size: 14px;" value="-" onclick="UpdateStateSubtotalneg(value,` + id + `,` + full['ID'] + `,` + full['Quantity'] + `)" id="subTotalstateneg_` + full['ID'] + `"/>
+                                   <input type="button" class="btn btn-outline-brand btn-elevate" style="padding: 0.0rem 0.6rem; height: 2rem;font-size: 14px;" value="-" onclick="UpdateSubtotal(value,` + id + `,` + full['ID'] + `,` + full['Quantity'] + `)" id="subTotalstateneg_` + full['ID'] + `"/>
                                    <input type="text" style="width: 90px;text-align: center;padding: 0rem 0.7rem;border-color: #ffe8d6;border-radius: 0px 0px 0px 0px; height:2rem; color:blue;background-color: #ffe8d6;font-size: 1.3rem;" value="`+ subtotal + `"   class="form-control" id="subTotalstate_` + full['ID'] + `" />
-                                   <input type="button" class="btn btn-outline-brand btn-elevate" style="padding: 0.0rem 0.4rem; height: 2rem;font-size: 14px;" value="+" onclick="UpdateStateSubtotalplus(value,` + id + `,` + full['ID'] + `,` + full['Quantity'] + `)" id="subTotalstateplus_` + full['ID'] + `"/>
+                                   <input type="button" class="btn btn-outline-brand btn-elevate" style="padding: 0.0rem 0.4rem; height: 2rem;font-size: 14px;" value="+" onclick="UpdateSubtotal(value,` + id + `,` + full['ID'] + `,` + full['Quantity'] + `)" id="subTotalstateplus_` + full['ID'] + `"/>
 
                             </div>`
                     }
@@ -2705,6 +2701,48 @@ function UpdateStateSubtotalneg(value, id, productId, count) {
     });
 
 };
+
+function UpdateSubtotal(value, id, productId, count) {
+    debugger
+    if (value == "+") {
+        var sonuc = document.getElementById(`subTotalstate_` + productId);
+        $('#subTotalstateplus_' + id).prop('disabled', true);
+
+        if (sonuc.value >= 0) {
+            sonuc.value = Number(sonuc.value) + 1;
+        }
+        else if (sonuc.value == "Yok") {
+            sonuc.value = 1;
+            sonuc.style.color = "red";
+        }
+    }
+    else if (value == "-") {
+        var sonuc = document.getElementById(`subTotalstate_` + productId);
+        $('#subTotalstateneg_' + id).prop('disabled', true);
+        if (sonuc.value > 0) {
+            sonuc.value = Number(sonuc.value) - 1;
+        }
+    }
+
+    $.ajax({
+        type: 'POST',
+        url: '/Order/ToBasketOtoOrderUpdate?productId=' + productId + '&OrderID=' + id + '&subTotal=' + count + '&count=' + value,
+        dataType: "json",
+        dataType: "json",
+        success: function (Total) {
+            if (value == "+") {
+                $('#subTotalstateplus_' + id).prop('disabled', false);
+            }
+            else if (value == "-") {
+                $('#subTotalstateneg_' + id).prop('disabled', false);
+            }
+        },
+    });
+};
+
+
+
+
 function ShowBranchOrderListOffForBranch(id) {
     var user = "";
     var table = $('#kt_table_getShowBranchOrderListOffCenter');
