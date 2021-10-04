@@ -1,4 +1,4 @@
-﻿function getProductsReportHorizontal(days, format, region) {
+﻿function getProductsReportHorizontal(days/*, format, region*/) {
     debugger
     var color = "blue";
 
@@ -7,7 +7,7 @@
         "bDestroy": true,
 
         ajax: {
-            url: '/Definition/getProductsReportHorizontal?dateforSOR=' + days + '&format=' + format + '&region=' + region,
+            url: '/Definition/getProductsReportHorizontal?dateforSOR=' + days /*+ '&format=' + format + '&region=' + region*/,
             type: 'POST',
         },
         "pageLength": -1,

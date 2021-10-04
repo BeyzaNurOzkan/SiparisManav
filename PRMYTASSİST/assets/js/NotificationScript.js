@@ -17,7 +17,7 @@
                     $('#NotificationCount').text(data[i]['notReadCount']);
                     var notification = data[i]['notReadCount'];
                     debugger
-                    if (controlOne!=0)
+                    if (notification!=0)
                         $('#NotificationCountring').addClass('kt-pulse__ring');
                     
 
