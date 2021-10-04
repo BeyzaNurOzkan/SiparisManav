@@ -180,12 +180,35 @@
                     </div>
                 </div>
             </div>
+            <div class="kt-portlet__body pt-2">
+                <div class="row">
+                    <div class="col-lg-3  pt-2  pl-1 " style=" align-self: center;text-align:left; ">
+                        <h5 class="pre-with-output mr-0 pr-0 ml-0 pl-0" style="color:black; ">Ana Kategori Seç</h5>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 pt-2 pl-0 pr-0" style=" align-self: center; ">
+                        <select id="ProductGroup" class="custom-select form-control pl-2 pr-1 selectpicker" name="ProductGroup">
+                            @foreach (var item in productGroups)
+                            {
+
+                                <option value="@item.ID">@item.Name.ToUpper() </option>
+
+                            }
+                        </select>
+                    </div>
+                    <div class=" col-md-3 pt-2 pr-2 pl-2">
+                        <input type="text" id="myInput" style="font-size:11px" class="form-control" onkeyup="myFunction(this.value)" placeholder="Ara..." title="">
+                    </div>
+                    <div class="col-md-3 pt-2 pr-2 pl-2">
+                        <input type="text" id="userName" name="userName" class="form-control" style="font-size:11px" placeholder="Siparişi Oluşturan Kişi" required>
+                    </div>
+                </div>
+            </div>
             <div class="kt-portlet__body pt-2" id="newOrder">
                 <!--begin: Datatable -->
 
                 <div class="kt-content  kt-grid__item kt-grid__item--fluid pt-1 pb-0 mb-0 pr-1 pl-1" id="kt_content">
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <ul class="nav nav-pills mb-3" id="myTab" name="myTab" role="tablist">
 
                                 @foreach (var items in productGroup2s.OrderBy(q => q.ID))
@@ -211,14 +234,7 @@
 
                             </ul>
                         </div>
-                        <div class=" col-md-3 pt-2 pr-2 pl-2">
-                            <input type="text" id="myInput" style="font-size:11px" class="form-control" onkeyup="myFunction(this.value)" placeholder="Ara..." title="">
-                        </div>
-                        <div class="col-md-3 pt-2 pr-2 pl-2">
-                            <input type="text" id="userName" name="userName" class="form-control" style="font-size:11px" placeholder="Siparişi Oluşturan Kişi" required>
-
-
-                        </div>
+                       
 
                     </div>
                 </div>
