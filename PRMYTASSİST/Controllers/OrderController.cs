@@ -127,6 +127,22 @@ namespace PRMYTASSİST.Controllers
             };
             return Json(ProductQuantityList, JsonRequestBehavior.AllowGet);
         }
+        public JsonResult getProductGroup2(string ProductGroup)
+        {
+            int productgroup2 = Convert.ToInt32(ProductGroup);
+            var DetailsList = new
+            {
+                data = from productGroup2s in db.ProductGroup2s.Where(q=>q.ProductGroupID==productgroup2)
+                       select new
+                       {
+                           ID=productGroup2s.ID,
+                           Code=productGroup2s.CodeRand,
+                           Name=productGroup2s.Name
+                       }
+            };
+            return Json(DetailsList, JsonRequestBehavior.AllowGet);
+
+        }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public JsonResult SaveAllForProductDet(int prodID, bool isVisible, int Category3ID, string ProductPhoto)

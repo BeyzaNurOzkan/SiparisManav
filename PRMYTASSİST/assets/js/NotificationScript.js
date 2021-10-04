@@ -6,7 +6,7 @@
         success: function (data) {
             var List = "";
             var c = data.length;
-            debugger
+            
             var controlOne = $('#NotificationCount').text();
             if (controlOne == c) {
 
@@ -16,7 +16,7 @@
                 for (var i = 0; i < c; i++) {
                     $('#NotificationCount').text(data[i]['notReadCount']);
                     var notification = data[i]['notReadCount'];
-                    debugger
+                    
                     if (notification!=0)
                         $('#NotificationCountring').addClass('kt-pulse__ring');
                     

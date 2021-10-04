@@ -24,7 +24,7 @@ $('#kt_datepicker_21').change(function myfunction() {
     getProductsReportHorizontal(dateID, format, region);
 });
 function getOrderProducts(groupId, branchID) {
-    debugger
+    
     var date = $('#kt_datepicker_2').val();
     for (var i = 1; i < 5; i++) {
        
@@ -74,7 +74,7 @@ function getOrderProducts(groupId, branchID) {
                             discount = 1;
                         var subtotal = full['subtotal'];
                         var Required = "";
-                        debugger
+                        
                         if (full['settings'] == "1") {
 
                             Required = "required";
@@ -206,7 +206,7 @@ function getOrderProducts(groupId, branchID) {
                         }
                         var maxcapacity = Number(full['MaxCapacity']);
                         var capacityval = (maxcapacity).toLocaleString('tr');
-                        debugger
+                        
                         var siparismiktar = full['quantity'];
                         if (full['subtotal'] != "") {
                             var eldekistok = full['subtotal'];
@@ -411,7 +411,7 @@ function getOrderProducts(groupId, branchID) {
 };
 
 function getOrderProductsListViewCap(groupId, branchID) {
-    debugger
+    
     var table = $("#tablenewCap_" + groupId);
 
     var date = $('#kt_datepicker_2').val();
@@ -683,7 +683,7 @@ function getOrderProductsListViewCap(groupId, branchID) {
                     var returnHtml;
                     var colorUnit;
                     var Required = "";
-                    debugger
+                    
                     if (full['settings'] == "1") {
 
                         Required = "required";
@@ -2883,6 +2883,93 @@ $('#branch').change(function () {
     orderAbsBranch(branchID);
     getOrderAbs(branchID);
 });
+function getProductGroup2(ProductGroup) {
+    debugger
+    var tab = document.getElementById(`myTab`);
+    $.ajax({
+        type: "POST",
+        url: '/Order/getProductGroup2?ProductGroup=' + ProductGroup,
+        success: function (data) {
+            debugger
+            var c = data.data.length;
+            for (var i = 0; i < c; i++) {
+                if (i == 0)
+                    tab.innerHTML += ` <li class="nav-item mt-1 mb-2" style=" border: 1px solid #003366; background-color: #ffb82236; border-radius: 0.25rem; ">
+      <a class="nav-link active" style = "min-width: 100px; text-align: center;" id="profile-tab" data-toggle="tab" href="#TabPanel_`+ data.data[i]['Code'] + `" role = "tab" aria-controls="profile" aria-selected="false" > <b>` + data.data[i]['Name']+`</b></a>
+                                        </li>`;
+                else {
+                    tab.innerHTML += ` <li class="nav-item mt-1 mb-2" style=" border: 1px solid #003366; background-color: #ffb82236; border-radius: 0.25rem; ">
+      <a class="nav-link" style = "min-width: 100px; text-align: center;" id="profile-tab" data-toggle="tab" href="#TabPanel_`+ data.data[i]['Code'] + `" role = "tab" aria-controls="profile" aria-selected="false" > <b>` + data.data[i]['Name'] + `</b></a>
+                                        </li>`;
+                }
+            }
+            tab.innerHTML += `<li class="nav-item mt-1 mb-2" style="border: 1px solid #003366; background-color: #ffb82236; border-radius: 0.25rem; ">
+                <a class="nav-link" style="min-width: 100px; text-align: center;" id="profile-tab" data-toggle="tab" href="#OrderBrief" role="tab" aria-controls="profile" aria-selected="false" onclick="reloadtableabs()"><b>SİPARİŞ ÖZETİ</b></a>
+            </li>`;
+           
+            
+            
+           
+        },
+        error: function (request, status, error) {
+            debugger
+            swal.fire("Hata!", "Bir sorun ile karşılaşıldı! Sipariş No bulunamadı", "error");
+        }
+    });
+    
+};
+$('#ProductGroup').change(function () {
+    debugger
+    var branchID = $('#branch').val();
+    var url = window.location.href;
+    var OrderCode = url.substring(url.lastIndexOf('?') + 1);
+    var settings = $('#settings').val();
+    var settings2 = $('#settings2').val();
+
+    if (settings == "1" && settings2 == "1") {
+        if (OrderCode == "list") {
+            $("#groupIds > option").each(function () {
+                getOrderProductsListViewCap(this.value, branchID);
+            });
+        }
+        else {
+            $("#groupIds > option").each(function () {
+                getOrderProductsCap(this.value, branchID);
+            });
+        }
+    }
+    else {
+        if (OrderCode == "list") {
+            $("#groupIds > option").each(function () {
+                getOrderProductsListView(this.value, branchID);
+
+
+
+            });
+            if (settings == "0") {
+
+                $("#groupIds > option").each(function () {
+                    debugger
+                    let group = Number(this.value);
+
+                    var table = $("#tablenew_" + group).DataTable();
+
+                    table.column(6).visible(false);
+                    table.column(7).visible(false);
+
+                });
+
+            }
+
+        }
+        else {
+            $("#groupIds > option").each(function () {
+                getOrderProducts(this.value, branchID);
+            });
+        }
+    }
+});
+
 function orderAbsBranch(branchID) {
     $.ajax({
         type: "POST",
