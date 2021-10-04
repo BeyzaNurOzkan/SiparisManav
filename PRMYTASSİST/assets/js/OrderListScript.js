@@ -639,7 +639,13 @@ function getBranchOrderListCenter(StartDate, EndDate) {
             {
                 data: 'UserName',
                 orderable: false,
-                width: "14%",
+                width: "10%",
+            },
+            {
+                data: 'SaveDetails',
+                orderable: false,
+                width: "10%",
+                visible: false
             },
             {
                 data: 'İşlemler',

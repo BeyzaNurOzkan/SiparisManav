@@ -15,10 +15,10 @@ namespace PRMYTASSİST.Controllers
 
         // GET: Branch 
         public ActionResult Index()
-        { 
+        {
             return View();
         }
-       
+
         public ActionResult BranchDefinition()
         {
             return View();
@@ -67,7 +67,7 @@ namespace PRMYTASSİST.Controllers
                            BranchCreatedDate = braches.LastUpdateDate,
                            Regions = region.Name.ToUpper(),
                            isMaster = braches.isMaster,
-                           user = from bra in db.Branchs.Where(q=>q.UserID!=null).OrderBy(z => z.LastUpdateDate).Take(1)
+                           user = from bra in db.Branchs.Where(q => q.UserID != null).OrderBy(z => z.LastUpdateDate).Take(1)
                                   from user in db.Users.Where(q => q.ID == bra.UserID)
                                   select user.FirstName + " " + user.LastName,
                        }
@@ -211,7 +211,7 @@ namespace PRMYTASSİST.Controllers
             {
                 data =
                        from braches in db.Branchs.Where(q => q.isMaster == false && ((region != 0 && q.RegionID == region) || region == 0) && ((format != 0 && q.FormatID == format) || format == 0))
-                       from order in db.Orders.Where(q=> q.CreateDate >= date && q.CreateDate < date2 && q.BranchCode==braches.ID && q.ApprovalStatus==1)
+                       from order in db.Orders.Where(q => q.CreateDate >= date && q.CreateDate < date2 && q.BranchCode == braches.ID && q.ApprovalStatus == 1)
 
                        select new
                        {
@@ -358,9 +358,9 @@ namespace PRMYTASSİST.Controllers
 
             var branchformatlist = new
             {
-                data = 
+                data =
                        from branch in db.Branchs.OrderBy(z => z.BranchName).ToList()
-                       from order in db.Orders.Where(q => q.CreateDate >= date && q.CreateDate < date2 && q.BranchCode==branch.ID).Take(1)
+                       from order in db.Orders.Where(q => q.CreateDate >= date && q.CreateDate < date2 && q.BranchCode == branch.ID).Take(1)
                        select new
                        {
                            BranchNameTrue = branch.BranchName.ToUpper(),
@@ -387,8 +387,8 @@ namespace PRMYTASSİST.Controllers
 
             var branchformatlist = new
             {
-                data = 
-                       from branch in db.Branchs.Where(z=> z.isMaster!=true  && z.Visible == true && !db.Orders.Where(q => q.CreateDate >= date && q.CreateDate < date2).Select(i => i.BranchCode).Contains(z.ID)).OrderBy(z=>z.BranchName).ToList()
+                data =
+                       from branch in db.Branchs.Where(z => z.isMaster != true && z.Visible == true && !db.Orders.Where(q => q.CreateDate >= date && q.CreateDate < date2).Select(i => i.BranchCode).Contains(z.ID)).OrderBy(z => z.BranchName).ToList()
                        select new
                        {
                            BranchNameFalse = branch.BranchName.ToUpper(),
@@ -648,7 +648,7 @@ namespace PRMYTASSİST.Controllers
                        from unit in db.Units.Where(q => product.ProductCode == q.StockCode && q.UnitCode == 2).DefaultIfEmpty()
                        from ProductGroup3s in db.ProductGroup3s.Where(q => product.ProductGroup3ID == q.ID).DefaultIfEmpty()
                        from ProductGroup2ss in db.ProductGroup2s.Where(q => ProductGroup3s.ProductGroup2ID == q.ID).DefaultIfEmpty()
-                       from barcode4 in db.barcodeModels.Where(q => q.Code == "Tanımsız").Take(1) 
+                       from barcode4 in db.barcodeModels.Where(q => q.Code == "Tanımsız").Take(1)
                        from barcode in db.barcodeModels.Where(q => product.ProductCode == q.StockCode).OrderByDescending(q => q.IsMaster).Take(1).DefaultIfEmpty(barcode4).DefaultIfEmpty(barcode4)
                        select new
                        {
@@ -754,7 +754,7 @@ namespace PRMYTASSİST.Controllers
                                from unit in db.Units.Where(q => q.StockCode == product.ProductCode && q.UnitCode == 2)
                                select new
                                {
-                                   orderDet, 
+                                   orderDet,
                                    unit,
                                };
                     shipmentSummary.Safe = (data.Where(q => q.unit.Name.ToUpper() == "KASA").Select(q => q.orderDet.SubTotal).DefaultIfEmpty().Sum()).ToString();
@@ -857,11 +857,11 @@ namespace PRMYTASSİST.Controllers
                                       from orderDet in order.orderDetails
                                       from product in db.Products.Where(q => q.ID == orderDet.ProductID)
                                       from unit in db.Units.Where(q => q.StockCode == product.ProductCode && q.UnitCode == 2 && q.Name.ToUpper() == "KASA")
-                                      select orderDet.SubTotal).Sum() / settings)+0+ ((from order in db.Orders.Where(q => q.BranchCode == branch.ID && q.CreateDate >= date && q.CreateDate < date2 && q.ApprovalStatus == 1)
-                                                      from orderDet in order.orderDetails
-                                                      from product in db.Products.Where(q => q.ID == orderDet.ProductID)
-                                                      from unit in db.Units.Where(q => q.StockCode == product.ProductCode && q.UnitCode == 2 && q.Name.ToUpper() == "ADET")
-                                                      select orderDet.SubTotal+1).Sum() / settings / settings2) .ToString()
+                                      select orderDet.SubTotal).Sum() / settings) + 0 + ((from order in db.Orders.Where(q => q.BranchCode == branch.ID && q.CreateDate >= date && q.CreateDate < date2 && q.ApprovalStatus == 1)
+                                                                                          from orderDet in order.orderDetails
+                                                                                          from product in db.Products.Where(q => q.ID == orderDet.ProductID)
+                                                                                          from unit in db.Units.Where(q => q.StockCode == product.ProductCode && q.UnitCode == 2 && q.Name.ToUpper() == "ADET")
+                                                                                          select orderDet.SubTotal + 1).Sum() / settings / settings2).ToString()
 
                        }
             };
@@ -870,6 +870,7 @@ namespace PRMYTASSİST.Controllers
 
         public JsonResult GetBranchesOrder(String StartDate, String EndDate)
         {
+
             DateTime date;
             DateTime date2;
             if (StartDate == "" || EndDate == "")
@@ -890,8 +891,8 @@ namespace PRMYTASSİST.Controllers
                 data = from order in db.Orders.Where(q => q.CreateDate >= date && q.CreateDate < date2)
                        from branch in db.Branchs.Where(q => order.BranchCode == q.ID)
                        from user in db.Users.Where(q => q.ID == order.userID).DefaultIfEmpty()
-                       from format in db.branchFormats.Where(q=>q.ID==branch.FormatID)
-                       from region in db.Regions.Where(q=>q.ID==branch.RegionID)
+                       from format in db.branchFormats.Where(q => q.ID == branch.FormatID)
+                       from region in db.Regions.Where(q => q.ID == branch.RegionID)
                        select new
                        {
                            ID = order.ID,
@@ -902,6 +903,7 @@ namespace PRMYTASSİST.Controllers
                            ApprovalStatus = order.ApprovalStatus,
                            BranchName = branch.BranchName.ToUpper(),
                            UserName = order.userName.ToUpper(),
+                           SaveDetails = user.FirstName.ToUpper() + " " + user.LastName.ToUpper(),
                            //Kasa=from orderget in db.OrderDetails.Where(q=> db.Units.Where(z=>z.StockCode==product.ProductCode && z.UnitCode==2).Select(y=>y.Name).FirstOrDefault().ToUpper() == "KASA" && q.OrderID==order.ID),
                            Safe = (from orderDet in order.orderDetails
                                    from product in db.Products.Where(q => q.ID == orderDet.ProductID)
@@ -915,8 +917,8 @@ namespace PRMYTASSİST.Controllers
                                    from product in db.Products.Where(q => q.ID == orderDet.ProductID)
                                    from unit in db.Units.Where(q => q.StockCode == product.ProductCode && q.UnitCode == 2 && q.Name.ToUpper() == "KASA")
                                    select orderDet.SubTotal).Sum() / settings).ToString(),
-                          Region=region.Name.ToUpper(),
-                          Format= format.FormatName.ToUpper()
+                           Region = region.Name.ToUpper(),
+                           Format = format.FormatName.ToUpper()
 
                        }
 
@@ -1117,7 +1119,7 @@ namespace PRMYTASSİST.Controllers
                 appcount1 = c,
                 appcount2 = d,
                 BranchCount = branchc,
-                fark=fark
+                fark = fark
             };
             return Json(OrderList, JsonRequestBehavior.AllowGet);
         }
