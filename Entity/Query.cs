@@ -18,6 +18,14 @@ namespace Entity
         {
             return db.storeStocks.AsNoTracking().ToList();
         }
+        public static List<Order> orders()
+        {
+            return db.Orders.AsNoTracking().ToList();
+        }
+        public static List<OrderDetail> orderDetails()
+        {
+            return db.OrderDetails.AsNoTracking().ToList();
+        }
         public static List<Settings> settings()
         {
             return db.Settings.AsNoTracking().ToList();

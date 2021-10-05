@@ -24,11 +24,12 @@ $('#kt_datepicker_21').change(function myfunction() {
     getProductsReportHorizontal(dateID, format, region);
 });
 function getOrderProducts(groupId, branchID) {
-    
+    debugger
     var date = $('#kt_datepicker_2').val();
     for (var i = 1; i < 5; i++) {
        
-        var tables = $("#tablenew"+i+"_" + groupId);
+        var tables = $("#tablenew" + i + "_");
+
         var t = tables.DataTable({
             "bDestroy": true,
             "paging": false,
@@ -351,7 +352,7 @@ function getOrderProducts(groupId, branchID) {
             "destroy": true,
 
         });
-        
+
         tables.on('change', '.SelectBranch', function () {
 
             var set = $(this).closest('tables').find('td:first-child .kt-checkable');
@@ -412,7 +413,7 @@ function getOrderProducts(groupId, branchID) {
 
 function getOrderProductsListViewCap(groupId, branchID) {
     
-    var table = $("#tablenewCap_" + groupId);
+    var table = $("#tablenewCap_");
 
     var date = $('#kt_datepicker_2').val();
     var t = table.DataTable({
@@ -502,7 +503,7 @@ function getOrderProductsListViewCap(groupId, branchID) {
             },
          
         ],
-        order: [[1, 'asc'], [1, 'asc']],
+        order: [[5, 'asc'], [1, 'asc']],
         columnDefs: [
             {
                 orderable: false,
@@ -890,7 +891,7 @@ function getOrderProductsCap(groupId, branchID) {
 
     var date = $('#kt_datepicker_2').val();
     for (var i = 1; i < 5; i++) {
-        var tables = $("#tablenewcapa" + i + "_" + groupId);
+        var tables = $("#tablenewcapa" + i + "_" );
         
         var t = tables.DataTable({
             ajax: {
@@ -1285,7 +1286,7 @@ function getOrderProductsCap(groupId, branchID) {
 };
 function getOrderProductsListView(groupId, branchID) {
     
-    var table = $("#tablenew_" + groupId);
+    var table = $("#tablenew_" );
 
     var date = $('#kt_datepicker_2').val();
     var t = table.DataTable({
@@ -1362,7 +1363,7 @@ function getOrderProductsListView(groupId, branchID) {
             },
           
         ],
-        order:  [1, 'asc'],
+        order: [[5, 'asc'], [1, 'asc']],
         columnDefs: [
             {
                 orderable: false,
@@ -2827,86 +2828,36 @@ $('#categoryForOrder').change(function () {
 });
 $('#branch').change(function () {
     debugger
-    var branchID = this.value;
-    var url = window.location.href;
-    var OrderCode = url.substring(url.lastIndexOf('?') + 1);
-    var settings = $('#settings').val();
-    var settings2 = $('#settings2').val();
-
-    if (settings == "1" && settings2 == "1") {
-        if (OrderCode == "list") {
-            $("#groupIds > option").each(function () {
-                getOrderProductsListViewCap(this.value, branchID);
-            });
-        }
-        else {
-            $("#groupIds > option").each(function () {
-                getOrderProductsCap(this.value, branchID);
-            });
-        }
-    }
-    else {
-        if (OrderCode == "list") {
-            $("#groupIds > option").each(function () {
-                getOrderProductsListView(this.value, branchID);
-
-
-
-            });
-            if (settings == "0") {
-
-                $("#groupIds > option").each(function () {
-                    debugger
-                    let group = Number(this.value);
-
-                    var table = $("#tablenew_" + group).DataTable();
-
-                    table.column(6).visible(false);
-                    table.column(7).visible(false);
-
-                });
-
-            }
-
-        }
-        else {
-            $("#groupIds > option").each(function () {
-                getOrderProducts(this.value, branchID);
-            });
-        }
-    }
+    var ProductGroup = $('#ProductGroup').val();
+    getProductGroup2(ProductGroup, this.value);
 });
-$('#branch').change(function () {
-    
-    var branchID = $('#branch').val();
-    //ProductFormat(branchID);
-    orderAbsBranch(branchID);
-    getOrderAbs(branchID);
-});
-function getProductGroup2(ProductGroup) {
+
+function getProductGroup2(ProductGroup, branchID) {
     debugger
     var tab = document.getElementById(`myTab`);
+    tab.innerHTML = '';
     $.ajax({
         type: "POST",
-        url: '/Order/getProductGroup2?ProductGroup=' + ProductGroup,
+        url: '/Order/getProductGroup2?ProductGroup=' + ProductGroup + '&branchID=' + branchID ,
         success: function (data) {
             debugger
             var c = data.data.length;
             for (var i = 0; i < c; i++) {
+                if (data.data[i]['Count'] != 0) {
                 if (i == 0)
                     tab.innerHTML += ` <li class="nav-item mt-1 mb-2" style=" border: 1px solid #003366; background-color: #ffb82236; border-radius: 0.25rem; ">
-      <a class="nav-link active" style = "min-width: 100px; text-align: center;" id="profile-tab" data-toggle="tab" href="#TabPanel_`+ data.data[i]['Code'] + `" role = "tab" aria-controls="profile" aria-selected="false" > <b>` + data.data[i]['Name']+`</b></a>
+      <a class="nav-link active" style = "min-width: 100px; text-align: center;" id="profile-tab" data-toggle="tab" href="#TabPanel_" role = "tab" aria-controls="profile" aria-selected="false" onclick="reloadtable(` + data.data[i]['ID'] + `)"> <b>` + data.data[i]['Name'] + ` (` + data.data[i]['Count']+`)</b></a>
                                         </li>`;
                 else {
                     tab.innerHTML += ` <li class="nav-item mt-1 mb-2" style=" border: 1px solid #003366; background-color: #ffb82236; border-radius: 0.25rem; ">
-      <a class="nav-link" style = "min-width: 100px; text-align: center;" id="profile-tab" data-toggle="tab" href="#TabPanel_`+ data.data[i]['Code'] + `" role = "tab" aria-controls="profile" aria-selected="false" > <b>` + data.data[i]['Name'] + `</b></a>
+      <a class="nav-link" style = "min-width: 100px; text-align: center;" id="profile-tab" data-toggle="tab" href="#TabPanel_" role = "tab" aria-controls="profile" aria-selected="false"onclick="reloadtable(` + data.data[i]['ID'] + `)" > <b>` + data.data[i]['Name'] + ` (` + data.data[i]['Count']+`)</b></a>
                                         </li>`;
-                }
+                }}
             }
             tab.innerHTML += `<li class="nav-item mt-1 mb-2" style="border: 1px solid #003366; background-color: #ffb82236; border-radius: 0.25rem; ">
                 <a class="nav-link" style="min-width: 100px; text-align: center;" id="profile-tab" data-toggle="tab" href="#OrderBrief" role="tab" aria-controls="profile" aria-selected="false" onclick="reloadtableabs()"><b>SİPARİŞ ÖZETİ</b></a>
             </li>`;
-           
+            reloadtable(data.data[0]['ID']);
             
             
            
@@ -2920,55 +2871,56 @@ function getProductGroup2(ProductGroup) {
 };
 $('#ProductGroup').change(function () {
     debugger
+   
+    var branchID = $('#branch').val();
+
+    getProductGroup2(this.value, branchID);
+});
+
+$('#ProductGroupUp').change(function () {
+    debugger
+
     var branchID = $('#branch').val();
     var url = window.location.href;
-    var OrderCode = url.substring(url.lastIndexOf('?') + 1);
-    var settings = $('#settings').val();
-    var settings2 = $('#settings2').val();
-
-    if (settings == "1" && settings2 == "1") {
-        if (OrderCode == "list") {
-            $("#groupIds > option").each(function () {
-                getOrderProductsListViewCap(this.value, branchID);
-            });
-        }
-        else {
-            $("#groupIds > option").each(function () {
-                getOrderProductsCap(this.value, branchID);
-            });
-        }
-    }
-    else {
-        if (OrderCode == "list") {
-            $("#groupIds > option").each(function () {
-                getOrderProductsListView(this.value, branchID);
-
-
-
-            });
-            if (settings == "0") {
-
-                $("#groupIds > option").each(function () {
-                    debugger
-                    let group = Number(this.value);
-
-                    var table = $("#tablenew_" + group).DataTable();
-
-                    table.column(6).visible(false);
-                    table.column(7).visible(false);
-
-                });
-
-            }
-
-        }
-        else {
-            $("#groupIds > option").each(function () {
-                getOrderProducts(this.value, branchID);
-            });
-        }
-    }
+    var orderCodez = url.split('?')[1];
+    var OrderCode = orderCodez.substring(orderCodez.lastIndexOf('=') + 1);
+    getProductGroup2Up(this.value, branchID, OrderCode);
 });
+function getProductGroup2Up(ProductGroup, branchID, OrderCode) {
+    debugger
+    var tab = document.getElementById(`myTabUp`);
+    tab.innerHTML = '';
+    $.ajax({
+        type: "POST",
+        url: '/Order/getProductGroup2?ProductGroup=' + ProductGroup + '&branchID=' + branchID,
+        success: function (data) {
+            debugger
+            var c = data.data.length;
+            for (var i = 0; i < c; i++) {
+                if (data.data[i]['Count'] != 0) {
+                    if (i == 0)
+                        tab.innerHTML += ` <li class="nav-item mt-1 mb-2" style=" border: 1px solid #003366; background-color: #ffb82236; border-radius: 0.25rem; ">
+      <a class="nav-link active" style = "min-width: 100px; text-align: center;" id="profile-tab" data-toggle="tab" href="#TabPanel_" role = "tab" aria-controls="profile" aria-selected="false" onclick="reloadTableUpdate(` + OrderCode + `,` + data.data[i]['ID'] + `)"> <b>` + data.data[i]['Name'] + ` (` + data.data[i]['Count'] + `)</b></a>
+                                        </li>`;
+                    else {
+                        tab.innerHTML += ` <li class="nav-item mt-1 mb-2" style=" border: 1px solid #003366; background-color: #ffb82236; border-radius: 0.25rem; ">
+      <a class="nav-link" style = "min-width: 100px; text-align: center;" id="profile-tab" data-toggle="tab" href="#TabPanel_" role = "tab" aria-controls="profile" aria-selected="false"onclick="reloadTableUpdate(` + OrderCode + `,` + data.data[i]['ID'] + `)" > <b>` + data.data[i]['Name'] + ` (` + data.data[i]['Count'] + `)</b></a>
+                                        </li>`;
+                    }
+                }
+            }
+            tab.innerHTML += `<li class="nav-item mt-1 mb-2" style="border: 1px solid #003366; background-color: #ffb82236; border-radius: 0.25rem; ">
+                <a class="nav-link" style="min-width: 100px; text-align: center;" id="profile-tab" data-toggle="tab" href="#OrderBrief" role="tab" aria-controls="profile" aria-selected="false" onclick="reloadTableAbsUpdate()"><b>SİPARİŞ ÖZETİ</b></a>
+            </li>`;
+            reloadTableUpdate(OrderCode,data.data[0]['ID']);
+        },
+        error: function (request, status, error) {
+            debugger
+            swal.fire("Hata!", "Bir sorun ile karşılaşıldı! Sipariş No bulunamadı", "error");
+        }
+    });
+
+};
 
 function orderAbsBranch(branchID) {
     $.ajax({
@@ -3051,6 +3003,40 @@ function refreshPage() {
         type: 'POST',
         url: '/Order/refreshPage',
     });
+};
+function reloadtable(GroupId) {
+    debugger
+   
+    var branchID = $('#branch').val();
+   
+    var url = window.location.href;
+    var OrderCode = url.substring(url.lastIndexOf('?') + 1);
+    var settings = $('#settings').val();
+    var settings2 = $('#settings2').val();
+
+    if (settings == "1" && settings2 == "1") {
+        if (OrderCode == "list") {         
+            getOrderProductsListViewCap(GroupId, branchID);         
+        }
+        else {           
+                getOrderProductsCap(GroupId, branchID);         
+        }
+    }
+    else {
+        if (OrderCode == "list") {           
+            getOrderProductsListView(GroupId, branchID);           
+            if (settings == "0") {              
+                    debugger
+                    let group = Number(GroupId);
+                    var table = $("#tablenew_" ).DataTable();
+                    table.column(6).visible(false);
+                    table.column(7).visible(false);
+            }
+        }
+        else {         
+            getOrderProducts(GroupId, branchID);          
+        }
+    }
 };
 function reloadtableabs() {
     var branchID = $('#branch').val();
@@ -3412,6 +3398,7 @@ function getOrderAbs(branchID) {
         },
 
     });
+    table.DataTable().ajax.reload();
     t.on('draw.dt', function () {
         var PageInfo = $('#tableOrderAbstract').DataTable().page.info();
         t.column(0, { page: 'current' }).nodes().each(function (cell, i) {

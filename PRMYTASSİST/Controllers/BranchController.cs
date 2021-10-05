@@ -97,7 +97,7 @@ namespace PRMYTASSİST.Controllers
         {
             var brancList = new
             {
-                data = from braches in db.Branchs.Where(q => q.isMaster == false && (q.Regions.ID == 0))
+                data = from braches in db.Branchs.Where(q => q.isMaster == false && (q.Regions.ID == 0 || q.Regions.ID==null))
                        select new
                        {
                            ID = braches.ID,
