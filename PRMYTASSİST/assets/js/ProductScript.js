@@ -16,7 +16,7 @@
         'stripeClasses': ['stripe1', 'stripe2'],
         dom: `<'row'<'col-sm-3 text-left'f><'col-sm-9 text-right'B>>
 			<'row'<'col-sm-12'tr>>
-			<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
+			<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-2 dataTables_pager'lp>>`,
 
         buttons: [{
             extend: 'collection',
