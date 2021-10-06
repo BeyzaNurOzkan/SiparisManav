@@ -142,8 +142,33 @@ $('#categoryForProductSelect').change(function myfunction() {
 
 
 
+function Addcategory() {
+    debugger
+    var html = document.getElementById(`addcategory`);
+    html.innerHTML += `<label class="col-lg-2 col-form-label">Kategori Adı</label> <div class="col-lg-9"> <input type="text" id="categoryName" name="categoryName" class="form-control categoryName" placeholder="Kategori Adı" style=" font-size: 11px; "></div>`;
+  
+    html.innerHTML += `<div class="col-lg-1"> <input type="button" onclick="DeleteCategoryInput(this)" class="form-control" value="-" style=" font-size: 11px; "></div> `;
 
 
+};
+
+$(document).on('click', '#delItem', function () {
+   debugger
+    var z = $(this).parents('div');
+    z[0].remove();
+     
+});
+function DeleteCategoryInput(abc) {
+    debugger
+    //abc.remove();
+    $(abc).parents('div')[1].remove();
+    //var html = document.getElementById(`addcategory`);
+    //html.innerHTML += `<input type="text" id="categoryName" name="categoryName" class="form-control categoryName" placeholder="Kategori Adı" style=" font-size: 11px; ">`;
+    //var html2 = document.getElementById(`deletecategory`);
+    //html2.innerHTML += `<input type="button" onclick="Addcategory()" class="form-control" value="-" style=" font-size: 11px; "> `;
+
+
+};
 function getCategoryForNewOne() {
     debugger
     var table = $('#kt_table_newCategory');
@@ -308,7 +333,23 @@ function EditCategory(CodeRand) {
     });
 };
 
-
+function SaveCategory() {
+    debugger
+    var categoryForProductSelect = $('#categoryForProductSelect').val();
+    var categoryName = $(".categoryName");
+    var categoryNameList = [];
+    for (var i = 0; i < categoryName.length; i++) {
+      
+        categoryNameList.push(categoryName[i].value);
+       
+    }
+    $.ajax({
+        type: 'POST',
+        url: '/Definition/NewGroup/',
+        dataType: "json",
+        data: { "categoryForProductSelect": categoryForProductSelect,  "categoryNameList": categoryNameList, }
+    });
+}
 
 function DeleteCategory(CodeRand) {
 

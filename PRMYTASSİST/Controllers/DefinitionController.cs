@@ -168,156 +168,161 @@ namespace PRMYTASSİST.Controllers
         }
 
 
-        public ActionResult NewGroup(string categoryForProductSelect, string categoryName, string CategoryCode)
+        public ActionResult NewGroup(string categoryForProductSelect, string[] categoryNameList)
         {
-
-            if (categoryForProductSelect == "0")
+            string categoryName ;
+            for (int i = 0; i < categoryNameList.Length; i++)
             {
-                int Code = db.ProductGroups.Count();
-                ProductGroup productGroup1 = new ProductGroup()
-                {
 
-                    Name = categoryName,
-                    Code = (Code + 1).ToString(),
-                    CreateDate = DateTime.Now,
-                    isVisible = true,
-                    CodeRand = (Code + 1).ToString()
-                };
-                db.ProductGroups.Add(productGroup1);
-            }
-            else
-            {
-                var GroupList1 = new
+                categoryName = categoryNameList[i];
+                if (categoryForProductSelect == "0")
                 {
-                    data = from Group in db.ProductGroups
+                    int Code = db.ProductGroups.Count();
+                    ProductGroup productGroup1 = new ProductGroup()
+                    {
+
+                        Name = categoryName,
+                        Code = (Code + 1).ToString(),
+                        CreateDate = DateTime.Now,
+                        isVisible = true,
+                        CodeRand = (Code + 1).ToString()
+                    };
+                    db.ProductGroups.Add(productGroup1);
+                }
+                else
+                {
+                    var GroupList1 = new
+                    {
+                        data = from Group in db.ProductGroups
 
 
-                           select new
-                           {
-                               Group1Value = Group.ID + Group.Code + Group.Name,
-                               Group1ID = Group.ID,
-                               Group1Code = Group.CodeRand,
-                               Count2 = Group.ProductGroup2s.Count(),
-
-                           }
-                };
-                var GroupList2 = new
-                {
-                    data =
-                              from Group2 in db.ProductGroup2s
-                              select new
-                              {
-                                  Group2Value = Group2.ID + Group2.Code + Group2.Name,
-                                  Group2ID = Group2.ID,
-                                  Group2Code = Group2.CodeRand,
-                                  Count3 = Group2.ProductGroups3.Count(),
-                              }
-                };
-                var GroupList3 = new
-                {
-                    data =
-                               from Group3 in db.ProductGroup3s
                                select new
                                {
-                                   Group3Value = Group3.ID + Group3.Code + Group3.Name,
-                                   Group3ID = Group3.ID,
-                                   Group3Code = Group3.CodeRand,
-                                   Count4 = Group3.ProductGroups4.Count(),
+                                   Group1Value = Group.ID + Group.Code + Group.Name,
+                                   Group1ID = Group.ID,
+                                   Group1Code = Group.CodeRand,
+                                   Count2 = Group.ProductGroup2s.Count(),
+
                                }
-                };
-                var GroupList4 = new
-                {
-                    data =
-                               from Group4 in db.ProductGroup4s
-                               select new
-                               {
-                                   Group4Value = Group4.ID + Group4.Code + Group4.Name,
-                                   Group4ID = Group4.ID,
-                                   Group4Code = Group4.CodeRand,
-                                   Count5 = Group4.ProductGroups5.Count(),
-                               }
-                };
-                foreach (var item in GroupList1.data)
-                {
-                    if (item.Group1Value == categoryForProductSelect)
+                    };
+                    var GroupList2 = new
                     {
-                        ProductGroup2 productGroup2 = new ProductGroup2()
+                        data =
+                                  from Group2 in db.ProductGroup2s
+                                  select new
+                                  {
+                                      Group2Value = Group2.ID + Group2.Code + Group2.Name,
+                                      Group2ID = Group2.ID,
+                                      Group2Code = Group2.CodeRand,
+                                      Count3 = Group2.ProductGroups3.Count(),
+                                  }
+                    };
+                    var GroupList3 = new
+                    {
+                        data =
+                                   from Group3 in db.ProductGroup3s
+                                   select new
+                                   {
+                                       Group3Value = Group3.ID + Group3.Code + Group3.Name,
+                                       Group3ID = Group3.ID,
+                                       Group3Code = Group3.CodeRand,
+                                       Count4 = Group3.ProductGroups4.Count(),
+                                   }
+                    };
+                    var GroupList4 = new
+                    {
+                        data =
+                                   from Group4 in db.ProductGroup4s
+                                   select new
+                                   {
+                                       Group4Value = Group4.ID + Group4.Code + Group4.Name,
+                                       Group4ID = Group4.ID,
+                                       Group4Code = Group4.CodeRand,
+                                       Count5 = Group4.ProductGroups5.Count(),
+                                   }
+                    };
+                    foreach (var item in GroupList1.data)
+                    {
+                        if (item.Group1Value == categoryForProductSelect)
                         {
+                            ProductGroup2 productGroup2 = new ProductGroup2()
+                            {
 
-                            Name = categoryName,
-                            Code = (item.Count2 + 1).ToString(),
-                            CreateDate = DateTime.Now,
-                            isVisible = true,
-                            ProductGroupID = item.Group1ID,
-                            CodeRand = item.Group1Code + "00" + (item.Count2 + 1).ToString()
-                        };
-                        db.ProductGroup2s.Add(productGroup2);
-                        break;
+                                Name = categoryName,
+                                Code = (item.Count2 + 1).ToString(),
+                                CreateDate = DateTime.Now,
+                                isVisible = true,
+                                ProductGroupID = item.Group1ID,
+                                CodeRand = item.Group1Code + "00" + (item.Count2 + 1).ToString()
+                            };
+                            db.ProductGroup2s.Add(productGroup2);
+                            break;
+                        }
                     }
-                }
 
 
 
-                foreach (var item in GroupList2.data)
-                {
-                    if (item.Group2Value == categoryForProductSelect)
+                    foreach (var item in GroupList2.data)
                     {
-
-                        ProductGroup3 productGroup3 = new ProductGroup3()
+                        if (item.Group2Value == categoryForProductSelect)
                         {
 
-                            Name = categoryName,
-                            Code = (item.Count3 + 1).ToString(),
-                            CreateDate = DateTime.Now,
-                            isVisible = true,
-                            ProductGroup2ID = item.Group2ID,
-                            CodeRand = item.Group2Code + "00" + (item.Count3 + 1).ToString()
-                        };
-                        db.ProductGroup3s.Add(productGroup3);
-                        break;
+                            ProductGroup3 productGroup3 = new ProductGroup3()
+                            {
+
+                                Name = categoryName,
+                                Code = (item.Count3 + 1).ToString(),
+                                CreateDate = DateTime.Now,
+                                isVisible = true,
+                                ProductGroup2ID = item.Group2ID,
+                                CodeRand = item.Group2Code + "00" + (item.Count3 + 1).ToString()
+                            };
+                            db.ProductGroup3s.Add(productGroup3);
+                            break;
+                        }
                     }
-                }
 
 
 
-                foreach (var item in GroupList3.data)
-                {
-
-                    if (item.Group3Value == categoryForProductSelect)
+                    foreach (var item in GroupList3.data)
                     {
 
-                        ProductGroup4 productGroup4 = new ProductGroup4()
+                        if (item.Group3Value == categoryForProductSelect)
                         {
 
-                            Name = categoryName,
-                            Code = (item.Count4 + 1).ToString(),
-                            CreateDate = DateTime.Now,
-                            isVisible = true,
-                            ProductGroup3ID = item.Group3ID,
-                            CodeRand = item.Group3Code + "00" + (item.Count4 + 1).ToString()
-                        };
-                        db.ProductGroup4s.Add(productGroup4);
-                        break;
+                            ProductGroup4 productGroup4 = new ProductGroup4()
+                            {
+
+                                Name = categoryName,
+                                Code = (item.Count4 + 1).ToString(),
+                                CreateDate = DateTime.Now,
+                                isVisible = true,
+                                ProductGroup3ID = item.Group3ID,
+                                CodeRand = item.Group3Code + "00" + (item.Count4 + 1).ToString()
+                            };
+                            db.ProductGroup4s.Add(productGroup4);
+                            break;
+                        }
                     }
-                }
-                foreach (var item in GroupList4.data)
-                {
-
-                    if (item.Group4Value == categoryForProductSelect)
+                    foreach (var item in GroupList4.data)
                     {
 
-                        ProductGroup5 productGroup5 = new ProductGroup5()
+                        if (item.Group4Value == categoryForProductSelect)
                         {
 
-                            Name = categoryName,
-                            Code = (item.Count5 + 1).ToString(),
-                            CreateDate = DateTime.Now,
-                            isVisible = true,
-                            ProductGroup4ID = item.Group4ID,
-                            CodeRand = item.Group4Code + "00" + (item.Count5 + 1).ToString()
-                        };
-                        db.ProductGroup5s.Add(productGroup5);
-                        break;
+                            ProductGroup5 productGroup5 = new ProductGroup5()
+                            {
+
+                                Name = categoryName,
+                                Code = (item.Count5 + 1).ToString(),
+                                CreateDate = DateTime.Now,
+                                isVisible = true,
+                                ProductGroup4ID = item.Group4ID,
+                                CodeRand = item.Group4Code + "00" + (item.Count5 + 1).ToString()
+                            };
+                            db.ProductGroup5s.Add(productGroup5);
+                            break;
+                        }
                     }
                 }
             }

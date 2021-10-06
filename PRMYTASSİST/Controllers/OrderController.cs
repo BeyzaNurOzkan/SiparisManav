@@ -667,11 +667,10 @@ namespace PRMYTASSİST.Controllers
             else
                 return Json(orderProductList, JsonRequestBehavior.AllowGet);
         }
-        public JsonResult GetOrderProducts1(int groupId, int? branchCode, string date)
+        public JsonResult GetOrderProducts1(int groupId, int? branchCode, string date,int ColumnNumber)
         {
 
             DateTime date2;
-            int id = 0;
             if (date != "")
             {
                 date2 = Convert.ToDateTime(date);
@@ -679,23 +678,7 @@ namespace PRMYTASSİST.Controllers
             else
             {
                 date2 = DateTime.Now;
-            }
-            double count = (db.Products.Where(q => q.ProductGroup2ID == groupId && q.ProductCode == db.quantityModels.Where(z => z.BranchCode == db.Branchs.Where(t => t.ID == branchCode).FirstOrDefault().BranchCode && z.StockCode == q.ProductCode).FirstOrDefault().StockCode && q.Visible == false).Count()) / 4.0;
-            int count2 = (db.Products.Where(q => q.ProductGroup2ID == groupId && q.ProductCode == db.quantityModels.Where(z => z.BranchCode == db.Branchs.Where(t => t.ID == branchCode).FirstOrDefault().BranchCode && z.StockCode == q.ProductCode).FirstOrDefault().StockCode && q.Visible == false).Count()) / 4;
-            if (count == count2)
-            {
-                id = db.Products.Where(q => q.ProductGroup2ID == groupId && q.ProductCode == db.quantityModels.Where(z => z.BranchCode == db.Branchs.Where(t => t.ID == branchCode).FirstOrDefault().BranchCode && z.StockCode == q.ProductCode).FirstOrDefault().StockCode && q.Visible == false).OrderBy(q => q.ID).Skip(count2).First().ID;
-            }
-            else
-            {
-                if (count2 != 0)
-                    id = db.Products.Where(q => q.ProductGroup2ID == groupId && q.ProductCode == db.quantityModels.Where(z => z.BranchCode == db.Branchs.Where(t => t.ID == branchCode).FirstOrDefault().BranchCode && z.StockCode == q.ProductCode).FirstOrDefault().StockCode && q.Visible == false).OrderBy(q => q.ID).Skip(count2 + 1).First().ID;
-                else
-                {
-                    id = db.Products.Where(q => q.ProductGroup2ID == groupId && q.ProductCode == db.quantityModels.Where(z => z.BranchCode == db.Branchs.Where(t => t.ID == branchCode).FirstOrDefault().BranchCode && z.StockCode == q.ProductCode).FirstOrDefault().StockCode && q.Visible == false).OrderBy(q => q.ID).Skip(count2).First().ID;
-                    id = id + 1;
-                }
-            }
+            }           
             var orderProductList = new
             {
                 data =
@@ -703,7 +686,7 @@ namespace PRMYTASSİST.Controllers
                        from Group3 in Group2.ProductGroups3.OrderBy(q => q.Name)
                        from Branchs in db.Branchs.Where(q => q.ID == branchCode)
                        from quantity in db.quantityModels.Where(q => q.BranchCode == Branchs.BranchCode)
-                       from product in db.Products.Where(q => q.ProductGroup3ID == Group3.ID && q.ProductCode == quantity.StockCode && q.Visible == false && q.ID < id)
+                       from product in db.Products.Where(q => q.ProductGroup3ID == Group3.ID && q.ProductCode == quantity.StockCode && q.Visible == false )
                        from barcode4 in db.barcodeModels.Where(q => q.Code == "Tanımsız").Take(1)
                        from barcode in db.barcodeModels.Where(q => product.ProductCode == q.StockCode).OrderByDescending(q => q.IsMaster).Take(1).DefaultIfEmpty(barcode4)
                        from unit2 in db.Units.Where(q => q.StockCode == product.ProductCode && q.UnitCode == 2).DefaultIfEmpty()
@@ -732,20 +715,106 @@ namespace PRMYTASSİST.Controllers
                            DiscountProd = DiscountBranch.productID.ToString(),
                            Coefficient = discount.Coefficient.ToString(),
                            GroupImage = product.Photo,
-                           settings = settings.Value
-
-
+                           settings = settings.Value,
+                           group3=Group3.Name
                        }
             };
+            var column1 = new { data = orderProductList.data };
+            var column2 = new { data = orderProductList.data };
+            var column3 = new { data = orderProductList.data };
+            var column4 = column1;
             string settings1 = db.Settings.Where(z => z.SettingsCode == 7070).FirstOrDefault().Value;
             string settings2 = db.Settings.Where(z => z.SettingsCode == 7474).FirstOrDefault().Value;
-            if (settings1 == "1" && settings2 == "1")
+
+            //if (settings1 == "1" && settings2 == "1")
+            //{
+            //    var deneme = new { data = column1.data.OrderByDescending(q => q.MaxCapacity) };
+            //    column2 = new { data = orderProductList.data.OrderBy(z => z.group3).Skip(count + 1).Take(count + 1) };
+            //    column3 = new { data = orderProductList.data.OrderBy(z => z.group3).Skip(count + 2).Take(count + 1) };
+            //    column4 = new { data = orderProductList.data.OrderBy(z => z.group3).Skip(count + 3).DefaultIfEmpty() };
+            //    var c = new { data = orderProductList.data.OrderByDescending(z => z.MaxCapacity) };
+            //}
+            int count = orderProductList.data.Count()/4;
+            double count2 =(orderProductList.data.Count()) / 4.0;
+            if (count != 0)
             {
-                var c = new { data = orderProductList.data.OrderByDescending(z => z.MaxCapacity) };
-                return Json(c, JsonRequestBehavior.AllowGet);
+                if (count == count2)
+                {
+                     column1 = new { data = orderProductList.data.OrderBy(z => z.group3).Take(count) };
+                     column2 = new { data = orderProductList.data.OrderBy(z => z.group3).Skip(count).Take(count) };
+                     column3 = new { data = orderProductList.data.OrderBy(z => z.group3).Skip(count*2).Take(count) };
+                     column4 = new { data = orderProductList.data.OrderBy(z => z.group3).Skip(count*3).Take(count) };
+
+
+                }
+                else if (count2 - count == 0.75)
+                {
+                     column1 = new { data = orderProductList.data.OrderBy(z => z.group3).Take(count+1) };
+                     column2 = new { data = orderProductList.data.OrderBy(z => z.group3).Skip(count+1).Take(count+1) };
+                     column3 = new { data = orderProductList.data.OrderBy(z => z.group3).Skip(count * 2+2).Take(count+1) };
+                     column4 = new { data = orderProductList.data.OrderBy(z => z.group3).Skip(count * 3+3).Take(count) };
+
+                }
+                else if (count2 - count == 0.50 )
+                {
+                     column1 = new { data = orderProductList.data.OrderBy(z => z.group3).Take(count+1) };
+                     column2 = new { data = orderProductList.data.OrderBy(z => z.group3).Skip(count+1).Take(count+1) };
+                     column3 = new { data = orderProductList.data.OrderBy(z => z.group3).Skip(count * 2+2).Take(count) };
+                     column4 = new { data = orderProductList.data.OrderBy(z => z.group3).Skip(count * 3+2).Take(count) };
+
+                }
+                else if (count2 - count == 0.25 )
+                {
+                     column1 = new { data = orderProductList.data.OrderBy(z => z.group3).Take(count+1) };
+                     column2 = new { data = orderProductList.data.OrderBy(z => z.group3).Skip(count+1).Take(count) };
+                     column3 = new { data = orderProductList.data.OrderBy(z => z.group3).Skip(count * 2+1).Take(count) };
+                     column4 = new { data = orderProductList.data.OrderBy(z => z.group3).Skip(count * 3+1).Take(count) };
+
+                }
             }
             else
-                return Json(orderProductList, JsonRequestBehavior.AllowGet);
+            {
+              
+                if (count2 - count == 0.75)
+                {
+                    column1 = new { data = orderProductList.data.OrderBy(z => z.group3).Take(count + 1) };
+                    column2 = new { data = orderProductList.data.OrderBy(z => z.group3).Skip(count + 1).Take(count + 1) };
+                    column3 = new { data = orderProductList.data.OrderBy(z => z.group3).Skip(count + 2).Take(count + 1) };
+                    column4 = new { data = orderProductList.data.OrderBy(z => z.group3).Skip(count + 3 ).DefaultIfEmpty() };
+
+                }
+                else if (count2 - count == 0.50)
+                {
+                    column1 = new { data = orderProductList.data.OrderBy(z => z.group3).Take(count + 1) };
+                    column2 = new { data = orderProductList.data.OrderBy(z => z.group3).Skip(count + 1).Take(count + 1) };
+                    column3 = new { data = orderProductList.data.OrderBy(z => z.group3).Skip(count + 2).DefaultIfEmpty() };
+                    column4 = new { data = orderProductList.data.OrderBy(z => z.group3).Skip(count  + 2).DefaultIfEmpty() };
+
+                }
+                else if (count2 - count == 0.25)
+                {
+                    column1 = new { data = orderProductList.data.OrderBy(z => z.group3).Take(count + 1) };
+                    column2 = new { data = orderProductList.data.OrderBy(z => z.group3).Skip(count + 1).DefaultIfEmpty() };
+                    column3 = new { data = orderProductList.data.OrderBy(z => z.group3).Skip(count  + 1).DefaultIfEmpty() };
+                    column4 = new { data = orderProductList.data.OrderBy(z => z.group3).Skip(count  + 1).DefaultIfEmpty() };
+
+                }
+            }
+
+            if (ColumnNumber == 1)
+                return Json(column1, JsonRequestBehavior.AllowGet);
+
+            else if (ColumnNumber == 2)
+                return Json(column2, JsonRequestBehavior.AllowGet);
+
+            else if (ColumnNumber == 3)
+                return Json(column3, JsonRequestBehavior.AllowGet);
+
+            else
+                return Json(column4, JsonRequestBehavior.AllowGet);
+
+
+
         }
         public JsonResult GetOrderProducts2(int groupId, int? branchCode, string date)
         {

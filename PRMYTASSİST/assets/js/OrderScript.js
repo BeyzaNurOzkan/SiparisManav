@@ -37,7 +37,7 @@ function getOrderProducts(groupId, branchID) {
             "searching": false,
             "bSort": false,
             ajax: {
-                url: '/Order/GetOrderProducts'+i+'?groupId=' + groupId + '&branchCode=' + branchID + '&date=' + date,
+                url: '/Order/GetOrderProducts' + 1 + '?groupId=' + groupId + '&branchCode=' + branchID + '&date=' + date + '&ColumnNumber=' + i,
                 type: 'POST',
                 contentType: 'application/json; charset=utf-8',
             },
