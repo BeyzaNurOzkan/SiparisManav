@@ -1,4 +1,4 @@
-﻿ using Entity;
+﻿using Entity;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -15,7 +15,7 @@ namespace PRMYTASSİST.Controllers
         REContext db = new REContext();
 
         // GET: Order
-         
+
         public JsonResult backToNewOrder(int id)
         {
             int orderCode = db.Orders.Where(q => q.ID == id).Select(q => q.OrderNo).FirstOrDefault();
@@ -127,6 +127,29 @@ namespace PRMYTASSİST.Controllers
             };
             return Json(ProductQuantityList, JsonRequestBehavior.AllowGet);
         }
+        public JsonResult getProductGroup2(string ProductGroup, string branchID)
+        {
+            int productgroup2 = Convert.ToInt32(ProductGroup);
+            int branch = Convert.ToInt32(branchID);
+            int Code = db.Branchs.Find(branch).BranchCode;
+            var DetailsList = new
+            {
+                data = from productGroup2s in db.ProductGroup2s.Where(q => q.ProductGroupID == productgroup2)
+
+
+                       select new
+                       {
+                           ID = productGroup2s.ID,
+                           Code = productGroup2s.CodeRand,
+                           Name = productGroup2s.Name.ToUpper(),
+                           Count = (from product in db.Products.Where(q => q.ProductGroup2ID == productGroup2s.ID)
+                                    from count in db.quantityModels.Where(q => q.StockCode == product.ProductCode && q.BranchCode == Code)
+                                    select count.BranchCode).Count()
+                       }
+            };
+            return Json(DetailsList, JsonRequestBehavior.AllowGet);
+
+        }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public JsonResult SaveAllForProductDet(int prodID, bool isVisible, int Category3ID, string ProductPhoto)
@@ -136,25 +159,27 @@ namespace PRMYTASSİST.Controllers
             {
                 Product product = db.Products.Find(prodID);
                 int group2 = db.ProductGroup3s.Find(Category3ID).ProductGroup2ID;
-                if(product.Visible!=isVisible || ProductPhoto != null || product.ProductGroup3ID!=Category3ID)
+                if (product.Visible != isVisible || ProductPhoto != null || product.ProductGroup3ID != Category3ID)
                 {
-                User CurrentUser = Session["CurrentUser"] as User;
-                product.LastUpdateDate = DateTime.Now;
-                product.LastUpdateUserID = CurrentUser.ID;
+                    User CurrentUser = Session["CurrentUser"] as User;
+                    product.LastUpdateDate = DateTime.Now;
+                    product.LastUpdateUserID = CurrentUser.ID;
                 }
                 product.Visible = isVisible;
                 product.ProductGroup3ID = Category3ID;
                 product.ProductGroup2ID = group2;
-                
 
-                if (ProductPhoto != null) { 
-                byte[] data = Convert.FromBase64String(ProductPhoto.Substring(22));
-                string fileName = Guid.NewGuid() + ".jpg";
-                string savePath = Path.Combine(
-                   Server.MapPath("~/assets/media/productPhoto"), fileName
-                );
-                System.IO.File.WriteAllBytes(savePath, data);
-                product.Photo = "/assets/media/productPhoto/"+fileName;}
+
+                if (ProductPhoto != null)
+                {
+                    byte[] data = Convert.FromBase64String(ProductPhoto.Substring(22));
+                    string fileName = Guid.NewGuid() + ".jpg";
+                    string savePath = Path.Combine(
+                       Server.MapPath("~/assets/media/productPhoto"), fileName
+                    );
+                    System.IO.File.WriteAllBytes(savePath, data);
+                    product.Photo = "/assets/media/productPhoto/" + fileName;
+                }
                 db.SaveChanges();
                 result = "Ürün Güncellemeleri Tamamlandı...";
             }
@@ -256,10 +281,10 @@ namespace PRMYTASSİST.Controllers
 
             var DetailsList = new
             {
-                data = from orderDetails in db.OrderDetails.Where(q => q.BasketID == (db.Baskets.Where(z=>z.UserID==branchID).Select(z=>z.ID).FirstOrDefault()) && q.ProductID==productID && q.CreateDate >= date && q.CreateDate < date2)
+                data = from orderDetails in db.OrderDetails.Where(q => q.BasketID == (db.Baskets.Where(z => z.UserID == branchID).Select(z => z.ID).FirstOrDefault()) && q.ProductID == productID && q.CreateDate >= date && q.CreateDate < date2)
                        from Products in db.Products.Where(q => q.ID == productID)
-                       from quantityForm in db.quantityFormats.Where(q => q.StockCode == Products.ProductCode && q.FormatID == (db.Branchs.Where(z=>z.ID==branchID).Select(z => z.FormatID).FirstOrDefault()))
-                       from order in db.Orders.Where(q=>q.ID==orderDetails.OrderID && q.ApprovalStatus==1)
+                       from quantityForm in db.quantityFormats.Where(q => q.StockCode == Products.ProductCode && q.FormatID == (db.Branchs.Where(z => z.ID == branchID).Select(z => z.FormatID).FirstOrDefault()))
+                       from order in db.Orders.Where(q => q.ID == orderDetails.OrderID && q.ApprovalStatus == 1)
                        from Branchs in db.Branchs.Where(q => q.ID == branchID)
 
 
@@ -269,15 +294,15 @@ namespace PRMYTASSİST.Controllers
                            Quantity = orderDetails.Quantity,
                            SubTotal = orderDetails.SubTotal,
                            Comment = orderDetails.Comment,
-                           Maxcapacity=quantityForm.Capacity,
-                           OrderNo=order.OrderNo,
-                           OrderID=order.ID,
-                           CheckBox=orderDetails.CheckBox,
-                           BranchName=Branchs.BranchName.ToUpper(),
+                           Maxcapacity = quantityForm.Capacity,
+                           OrderNo = order.OrderNo,
+                           OrderID = order.ID,
+                           CheckBox = orderDetails.CheckBox,
+                           BranchName = Branchs.BranchName.ToUpper(),
 
                        }
             };
-        
+
             return Json(DetailsList, JsonRequestBehavior.AllowGet);
         }
         public JsonResult GetOrderProductsUpdate(int groupId, int branchCode, int orderID)
@@ -335,9 +360,13 @@ namespace PRMYTASSİST.Controllers
             }
             else
             {
-
-                id = db.Products.Where(q => q.ProductGroup2ID == groupId && q.ProductCode == db.quantityModels.Where(z => z.BranchCode == db.Branchs.Where(t => t.ID == branchCode).FirstOrDefault().BranchCode && z.StockCode == q.ProductCode).FirstOrDefault().StockCode && q.Visible == false).OrderBy(q => q.ID).Skip(count2 + 1).First().ID;
-
+                if (count2 != 0)
+                    id = db.Products.Where(q => q.ProductGroup2ID == groupId && q.ProductCode == db.quantityModels.Where(z => z.BranchCode == db.Branchs.Where(t => t.ID == branchCode).FirstOrDefault().BranchCode && z.StockCode == q.ProductCode).FirstOrDefault().StockCode && q.Visible == false).OrderBy(q => q.ID).Skip(count2 + 1).First().ID;
+                else
+                {
+                    id = db.Products.Where(q => q.ProductGroup2ID == groupId && q.ProductCode == db.quantityModels.Where(z => z.BranchCode == db.Branchs.Where(t => t.ID == branchCode).FirstOrDefault().BranchCode && z.StockCode == q.ProductCode).FirstOrDefault().StockCode && q.Visible == false).OrderBy(q => q.ID).Skip(count2).First().ID;
+                    id = id + 1;
+                }
             }
             var orderProductList = new
             {
@@ -347,7 +376,7 @@ namespace PRMYTASSİST.Controllers
                        from Branchs in db.Branchs.Where(q => q.ID == branchCode)
                        from quantity in db.quantityModels.Where(q => q.BranchCode == Branchs.BranchCode)
                        from product in db.Products.Where(q => q.ProductGroup3ID == Group3.ID && q.ProductCode == quantity.StockCode && q.Visible == false && q.ID < id)
-                       from barcode4 in db.barcodeModels.Where(q => q.Code == "Tanımsız").Take(1) 
+                       from barcode4 in db.barcodeModels.Where(q => q.Code == "Tanımsız").Take(1)
                        from barcode in db.barcodeModels.Where(q => product.ProductCode == q.StockCode).OrderByDescending(q => q.IsMaster).Take(1).DefaultIfEmpty(barcode4)
                        from unit2 in db.Units.Where(q => q.StockCode == product.ProductCode && q.UnitCode == 2).DefaultIfEmpty()
                        from price in db.prices.Where(q => q.StockCode == product.ProductCode).Take(1).DefaultIfEmpty()
@@ -380,7 +409,16 @@ namespace PRMYTASSİST.Controllers
 
                        }
             };
-            return Json(orderProductList, JsonRequestBehavior.AllowGet);
+
+            string settings1 = db.Settings.Where(z => z.SettingsCode == 7070).FirstOrDefault().Value;
+            string settings2 = db.Settings.Where(z => z.SettingsCode == 7474).FirstOrDefault().Value;
+            if (settings1 == "1" && settings2 == "1")
+            {
+                var c = new { data = orderProductList.data.OrderByDescending(z => z.MaxCapacity) };
+                return Json(c, JsonRequestBehavior.AllowGet);
+            }
+            else
+                return Json(orderProductList, JsonRequestBehavior.AllowGet);
         }
         public JsonResult GetOrderProductsUpdate2(int groupId, int branchCode, int orderID)
         {
@@ -397,10 +435,12 @@ namespace PRMYTASSİST.Controllers
             else if (count2 - count >= 0.50)
             {
                 id = db.Products.Where(q => q.ProductGroup2ID == groupId && q.ProductCode == db.quantityModels.Where(z => z.BranchCode == db.Branchs.Where(t => t.ID == branchCode).FirstOrDefault().BranchCode && z.StockCode == q.ProductCode).FirstOrDefault().StockCode && q.Visible == false).OrderBy(q => q.ID).Skip(count + 1).First().ID;
-                id2 = db.Products.Where(q => q.ProductGroup2ID == groupId && q.ProductCode == db.quantityModels.Where(z => z.BranchCode == db.Branchs.Where(t => t.ID == branchCode).FirstOrDefault().BranchCode && z.StockCode == q.ProductCode).FirstOrDefault().StockCode && q.Visible == false).OrderBy(q => q.ID).Skip(count * 2 + 2).First().ID;
-
+                if (count != 0 || count2 - count > 0.50)
+                    id2 = db.Products.Where(q => q.ProductGroup2ID == groupId && q.ProductCode == db.quantityModels.Where(z => z.BranchCode == db.Branchs.Where(t => t.ID == branchCode).FirstOrDefault().BranchCode && z.StockCode == q.ProductCode).FirstOrDefault().StockCode && q.Visible == false).OrderBy(q => q.ID).Skip(count * 2 + 2).First().ID;
+                else
+                    id2 = id + 1;
             }
-            else
+            else if (count2 - count < 0.50 && count != 0)
             {
                 id = db.Products.Where(q => q.ProductGroup2ID == groupId && q.ProductCode == db.quantityModels.Where(z => z.BranchCode == db.Branchs.Where(t => t.ID == branchCode).FirstOrDefault().BranchCode && z.StockCode == q.ProductCode).FirstOrDefault().StockCode && q.Visible == false).OrderBy(q => q.ID).Skip(count + 1).First().ID;
                 id2 = db.Products.Where(q => q.ProductGroup2ID == groupId && q.ProductCode == db.quantityModels.Where(z => z.BranchCode == db.Branchs.Where(t => t.ID == branchCode).FirstOrDefault().BranchCode && z.StockCode == q.ProductCode).FirstOrDefault().StockCode && q.Visible == false).OrderBy(q => q.ID).Skip(count * 2 + 1).First().ID;
@@ -447,7 +487,15 @@ namespace PRMYTASSİST.Controllers
 
                        }
             };
-            return Json(orderProductList, JsonRequestBehavior.AllowGet);
+            string settings1 = db.Settings.Where(z => z.SettingsCode == 7070).FirstOrDefault().Value;
+            string settings2 = db.Settings.Where(z => z.SettingsCode == 7474).FirstOrDefault().Value;
+            if (settings1 == "1" && settings2 == "1")
+            {
+                var c = new { data = orderProductList.data.OrderByDescending(z => z.MaxCapacity) };
+                return Json(c, JsonRequestBehavior.AllowGet);
+            }
+            else
+                return Json(orderProductList, JsonRequestBehavior.AllowGet);
         }
         public JsonResult GetOrderProductsUpdate3(int groupId, int branchCode, int orderID)
         {
@@ -464,16 +512,21 @@ namespace PRMYTASSİST.Controllers
             else if (count2 - count == 0.75)
             {
                 id = db.Products.Where(q => q.ProductGroup2ID == groupId && q.ProductCode == db.quantityModels.Where(z => z.BranchCode == db.Branchs.Where(t => t.ID == branchCode).FirstOrDefault().BranchCode && z.StockCode == q.ProductCode).FirstOrDefault().StockCode && q.Visible == false).OrderBy(q => q.ID).Skip(count * 2 + 2).First().ID;
-                id2 = db.Products.Where(q => q.ProductGroup2ID == groupId && q.ProductCode == db.quantityModels.Where(z => z.BranchCode == db.Branchs.Where(t => t.ID == branchCode).FirstOrDefault().BranchCode && z.StockCode == q.ProductCode).FirstOrDefault().StockCode && q.Visible == false).OrderBy(q => q.ID).Skip(count * 3 + 3).First().ID;
-
+                if (count != 0)
+                    id2 = db.Products.Where(q => q.ProductGroup2ID == groupId && q.ProductCode == db.quantityModels.Where(z => z.BranchCode == db.Branchs.Where(t => t.ID == branchCode).FirstOrDefault().BranchCode && z.StockCode == q.ProductCode).FirstOrDefault().StockCode && q.Visible == false).OrderBy(q => q.ID).Skip(count * 3 + 3).First().ID;
+                else
+                {
+                    id2 = id + 1;
+                }
             }
-            else if (count2 - count == 0.50)
+            else if (count2 - count == 0.50 && count != 0)
             {
                 id = db.Products.Where(q => q.ProductGroup2ID == groupId && q.ProductCode == db.quantityModels.Where(z => z.BranchCode == db.Branchs.Where(t => t.ID == branchCode).FirstOrDefault().BranchCode && z.StockCode == q.ProductCode).FirstOrDefault().StockCode && q.Visible == false).OrderBy(q => q.ID).Skip(count * 2 + 2).First().ID;
                 id2 = db.Products.Where(q => q.ProductGroup2ID == groupId && q.ProductCode == db.quantityModels.Where(z => z.BranchCode == db.Branchs.Where(t => t.ID == branchCode).FirstOrDefault().BranchCode && z.StockCode == q.ProductCode).FirstOrDefault().StockCode && q.Visible == false).OrderBy(q => q.ID).Skip(count * 3 + 2).First().ID;
 
             }
-            else
+            else if (count2 - count < 0.50 && count != 0)
+
             {
                 id = db.Products.Where(q => q.ProductGroup2ID == groupId && q.ProductCode == db.quantityModels.Where(z => z.BranchCode == db.Branchs.Where(t => t.ID == branchCode).FirstOrDefault().BranchCode && z.StockCode == q.ProductCode).FirstOrDefault().StockCode && q.Visible == false).OrderBy(q => q.ID).Skip(count * 2 + 1).First().ID;
                 id2 = db.Products.Where(q => q.ProductGroup2ID == groupId && q.ProductCode == db.quantityModels.Where(z => z.BranchCode == db.Branchs.Where(t => t.ID == branchCode).FirstOrDefault().BranchCode && z.StockCode == q.ProductCode).FirstOrDefault().StockCode && q.Visible == false).OrderBy(q => q.ID).Skip(count * 3 + 1).First().ID;
@@ -518,9 +571,18 @@ namespace PRMYTASSİST.Controllers
                            GroupImage = product.Photo,
 
 
+
                        }
             };
-            return Json(orderProductList, JsonRequestBehavior.AllowGet);
+            string settings1 = db.Settings.Where(z => z.SettingsCode == 7070).FirstOrDefault().Value;
+            string settings2 = db.Settings.Where(z => z.SettingsCode == 7474).FirstOrDefault().Value;
+            if (settings1 == "1" && settings2 == "1")
+            {
+                var c = new { data = orderProductList.data.OrderByDescending(z => z.MaxCapacity) };
+                return Json(c, JsonRequestBehavior.AllowGet);
+            }
+            else
+                return Json(orderProductList, JsonRequestBehavior.AllowGet);
         }
         public JsonResult GetOrderProductsUpdate4(int groupId, int branchCode, int orderID)
         {
@@ -534,19 +596,20 @@ namespace PRMYTASSİST.Controllers
                 id2 = db.Products.Where(q => q.ProductGroup2ID == groupId && q.ProductCode == db.quantityModels.Where(z => z.BranchCode == db.Branchs.Where(t => t.ID == branchCode).FirstOrDefault().BranchCode && z.StockCode == q.ProductCode).FirstOrDefault().StockCode && q.Visible == false).OrderBy(q => q.ID).Skip((count * 4) - 1).First().ID;
 
             }
-            else if (count2 - count == 0.75)
+            else if (count2 - count == 0.75 && count != 0)
             {
                 id = db.Products.Where(q => q.ProductGroup2ID == groupId && q.ProductCode == db.quantityModels.Where(z => z.BranchCode == db.Branchs.Where(t => t.ID == branchCode).FirstOrDefault().BranchCode && z.StockCode == q.ProductCode).FirstOrDefault().StockCode && q.Visible == false).OrderBy(q => q.ID).Skip(count * 3 + 3).First().ID;
                 id2 = db.Products.Where(q => q.ProductGroup2ID == groupId && q.ProductCode == db.quantityModels.Where(z => z.BranchCode == db.Branchs.Where(t => t.ID == branchCode).FirstOrDefault().BranchCode && z.StockCode == q.ProductCode).FirstOrDefault().StockCode && q.Visible == false).OrderBy(q => q.ID).Skip((count * 4 + 3) - 1).First().ID;
 
             }
-            else if (count2 - count == 0.50)
+            else if (count2 - count == 0.50 && count != 0)
             {
                 id = db.Products.Where(q => q.ProductGroup2ID == groupId && q.ProductCode == db.quantityModels.Where(z => z.BranchCode == db.Branchs.Where(t => t.ID == branchCode).FirstOrDefault().BranchCode && z.StockCode == q.ProductCode).FirstOrDefault().StockCode && q.Visible == false).OrderBy(q => q.ID).Skip(count * 3 + 2).First().ID;
                 id2 = db.Products.Where(q => q.ProductGroup2ID == groupId && q.ProductCode == db.quantityModels.Where(z => z.BranchCode == db.Branchs.Where(t => t.ID == branchCode).FirstOrDefault().BranchCode && z.StockCode == q.ProductCode).FirstOrDefault().StockCode && q.Visible == false).OrderBy(q => q.ID).Skip((count * 4 + 2) - 1).First().ID;
 
             }
-            else
+            else if (count2 - count < 0.50 && count != 0)
+
             {
                 id = db.Products.Where(q => q.ProductGroup2ID == groupId && q.ProductCode == db.quantityModels.Where(z => z.BranchCode == db.Branchs.Where(t => t.ID == branchCode).FirstOrDefault().BranchCode && z.StockCode == q.ProductCode).FirstOrDefault().StockCode && q.Visible == false).OrderBy(q => q.ID).Skip(count * 3 + 1).First().ID;
                 id2 = db.Products.Where(q => q.ProductGroup2ID == groupId && q.ProductCode == db.quantityModels.Where(z => z.BranchCode == db.Branchs.Where(t => t.ID == branchCode).FirstOrDefault().BranchCode && z.StockCode == q.ProductCode).FirstOrDefault().StockCode && q.Visible == false).OrderBy(q => q.ID).Skip((count * 4 + 1) - 1).First().ID;
@@ -594,7 +657,15 @@ namespace PRMYTASSİST.Controllers
 
                        }
             };
-            return Json(orderProductList, JsonRequestBehavior.AllowGet);
+            string settings1 = db.Settings.Where(z => z.SettingsCode == 7070).FirstOrDefault().Value;
+            string settings2 = db.Settings.Where(z => z.SettingsCode == 7474).FirstOrDefault().Value;
+            if (settings1 == "1" && settings2 == "1")
+            {
+                var c = new { data = orderProductList.data.OrderByDescending(z => z.MaxCapacity) };
+                return Json(c, JsonRequestBehavior.AllowGet);
+            }
+            else
+                return Json(orderProductList, JsonRequestBehavior.AllowGet);
         }
         public JsonResult GetOrderProducts1(int groupId, int? branchCode, string date)
         {
@@ -609,16 +680,21 @@ namespace PRMYTASSİST.Controllers
             {
                 date2 = DateTime.Now;
             }
-            double count = (db.Products.Where(q => q.ProductGroup2ID == groupId && q.ProductCode == db.quantityModels.Where(z => z.BranchCode == db.Branchs.Where(t=>t.ID==branchCode).FirstOrDefault().BranchCode && z.StockCode==q.ProductCode).FirstOrDefault().StockCode && q.Visible == false).Count())/4.0;
+            double count = (db.Products.Where(q => q.ProductGroup2ID == groupId && q.ProductCode == db.quantityModels.Where(z => z.BranchCode == db.Branchs.Where(t => t.ID == branchCode).FirstOrDefault().BranchCode && z.StockCode == q.ProductCode).FirstOrDefault().StockCode && q.Visible == false).Count()) / 4.0;
             int count2 = (db.Products.Where(q => q.ProductGroup2ID == groupId && q.ProductCode == db.quantityModels.Where(z => z.BranchCode == db.Branchs.Where(t => t.ID == branchCode).FirstOrDefault().BranchCode && z.StockCode == q.ProductCode).FirstOrDefault().StockCode && q.Visible == false).Count()) / 4;
             if (count == count2)
             {
-                 id = db.Products.Where(q => q.ProductGroup2ID == groupId && q.ProductCode == db.quantityModels.Where(z => z.BranchCode == db.Branchs.Where(t => t.ID == branchCode).FirstOrDefault().BranchCode && z.StockCode == q.ProductCode).FirstOrDefault().StockCode && q.Visible == false).OrderBy(q => q.ID).Skip(count2).First().ID;
+                id = db.Products.Where(q => q.ProductGroup2ID == groupId && q.ProductCode == db.quantityModels.Where(z => z.BranchCode == db.Branchs.Where(t => t.ID == branchCode).FirstOrDefault().BranchCode && z.StockCode == q.ProductCode).FirstOrDefault().StockCode && q.Visible == false).OrderBy(q => q.ID).Skip(count2).First().ID;
             }
-            else {
-
-                 id = db.Products.Where(q => q.ProductGroup2ID == groupId && q.ProductCode == db.quantityModels.Where(z => z.BranchCode == db.Branchs.Where(t => t.ID == branchCode).FirstOrDefault().BranchCode && z.StockCode == q.ProductCode).FirstOrDefault().StockCode && q.Visible == false).OrderBy(q => q.ID).Skip(count2+1).First().ID;
-
+            else
+            {
+                if (count2 != 0)
+                    id = db.Products.Where(q => q.ProductGroup2ID == groupId && q.ProductCode == db.quantityModels.Where(z => z.BranchCode == db.Branchs.Where(t => t.ID == branchCode).FirstOrDefault().BranchCode && z.StockCode == q.ProductCode).FirstOrDefault().StockCode && q.Visible == false).OrderBy(q => q.ID).Skip(count2 + 1).First().ID;
+                else
+                {
+                    id = db.Products.Where(q => q.ProductGroup2ID == groupId && q.ProductCode == db.quantityModels.Where(z => z.BranchCode == db.Branchs.Where(t => t.ID == branchCode).FirstOrDefault().BranchCode && z.StockCode == q.ProductCode).FirstOrDefault().StockCode && q.Visible == false).OrderBy(q => q.ID).Skip(count2).First().ID;
+                    id = id + 1;
+                }
             }
             var orderProductList = new
             {
@@ -627,8 +703,8 @@ namespace PRMYTASSİST.Controllers
                        from Group3 in Group2.ProductGroups3.OrderBy(q => q.Name)
                        from Branchs in db.Branchs.Where(q => q.ID == branchCode)
                        from quantity in db.quantityModels.Where(q => q.BranchCode == Branchs.BranchCode)
-                       from product in db.Products.Where(q => q.ProductGroup3ID == Group3.ID && q.ProductCode == quantity.StockCode && q.Visible == false && q.ID<id)
-                       from barcode4 in db.barcodeModels.Where(q => q.Code == "Tanımsız").Take(1) 
+                       from product in db.Products.Where(q => q.ProductGroup3ID == Group3.ID && q.ProductCode == quantity.StockCode && q.Visible == false && q.ID < id)
+                       from barcode4 in db.barcodeModels.Where(q => q.Code == "Tanımsız").Take(1)
                        from barcode in db.barcodeModels.Where(q => product.ProductCode == q.StockCode).OrderByDescending(q => q.IsMaster).Take(1).DefaultIfEmpty(barcode4)
                        from unit2 in db.Units.Where(q => q.StockCode == product.ProductCode && q.UnitCode == 2).DefaultIfEmpty()
                        from price in db.prices.Where(q => q.StockCode == product.ProductCode && q.BranchNo == Branchs.BranchCode).Take(1).DefaultIfEmpty()
@@ -637,7 +713,7 @@ namespace PRMYTASSİST.Controllers
                        from DiscountBranch in db.discountBranches.Where(q => q.branchID == Branchs.ID && q.DiscountEndDate >= date2 && q.DiscountStartDate <= date2 && q.productID == product.ID).DefaultIfEmpty().Take(1)
                        from discount in db.Discounts.Where(q => q.ID == DiscountBranch.discountID).DefaultIfEmpty()
                        from quantityForm in db.quantityFormats.Where(q => q.StockCode == product.ProductCode && q.FormatID == Branchs.FormatID).DefaultIfEmpty()
-                       from settings in db.Settings.Where(q=>q.SettingsCode==1313).Take(1)
+                       from settings in db.Settings.Where(q => q.SettingsCode == 1313).Take(1)
                        select new
                        {
                            ID = product.ID,
@@ -655,20 +731,29 @@ namespace PRMYTASSİST.Controllers
                            CheckBox = basketPro.CheckBox.ToString(),
                            DiscountProd = DiscountBranch.productID.ToString(),
                            Coefficient = discount.Coefficient.ToString(),
-                           GroupImage= product.Photo,
-                           settings=settings.Value
-                          
+                           GroupImage = product.Photo,
+                           settings = settings.Value
+
 
                        }
             };
-            return Json(orderProductList, JsonRequestBehavior.AllowGet);
+            string settings1 = db.Settings.Where(z => z.SettingsCode == 7070).FirstOrDefault().Value;
+            string settings2 = db.Settings.Where(z => z.SettingsCode == 7474).FirstOrDefault().Value;
+            if (settings1 == "1" && settings2 == "1")
+            {
+                var c = new { data = orderProductList.data.OrderByDescending(z => z.MaxCapacity) };
+                return Json(c, JsonRequestBehavior.AllowGet);
+            }
+            else
+                return Json(orderProductList, JsonRequestBehavior.AllowGet);
         }
         public JsonResult GetOrderProducts2(int groupId, int? branchCode, string date)
         {
-            int id=0;
+            int id = 0;
             int id2 = 0;
             int count = (db.Products.Where(q => q.ProductGroup2ID == groupId && q.ProductCode == db.quantityModels.Where(z => z.BranchCode == db.Branchs.Where(t => t.ID == branchCode).FirstOrDefault().BranchCode && z.StockCode == q.ProductCode).FirstOrDefault().StockCode && q.Visible == false).Count()) / 4;
             double count2 = (db.Products.Where(q => q.ProductGroup2ID == groupId && q.ProductCode == db.quantityModels.Where(z => z.BranchCode == db.Branchs.Where(t => t.ID == branchCode).FirstOrDefault().BranchCode && z.StockCode == q.ProductCode).FirstOrDefault().StockCode && q.Visible == false).Count()) / 4.0;
+
             if (count == count2)
             {
                 id = db.Products.Where(q => q.ProductGroup2ID == groupId && q.ProductCode == db.quantityModels.Where(z => z.BranchCode == db.Branchs.Where(t => t.ID == branchCode).FirstOrDefault().BranchCode && z.StockCode == q.ProductCode).FirstOrDefault().StockCode && q.Visible == false).OrderBy(q => q.ID).Skip(count).First().ID;
@@ -677,14 +762,19 @@ namespace PRMYTASSİST.Controllers
             }
             else if (count2 - count >= 0.50)
             {
-                id = db.Products.Where(q => q.ProductGroup2ID == groupId && q.ProductCode == db.quantityModels.Where(z => z.BranchCode == db.Branchs.Where(t => t.ID == branchCode).FirstOrDefault().BranchCode && z.StockCode == q.ProductCode).FirstOrDefault().StockCode && q.Visible == false).OrderBy(q => q.ID).Skip(count+1).First().ID;
-                id2 = db.Products.Where(q => q.ProductGroup2ID == groupId && q.ProductCode == db.quantityModels.Where(z => z.BranchCode == db.Branchs.Where(t => t.ID == branchCode).FirstOrDefault().BranchCode && z.StockCode == q.ProductCode).FirstOrDefault().StockCode && q.Visible == false).OrderBy(q => q.ID).Skip(count * 2+2).First().ID;
+                id = db.Products.Where(q => q.ProductGroup2ID == groupId && q.ProductCode == db.quantityModels.Where(z => z.BranchCode == db.Branchs.Where(t => t.ID == branchCode).FirstOrDefault().BranchCode && z.StockCode == q.ProductCode).FirstOrDefault().StockCode && q.Visible == false).OrderBy(q => q.ID).Skip(count + 1).First().ID;
+                if (count != 0 || count2 - count > 0.50)
+                {
+                    id2 = db.Products.Where(q => q.ProductGroup2ID == groupId && q.ProductCode == db.quantityModels.Where(z => z.BranchCode == db.Branchs.Where(t => t.ID == branchCode).FirstOrDefault().BranchCode && z.StockCode == q.ProductCode).FirstOrDefault().StockCode && q.Visible == false).OrderBy(q => q.ID).Skip(count * 2 + 2).First().ID;
+                }
+                else
+                    id2 = id + 1;
 
             }
-            else  
+            else if (count2 - count < 0.50 && count != 0)
             {
                 id = db.Products.Where(q => q.ProductGroup2ID == groupId && q.ProductCode == db.quantityModels.Where(z => z.BranchCode == db.Branchs.Where(t => t.ID == branchCode).FirstOrDefault().BranchCode && z.StockCode == q.ProductCode).FirstOrDefault().StockCode && q.Visible == false).OrderBy(q => q.ID).Skip(count + 1).First().ID;
-                id2 = db.Products.Where(q => q.ProductGroup2ID == groupId && q.ProductCode == db.quantityModels.Where(z => z.BranchCode == db.Branchs.Where(t => t.ID == branchCode).FirstOrDefault().BranchCode && z.StockCode == q.ProductCode).FirstOrDefault().StockCode && q.Visible == false).OrderBy(q => q.ID).Skip(count * 2+1 ).First().ID;
+                id2 = db.Products.Where(q => q.ProductGroup2ID == groupId && q.ProductCode == db.quantityModels.Where(z => z.BranchCode == db.Branchs.Where(t => t.ID == branchCode).FirstOrDefault().BranchCode && z.StockCode == q.ProductCode).FirstOrDefault().StockCode && q.Visible == false).OrderBy(q => q.ID).Skip(count * 2 + 1).First().ID;
 
             }
 
@@ -706,7 +796,7 @@ namespace PRMYTASSİST.Controllers
                        from Group3 in Group2.ProductGroups3.OrderBy(q => q.Name)
                        from Branchs in db.Branchs.Where(q => q.ID == branchCode)
                        from quantity in db.quantityModels.Where(q => q.BranchCode == Branchs.BranchCode)
-                       from product in db.Products.Where(q => q.ProductGroup3ID == Group3.ID && q.ProductCode == quantity.StockCode && q.Visible == false && q.ID<id2 && q.ID>=id ).OrderBy(q => q.ProductGroup3ID)
+                       from product in db.Products.Where(q => q.ProductGroup3ID == Group3.ID && q.ProductCode == quantity.StockCode && q.Visible == false && q.ID < id2 && q.ID >= id).OrderBy(q => q.ProductGroup3ID)
                        from barcode4 in db.barcodeModels.Where(q => q.Code == "Tanımsız").Take(1)
                        from barcode in db.barcodeModels.Where(q => product.ProductCode == q.StockCode).OrderByDescending(q => q.IsMaster).Take(1).DefaultIfEmpty(barcode4)
                        from unit2 in db.Units.Where(q => q.StockCode == product.ProductCode && q.UnitCode == 2).DefaultIfEmpty()
@@ -741,11 +831,23 @@ namespace PRMYTASSİST.Controllers
 
                        }
             };
-            return Json(orderProductList, JsonRequestBehavior.AllowGet);
+            string settings1 = db.Settings.Where(z => z.SettingsCode == 7070).FirstOrDefault().Value;
+            string settings2 = db.Settings.Where(z => z.SettingsCode == 7474).FirstOrDefault().Value;
+            if (settings1 == "1" && settings2 == "1")
+            {
+
+                var c = new { data = orderProductList.data.OrderByDescending(z => z.MaxCapacity) };
+
+                return Json(c, JsonRequestBehavior.AllowGet);
+            }
+            else
+                return Json(orderProductList, JsonRequestBehavior.AllowGet);
+
+
         }
         public JsonResult GetOrderProducts3(int groupId, int? branchCode, string date)
         {
-            
+
             DateTime date2;
 
             if (date != "")
@@ -755,7 +857,8 @@ namespace PRMYTASSİST.Controllers
             else
             {
                 date2 = DateTime.Now;
-            }int id = 0;
+            }
+            int id = 0;
             int id2 = 0;
             int count = (db.Products.Where(q => q.ProductGroup2ID == groupId && q.ProductCode == db.quantityModels.Where(z => z.BranchCode == db.Branchs.Where(t => t.ID == branchCode).FirstOrDefault().BranchCode && z.StockCode == q.ProductCode).FirstOrDefault().StockCode && q.Visible == false).Count()) / 4;
             double count2 = (db.Products.Where(q => q.ProductGroup2ID == groupId && q.ProductCode == db.quantityModels.Where(z => z.BranchCode == db.Branchs.Where(t => t.ID == branchCode).FirstOrDefault().BranchCode && z.StockCode == q.ProductCode).FirstOrDefault().StockCode && q.Visible == false).Count()) / 4.0;
@@ -768,16 +871,23 @@ namespace PRMYTASSİST.Controllers
             else if (count2 - count == 0.75)
             {
                 id = db.Products.Where(q => q.ProductGroup2ID == groupId && q.ProductCode == db.quantityModels.Where(z => z.BranchCode == db.Branchs.Where(t => t.ID == branchCode).FirstOrDefault().BranchCode && z.StockCode == q.ProductCode).FirstOrDefault().StockCode && q.Visible == false).OrderBy(q => q.ID).Skip(count * 2 + 2).First().ID;
-                id2 = db.Products.Where(q => q.ProductGroup2ID == groupId && q.ProductCode == db.quantityModels.Where(z => z.BranchCode == db.Branchs.Where(t => t.ID == branchCode).FirstOrDefault().BranchCode && z.StockCode == q.ProductCode).FirstOrDefault().StockCode && q.Visible == false).OrderBy(q => q.ID).Skip(count * 3 + 3).First().ID;
-
+                if (count != 0)
+                {
+                    id2 = db.Products.Where(q => q.ProductGroup2ID == groupId && q.ProductCode == db.quantityModels.Where(z => z.BranchCode == db.Branchs.Where(t => t.ID == branchCode).FirstOrDefault().BranchCode && z.StockCode == q.ProductCode).FirstOrDefault().StockCode && q.Visible == false).OrderBy(q => q.ID).Skip(count * 3 + 3).First().ID;
+                }
+                else
+                {
+                    id2 = id + 1;
+                }
             }
-            else if (count2 - count == 0.50)
+            else if (count2 - count == 0.50 && count != 0)
             {
                 id = db.Products.Where(q => q.ProductGroup2ID == groupId && q.ProductCode == db.quantityModels.Where(z => z.BranchCode == db.Branchs.Where(t => t.ID == branchCode).FirstOrDefault().BranchCode && z.StockCode == q.ProductCode).FirstOrDefault().StockCode && q.Visible == false).OrderBy(q => q.ID).Skip(count * 2 + 2).First().ID;
                 id2 = db.Products.Where(q => q.ProductGroup2ID == groupId && q.ProductCode == db.quantityModels.Where(z => z.BranchCode == db.Branchs.Where(t => t.ID == branchCode).FirstOrDefault().BranchCode && z.StockCode == q.ProductCode).FirstOrDefault().StockCode && q.Visible == false).OrderBy(q => q.ID).Skip(count * 3 + 2).First().ID;
 
             }
-            else {
+            else if (count2 - count < 0.50 && count != 0)
+            {
                 id = db.Products.Where(q => q.ProductGroup2ID == groupId && q.ProductCode == db.quantityModels.Where(z => z.BranchCode == db.Branchs.Where(t => t.ID == branchCode).FirstOrDefault().BranchCode && z.StockCode == q.ProductCode).FirstOrDefault().StockCode && q.Visible == false).OrderBy(q => q.ID).Skip(count * 2 + 1).First().ID;
                 id2 = db.Products.Where(q => q.ProductGroup2ID == groupId && q.ProductCode == db.quantityModels.Where(z => z.BranchCode == db.Branchs.Where(t => t.ID == branchCode).FirstOrDefault().BranchCode && z.StockCode == q.ProductCode).FirstOrDefault().StockCode && q.Visible == false).OrderBy(q => q.ID).Skip(count * 3 + 1).First().ID;
 
@@ -789,7 +899,7 @@ namespace PRMYTASSİST.Controllers
                        from Group3 in Group2.ProductGroups3.OrderBy(q => q.Name)
                        from Branchs in db.Branchs.Where(q => q.ID == branchCode)
                        from quantity in db.quantityModels.Where(q => q.BranchCode == Branchs.BranchCode)
-                       from product in db.Products.Where(q => q.ProductGroup3ID == Group3.ID && q.ProductCode == quantity.StockCode && q.Visible == false && q.ID<id2 && q.ID>=id).OrderBy(q => q.ProductGroup3ID)
+                       from product in db.Products.Where(q => q.ProductGroup3ID == Group3.ID && q.ProductCode == quantity.StockCode && q.Visible == false && q.ID < id2 && q.ID >= id).OrderBy(q => q.ProductGroup3ID)
                        from barcode4 in db.barcodeModels.Where(q => q.Code == "Tanımsız").Take(1)
                        from barcode in db.barcodeModels.Where(q => product.ProductCode == q.StockCode).OrderByDescending(q => q.IsMaster).Take(1).DefaultIfEmpty(barcode4)
                        from unit2 in db.Units.Where(q => q.StockCode == product.ProductCode && q.UnitCode == 2).DefaultIfEmpty()
@@ -824,7 +934,17 @@ namespace PRMYTASSİST.Controllers
 
                        }
             };
-            return Json(orderProductList, JsonRequestBehavior.AllowGet);
+            string settings1 = db.Settings.Where(z => z.SettingsCode == 7070).FirstOrDefault().Value;
+            string settings2 = db.Settings.Where(z => z.SettingsCode == 7474).FirstOrDefault().Value;
+            if (settings1 == "1" && settings2 == "1")
+            {
+                var c = new { data = orderProductList.data.OrderByDescending(z => z.MaxCapacity) };
+
+                return Json(c, JsonRequestBehavior.AllowGet);
+            }
+            else
+                return Json(orderProductList, JsonRequestBehavior.AllowGet);
+
         }
         public JsonResult GetOrderProducts4(int groupId, int? branchCode, string date)
         {
@@ -845,26 +965,26 @@ namespace PRMYTASSİST.Controllers
             double count2 = (db.Products.Where(q => q.ProductGroup2ID == groupId && q.ProductCode == db.quantityModels.Where(z => z.BranchCode == db.Branchs.Where(t => t.ID == branchCode).FirstOrDefault().BranchCode && z.StockCode == q.ProductCode).FirstOrDefault().StockCode && q.Visible == false).Count()) / 4.0;
             if (count == count2)
             {
-                 id = db.Products.Where(q => q.ProductGroup2ID == groupId && q.ProductCode == db.quantityModels.Where(z => z.BranchCode == db.Branchs.Where(t => t.ID == branchCode).FirstOrDefault().BranchCode && z.StockCode == q.ProductCode).FirstOrDefault().StockCode && q.Visible == false).OrderBy(q => q.ID).Skip(count * 3).First().ID;
-                 id2 = db.Products.Where(q => q.ProductGroup2ID == groupId && q.ProductCode == db.quantityModels.Where(z => z.BranchCode == db.Branchs.Where(t => t.ID == branchCode).FirstOrDefault().BranchCode && z.StockCode == q.ProductCode).FirstOrDefault().StockCode && q.Visible == false).OrderBy(q => q.ID).Skip((count * 4) - 1).First().ID;
+                id = db.Products.Where(q => q.ProductGroup2ID == groupId && q.ProductCode == db.quantityModels.Where(z => z.BranchCode == db.Branchs.Where(t => t.ID == branchCode).FirstOrDefault().BranchCode && z.StockCode == q.ProductCode).FirstOrDefault().StockCode && q.Visible == false).OrderBy(q => q.ID).Skip(count * 3).First().ID;
+                id2 = db.Products.Where(q => q.ProductGroup2ID == groupId && q.ProductCode == db.quantityModels.Where(z => z.BranchCode == db.Branchs.Where(t => t.ID == branchCode).FirstOrDefault().BranchCode && z.StockCode == q.ProductCode).FirstOrDefault().StockCode && q.Visible == false).OrderBy(q => q.ID).Skip((count * 4) - 1).First().ID;
 
             }
-            else if (count2 - count == 0.75)
+            else if (count2 - count == 0.75 && count != 0)
             {
-                id = db.Products.Where(q => q.ProductGroup2ID == groupId && q.ProductCode == db.quantityModels.Where(z => z.BranchCode == db.Branchs.Where(t => t.ID == branchCode).FirstOrDefault().BranchCode && z.StockCode == q.ProductCode).FirstOrDefault().StockCode && q.Visible == false).OrderBy(q => q.ID).Skip(count * 3+3).First().ID;
-                id2 = db.Products.Where(q => q.ProductGroup2ID == groupId && q.ProductCode == db.quantityModels.Where(z => z.BranchCode == db.Branchs.Where(t => t.ID == branchCode).FirstOrDefault().BranchCode && z.StockCode == q.ProductCode).FirstOrDefault().StockCode && q.Visible == false).OrderBy(q => q.ID).Skip((count * 4+3) - 1).First().ID;
+                id = db.Products.Where(q => q.ProductGroup2ID == groupId && q.ProductCode == db.quantityModels.Where(z => z.BranchCode == db.Branchs.Where(t => t.ID == branchCode).FirstOrDefault().BranchCode && z.StockCode == q.ProductCode).FirstOrDefault().StockCode && q.Visible == false).OrderBy(q => q.ID).Skip(count * 3 + 3).First().ID;
+                id2 = db.Products.Where(q => q.ProductGroup2ID == groupId && q.ProductCode == db.quantityModels.Where(z => z.BranchCode == db.Branchs.Where(t => t.ID == branchCode).FirstOrDefault().BranchCode && z.StockCode == q.ProductCode).FirstOrDefault().StockCode && q.Visible == false).OrderBy(q => q.ID).Skip((count * 4 + 3) - 1).First().ID;
 
             }
-            else if (count2 - count == 0.50)
+            else if (count2 - count == 0.50 && count != 0)
             {
-                id = db.Products.Where(q => q.ProductGroup2ID == groupId && q.ProductCode == db.quantityModels.Where(z => z.BranchCode == db.Branchs.Where(t => t.ID == branchCode).FirstOrDefault().BranchCode && z.StockCode == q.ProductCode).FirstOrDefault().StockCode && q.Visible == false).OrderBy(q => q.ID).Skip(count * 3+2).First().ID;
-                id2 = db.Products.Where(q => q.ProductGroup2ID == groupId && q.ProductCode == db.quantityModels.Where(z => z.BranchCode == db.Branchs.Where(t => t.ID == branchCode).FirstOrDefault().BranchCode && z.StockCode == q.ProductCode).FirstOrDefault().StockCode && q.Visible == false).OrderBy(q => q.ID).Skip((count * 4+2) - 1).First().ID;
+                id = db.Products.Where(q => q.ProductGroup2ID == groupId && q.ProductCode == db.quantityModels.Where(z => z.BranchCode == db.Branchs.Where(t => t.ID == branchCode).FirstOrDefault().BranchCode && z.StockCode == q.ProductCode).FirstOrDefault().StockCode && q.Visible == false).OrderBy(q => q.ID).Skip(count * 3 + 2).First().ID;
+                id2 = db.Products.Where(q => q.ProductGroup2ID == groupId && q.ProductCode == db.quantityModels.Where(z => z.BranchCode == db.Branchs.Where(t => t.ID == branchCode).FirstOrDefault().BranchCode && z.StockCode == q.ProductCode).FirstOrDefault().StockCode && q.Visible == false).OrderBy(q => q.ID).Skip((count * 4 + 2) - 1).First().ID;
 
             }
-            else
+            else if (count2 - count < 0.50 && count != 0)
             {
-                id = db.Products.Where(q => q.ProductGroup2ID == groupId && q.ProductCode == db.quantityModels.Where(z => z.BranchCode == db.Branchs.Where(t => t.ID == branchCode).FirstOrDefault().BranchCode && z.StockCode == q.ProductCode).FirstOrDefault().StockCode && q.Visible == false).OrderBy(q => q.ID).Skip(count * 3+1).First().ID;
-                id2 = db.Products.Where(q => q.ProductGroup2ID == groupId && q.ProductCode == db.quantityModels.Where(z => z.BranchCode == db.Branchs.Where(t => t.ID == branchCode).FirstOrDefault().BranchCode && z.StockCode == q.ProductCode).FirstOrDefault().StockCode && q.Visible == false).OrderBy(q => q.ID).Skip((count * 4+1) - 1).First().ID;
+                id = db.Products.Where(q => q.ProductGroup2ID == groupId && q.ProductCode == db.quantityModels.Where(z => z.BranchCode == db.Branchs.Where(t => t.ID == branchCode).FirstOrDefault().BranchCode && z.StockCode == q.ProductCode).FirstOrDefault().StockCode && q.Visible == false).OrderBy(q => q.ID).Skip(count * 3 + 1).First().ID;
+                id2 = db.Products.Where(q => q.ProductGroup2ID == groupId && q.ProductCode == db.quantityModels.Where(z => z.BranchCode == db.Branchs.Where(t => t.ID == branchCode).FirstOrDefault().BranchCode && z.StockCode == q.ProductCode).FirstOrDefault().StockCode && q.Visible == false).OrderBy(q => q.ID).Skip((count * 4 + 1) - 1).First().ID;
 
             }
 
@@ -910,9 +1030,16 @@ namespace PRMYTASSİST.Controllers
 
                        }
             };
-            return Json(orderProductList, JsonRequestBehavior.AllowGet);
+            string settings1 = db.Settings.Where(z => z.SettingsCode == 7070).FirstOrDefault().Value;
+            string settings2 = db.Settings.Where(z => z.SettingsCode == 7474).FirstOrDefault().Value;
+            if (settings1 == "1" && settings2 == "1")
+            {
+                var c = new { data = orderProductList.data.OrderByDescending(z => z.MaxCapacity) };
+                return Json(c, JsonRequestBehavior.AllowGet);
+            }
+            else
+                return Json(orderProductList, JsonRequestBehavior.AllowGet);
         }
-
         public void ForSaveOrder(int productId, int branchId, string comment)
         {
             Basket b = db.Baskets.Where(x => x.UserID == branchId).FirstOrDefault(); // BranchId ile değişitir
@@ -991,10 +1118,10 @@ namespace PRMYTASSİST.Controllers
                     BasketID = b.ID,
                     Comment = comment,
                     CreateDate = or.CreateDate,
-                     OrderID=GroupID,
-                      Quantity=0,
-                       SubTotal=0,
-                    
+                    OrderID = GroupID,
+                    Quantity = 0,
+                    SubTotal = 0,
+
                 };
                 db.OrderDetails.Add(nbp);
                 db.SaveChanges();
@@ -1009,13 +1136,13 @@ namespace PRMYTASSİST.Controllers
         {
             Basket b = db.Baskets.Where(x => x.UserID == branchId).FirstOrDefault(); // BranchId ile değişitir
             BasketProduct bp = db.BasketProducts.Where(x => x.ProductID == productId && x.BasketID == b.ID).FirstOrDefault();
-            int subTotal2=0;
-            int count2=0;
+            int subTotal2 = 0;
+            int count2 = 0;
 
-            if(subTotal!="")
+            if (subTotal != "")
                 subTotal2 = Convert.ToInt32(subTotal);
 
-            if(count!="")
+            if (count != "")
                 count2 = Convert.ToInt32(count);
 
             if (bp == null)
@@ -1109,7 +1236,7 @@ namespace PRMYTASSİST.Controllers
             else
             {
                 bp.CheckBox = CheckBox;
-               
+
                 bp.SubTotal = 0;
                 db.SaveChanges();
                 Subtotal = bp.SubTotal;
@@ -1175,9 +1302,9 @@ namespace PRMYTASSİST.Controllers
                     BasketID = b.ID,
                     SubTotal = 0,
                     CreateDate = DateTime.Now,
-                    Quantity=0,
-                    OrderID= OrderID,
-                      
+                    Quantity = 0,
+                    OrderID = OrderID,
+
 
                 };
                 db.OrderDetails.Add(nbp);
@@ -1189,8 +1316,8 @@ namespace PRMYTASSİST.Controllers
             {
                 bp.CheckBox = CheckBox;
                 int value = (qf.Capacity - bp.Quantity) * discount;
-                
-                    bp.SubTotal = 0;
+
+                bp.SubTotal = 0;
                 db.SaveChanges();
                 Subtotal = bp.SubTotal;
 
@@ -1323,7 +1450,7 @@ namespace PRMYTASSİST.Controllers
                            quantity = BasketDet.Quantity.ToString(),
                            Comment = BasketDet.Comment,
                            Group2 = Group2.ID,
-                           CheckBox=BasketDet.CheckBox,
+                           CheckBox = BasketDet.CheckBox,
                        }
             };
             return Json(ProductQuantityList, JsonRequestBehavior.AllowGet);
@@ -1441,7 +1568,7 @@ namespace PRMYTASSİST.Controllers
                     Order order = db.Orders.Find(ordersId);
                     order.ApprovalStatus = 1;
                 }
-                db.SaveChanges(); 
+                db.SaveChanges();
                 result = "Siparişler Onaylandı!";
 
             }

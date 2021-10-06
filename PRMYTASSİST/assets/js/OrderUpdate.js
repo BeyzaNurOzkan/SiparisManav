@@ -37,45 +37,7 @@
             $('#orderdateabs').text(a);
 
             debugger
-            var branchID = $('#branch').val();
-            var url = window.location.href;
-            var OrderCode = url.substring(url.lastIndexOf('?') + 1);
-            var settings = $('#settings').val();
-            var settings2 = $('#settings2').val();
-            
-            if (settings == "1" && settings2 == "1") {
-                if (OrderCode == "list") {
-                    $("#groupIds > option").each(function () {
-                        getOrderProductsUpdateListViewCap(this.value, branchID,id);
-                    });
-                }
-                else {
-                    $("#groupIds > option").each(function () {
-                        getOrderProductsUpdateCap(this.value, branchID,id);
-                    });
-                }
-            }
-            else {
-                if (OrderCode == "list") {
-                    $("#groupIds > option").each(function () {
-                        getOrderProductsUpdateListView(this.value, branchID,id);
-                    });
-                    if (settings == "0") {
-                        $("#groupIds > option").each(function () {
-                            debugger
-                            let group = Number(this.value);
-                            var table = $("#table_" + group).DataTable();
-                            table.column(6).visible(false);
-                            table.column(7).visible(false);
-                        });
-                    }
-                }
-                else {
-                    $("#groupIds > option").each(function () {
-                        getOrderProductsUpdate(this.value, branchID,id);
-                    });
-                }
-            }        
+                 
             getCategoryForOrder(branchID);
             productCountTotalUpdate(id);
         },
@@ -90,7 +52,7 @@ function getOrderProductsUpdate(groupId, branchID, id) {
         var toolbar = "bos";
         if (i == 1)
             toolbar = "toolbar"
-        var tables = $("#table" + i + "_" + groupId);
+        var tables = $("#table" + i + "_" );
         tables.DataTable({
             "bDestroy": true,
             "paging": false,
@@ -501,7 +463,7 @@ function getOrderProductsUpdate(groupId, branchID, id) {
 };
 function getOrderProductsUpdateListViewCap(groupId, branchID, id) {
     debugger
-    var table = $("#table_" + groupId);
+    var table = $("#table_" );
     table.DataTable({
         "bDestroy": true,
         ajax: {
@@ -972,7 +934,7 @@ function getOrderProductsUpdateListViewCap(groupId, branchID, id) {
 };
 function getOrderProductsUpdateListView(groupId, branchID, id) {
     debugger
-    var table = $("#table_" + groupId);
+    var table = $("#table_" );
     table.DataTable({
         "bDestroy": true,
         ajax: {
@@ -1054,7 +1016,7 @@ function getOrderProductsUpdateListView(groupId, branchID, id) {
             },
            
         ],
-        order: [ [1, 'asc']],
+        order: [[5, 'asc'], [1, 'asc']],
         columnDefs: [
             {
                 orderable: false,
@@ -1469,7 +1431,7 @@ function getOrderProductsUpdateCap(groupId, branchID,id) {
     debugger
 
     for (var i = 1; i < 5; i++) {
-        var tables = $("#table" + i + "cap_" + groupId);
+        var tables = $("#table" + i + "cap_" );
         var toolbar = "bos";
         if (i == 1)
             toolbar = "toolbar"
@@ -2493,10 +2455,42 @@ function toBasketUpdate(val, id, OrderID) {
 };
 function reloadTableUpdate(id, GroupID) {
     debugger
-    var branchId = $('#branch').val();
-    var table = $("#table_" + id);
-    getOrderProductsUpdate(GroupID, branchId, id);
-    table.DataTable().ajax.reload();
+    var branchID = $('#branch').val();
+    var url = window.location.href;
+    var OrderCode = url.substring(url.lastIndexOf('?') + 1);
+    var settings = $('#settings').val();
+    var settings2 = $('#settings2').val();
+
+    if (settings == "1" && settings2 == "1") {
+        if (OrderCode == "list") {
+          
+            getOrderProductsUpdateListViewCap(GroupID, branchID, id);
+           
+        }
+        else {
+         
+            getOrderProductsUpdateCap(GroupID, branchID, id);
+           
+        }
+    }
+    else {
+        if (OrderCode == "list") {
+           
+            getOrderProductsUpdateListView(GroupID, branchID, id);
+           
+            if (settings == "0") {
+                    debugger
+                    var table = $("#table_" ).DataTable();
+                    table.column(6).visible(false);
+                    table.column(7).visible(false);
+            }
+        }
+        else {
+           
+            getOrderProductsUpdate(GroupID, branchID, id);
+           
+        }
+    }
 
 };
 
@@ -2919,6 +2913,8 @@ function getOrderAbsUpdate(id) {
         },
 
     });
+    table.DataTable().ajax.reload();
+
     t.on('draw.dt', function () {
         var PageInfo = $('#tableOrderAbstract').DataTable().page.info();
         t.column(0, { page: 'current' }).nodes().each(function (cell, i) {
