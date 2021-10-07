@@ -276,6 +276,7 @@ namespace PRMYTASSİST.Controllers
                            PlaceCode = product.PlaceCode,
                            Barcode = barcode.Code,
                            Units = unit2.Name.ToUpper(),
+                           Photo=product.Photo.ToString(),
                            ProductGroupUrl = (ProductGroup1ss.Name + ", " + ProductGroup2ss.Name + ", ").ToUpper(),
                            ProductGroupUr2= ProductGroup3s.Name.ToUpper(),
                            UnitName = from unit in db.unitFormats.Where(q => q.UnitName != unit2.Name)

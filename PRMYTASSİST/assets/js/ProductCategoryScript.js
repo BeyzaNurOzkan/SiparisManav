@@ -145,9 +145,10 @@ $('#categoryForProductSelect').change(function myfunction() {
 function Addcategory() {
     debugger
     var html = document.getElementById(`addcategory`);
-    html.innerHTML += `<label class="col-lg-2 col-form-label">Kategori Adı</label> <div class="col-lg-9"> <input type="text" id="categoryName" name="categoryName" class="form-control categoryName" placeholder="Kategori Adı" style=" font-size: 11px; "></div>`;
+    html.innerHTML += ` <div class="form-group row form-group-marginless kt-margin-t-1 pb-2">
+<label class="col-lg-2 col-form-label">Kategori Adı</label> <div class="col-lg-9"> <input type="text" id="categoryName" name="categoryName" class="form-control categoryName" placeholder="Kategori Adı" style=" font-size: 11px; "></div>
   
-    html.innerHTML += `<div class="col-lg-1"> <input type="button" onclick="DeleteCategoryInput(this)" class="form-control" value="-" style=" font-size: 11px; "></div> `;
+   <div class="col-lg-1"> <input type="button" onclick="DeleteCategoryInput(this)" class="form-control" value="-" style=" font-size: 11px; "></div></div> `;
 
 
 };
@@ -161,7 +162,9 @@ $(document).on('click', '#delItem', function () {
 function DeleteCategoryInput(abc) {
     debugger
     //abc.remove();
-    $(abc).parents('div')[1].remove();
+    var z = $(abc).parents('div');
+    z[1].remove();
+
     //var html = document.getElementById(`addcategory`);
     //html.innerHTML += `<input type="text" id="categoryName" name="categoryName" class="form-control categoryName" placeholder="Kategori Adı" style=" font-size: 11px; ">`;
     //var html2 = document.getElementById(`deletecategory`);

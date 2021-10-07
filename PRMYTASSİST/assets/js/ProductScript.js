@@ -41,6 +41,11 @@
                 searchable: false,
             },
             {
+                data: 'Photo',
+                "width": "3%",
+                className: 'dt-center',
+            },
+            {
                 data: 'Code',
                 className: 'dt-center',
             },
@@ -61,11 +66,11 @@
 
             { data: 'İşlemler' },
         ],
-        order: [[3, 'asc']],
+        order: [[4, 'asc']],
 
         columnDefs: [
             {
-                targets: 3,
+                targets: 4,
                 render: function (data, type, full, meta) {
                     var id = full['Name'];
                     var id = full['ID'];
@@ -74,10 +79,23 @@
                 }
             },
             {
-                targets: 2,
+                targets: 3,
                 render: function (data, type, full, meta) {
                     var id = full['Barcode'];
                     result = `<span style="color:blue;">` + id + `</span>`;
+
+                    return result;
+                }
+            },
+            {
+                targets: 1,
+                render: function (data, type, full, meta) {
+                    debugger
+                    var id = full['Photo'];
+                    var result = "";
+                    if(id!="")
+                        result = `<i class="icon-2x flaticon2-image-file"></i>`;
+                    
 
                     return result;
                 }
@@ -121,12 +139,12 @@
                 }
             },
             {
-                targets: 4,
+                targets: 5,
                 render: function (data, type, full, meta) {
                     var id = full['ID'];
                     var UnitName = full['Units'];
                     if (UnitName == null) {
-                        UnitName = "Tanımsız";
+                        UnitName = "TANIMSIZ";
                     }
                     var length = full['UnitName'].length;
                     var deneme = "";
@@ -135,12 +153,12 @@
                         deneme = deneme + `<option value=` + full['UnitName'][i] + ` >` + full['UnitName'][i].toLocaleUpperCase() + `</option>`;
                     }
                     return `
-                       <select onchange="SaveUnit(this,`+ full['ID'] + `)" style="font-size:13px;" class="form-control pt-1" id="exampleSelect1">
+                       <select onchange="SaveUnit(this,`+ full['ID'] + `)" style="font-size: 11px;height: 25px;" class="form-control pt-1" id="exampleSelect1">
                          <option>` + UnitName + `</option>` + deneme + `</select>`;
                 }
             },
             {
-                targets: 5,
+                targets: 6,
                 render: function (data, type, full, meta) {
                     var id = full['ID'];
                     var result = "";
@@ -229,17 +247,27 @@ function EditProduct(id) {
                     $("#productModal #visibileForProductList").prop("checked", true);
                     $("#productModal #visibileForProductList").val(id);
                 }
+
                 else {
                     $("#productModal #visibileForProductList").prop("checked", false);
                     $("#productModal #visibileForProductList").val(id);
                 }
 
-                
-                $("#productModal #productphoto").val(data['photo']);
-                var select = document.getElementById('selectProductCategory');
                 debugger
-                select.value = data['ProductGroup3Id'];
-                select.text = data['ProductGroupName'];
+                $("#productModal #productphoto").val(data['photo']);
+               // $("#productModal #categoryForProduct").val(data['ProductGroup3Id']);
+
+
+                debugger
+                if (data['ProductGroup3Id'] != undefined) {
+
+                    $('#productModal #ShortName').val(data['ProductGroupName']);
+                   
+
+                                }
+                else {
+                    $('#productModal #ShortName').val("TANIMSIZ");
+                }
                 $('#productModal').modal();
                 if (data['Photo'] != undefined) {
                     abc(data['Photo']);

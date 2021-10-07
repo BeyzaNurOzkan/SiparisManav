@@ -60,7 +60,7 @@ function getOrderProductsUpdate(groupId, branchID, id) {
             "searching": false,
             "bSort": false,
             ajax: {
-                url: '/Order/GetOrderProductsUpdate' + i + '?groupId=' + groupId + '&branchCode=' + branchID + '&orderID=' + id,
+                url: '/Order/GetOrderProductsUpdate' + 1 + '?groupId=' + groupId + '&branchCode=' + branchID + '&orderID=' + id + '&ColumnNumber=' + i,
                 type: 'POST',
                 contentType: 'application/json; charset=utf-8',
             },
@@ -1437,7 +1437,7 @@ function getOrderProductsUpdateCap(groupId, branchID,id) {
             toolbar = "toolbar"
         var t = tables.DataTable({
             ajax: {
-                url: '/Order/GetOrderProductsUpdate' + i + '?groupId=' + groupId + '&branchCode=' + branchID + '&orderID=' + id,
+                url: '/Order/GetOrderProductsUpdate' + 1 + '?groupId=' + groupId + '&branchCode=' + branchID + '&orderID=' + id + '&ColumnNumber=' + i,
                 type: 'POST',
                 contentType: 'application/json; charset=utf-8',
             },

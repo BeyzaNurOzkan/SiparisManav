@@ -105,6 +105,7 @@
                     <thead>
                         <tr>
                             <th>S/N </th>
+                            <th>Resim</th>
                             <th>Stok Kodu</th>
                             <th>Barkodu</th>
                             <th>Ürün Adı</th>
@@ -207,15 +208,15 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group row form-group-marginless kt-margin-t-1">
-                                                    <label class="col-lg-2 col-form-label" style=" align-self: center"><b>Kısa Tanım</b></label>
+                                                    <label class="col-lg-2 col-form-label" style=" align-self: center"><b>Ürün Grubu</b></label>
                                                     <div class="col-lg-5 mb-1" style=" align-self: center">
                                                         <input type="email" id="ShortName" class="form-control" disabled>
                                                     </div>
                                                 </div>
                                                 <div class="form-group pl-3 row form-group-marginless kt-margin-t-1">
-                                                    <label class="col-lg-2 col-form-label" style=" align-self: center"><b>Ürün Grubu</b></label>
-                                                    <select id="categoryForProductSelect" class="custom-select form-control form-control kt-selectpicker col-lg-10" name="categoryForProductSelect" data-live-search="true">
-                                                        <option id="selectProductCategory" value=""></option>
+                                                    <label class="col-lg-2 col-form-label" style=" align-self: center"><b>Grup Değiştir</b></label>
+
+                                                    <select id="categoryForProduct" class="custom-select form-control form-control kt-selectpicker col-lg-10" name="categoryForProduct" data-live-search="true">
                                                         @foreach (var item in productGroup3s.Where(q => q.isVisible == true))
                                                         {
                                                             <option data-content="" value="@item.ID">@item.ProductGroups2.ProductGroups.Name.ToUpper(), @item.ProductGroups2.Name.ToUpper(), @item.Name.ToUpper()</option>
@@ -343,11 +344,17 @@
                                                 <div class="row">
                                                     <label for="btnSelectImage" style="font-size:15px;float: left;margin-left: 80px;"><b>Lütfen Görsel Seçiniz:</b></label>
                                                     <br />
-                                                    <div class="col-6">
-                                                        <a id="btnSelectImagePath" class="btn btn-secondary mb-2 ml-5" style="background: #ffb822; color: #ffffff; background-color: #ffad00;">Dosya Seç</a>
+
+                                                    <div class="col-5" style="text-align-last: right;">
+                                                        <a id="btnSelectImagePath" class="btn btn-secondary" style="background: #ffb822; color: #ffffff; background-color: #ffad00;">Dosya Seç</a>
+
                                                     </div>
-                                                    <div class="col-6">
-                                                        <a id="btnCropBase64" class="btn btn-secondary mb-2" style="background: #ffb822; color: #ffffff; background-color: #ffad00; float: right; margin-right: 45px;">Önizle</a>
+                                                    <div class="col-3">
+                                                        <a onclick="DeleteImageProduct()" id="btnDeleteImagePath" class="btn btn-secondary " style="background: #ffb822; color: #ffffff; background-color: #ffad00;">Sil</a>
+
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <a id="btnCropBase64" class="btn btn-secondary " style="background: #ffb822; color: #ffffff; background-color: #ffad00; float: right; margin-right: 45px;">Önizle</a>
                                                     </div>
                                                 </div>
                                                 <br />
@@ -366,18 +373,10 @@
                                                         @Html.Hidden("ImgBase64")
                                                         <button class="btn btn-secondary " style="background: #ffb822; color: #ffffff; background-color: #ffad00; float: right; margin-right: 45px;">Ekle</button>}
                                                 </div>
-
-
-
-
-
                                             </div>
-
                                         </div>
-
                                     </div>
                                 </form>
-
                                 <!--end::Form-->
                             </div>
                             <!--End:: Tab Content-->
@@ -881,6 +880,13 @@
 <script src="./assets/vendors/general/jquery/dist/jquery.js" type="text/javascript"></script>
 <script src="~/Scripts/jquery-3.4.1.min.js"></script>
 <script src="~/Scripts/croppie.js"></script>
+<script src="./assets/js/demo1/scripts.bundle.js" type="text/javascript"></script>
+
+<!--end::Global Theme Bundle -->
+<!--begin::Page Scripts(used by this page) -->
+<script src="./assets/js/demo1/pages/crud/forms/widgets/bootstrap-select.js" type="text/javascript"></script>
+
+
 <!--end::Modal-->
 <!--begin:: Global Mandatory Vendors -->
 <script>
@@ -888,6 +894,16 @@
     $("#btnSelectImagePath").click(function () {
         $('#btnSelectImage').trigger('click');
         debugger
+    });
+    $("#btnDeleteImagePath").click(function () {
+        debugger
+        $("#btnCropBase64").hide();
+        $("#resultBase64").hide();
+        demo.croppie('bind', {
+
+            url: "./assets/media/resim-yok.jpg",
+        });
+
     });
     var prodID = $("#productModal #productphoto").val();
 
@@ -928,6 +944,7 @@
             url: "." + photo,
         });
     }
+
     function readURL(input) {
         debugger
         if (input.files && input.files[0]) {
@@ -938,17 +955,77 @@
                     url: e.target.result
                 }).then(function () {
                     console.log('jQuery bind complete');
+
                 });
             }
             reader.readAsDataURL(input.files[0]);
         }
+
         $("#btnCropBase64").show();
+
+
 
     }
 
     $("#btnSelectImage").change(function () {
         readURL(this);
     });
+    function DeleteImageProduct() {
+        var prodID = $("#productModal #visibileForProductList").val();
+        $.ajax({
+            type: "POST",
+            url: '/Order/DeleteImageProduct?prodID=' + prodID,
+            
+            error: function (request, status, error) {
+                swal.fire("Hata!", "Bir sorun ile karşılaşıldı!", "error");
+            }
+        });
+
+
+    };
+    function SaveAllForProductDet() {
+        debugger
+       
+            //$("#saveForm").show();
+
+            var isVisible = $("#productModal #visibileForProductList").prop('checked');
+            var prodID = $("#productModal #visibileForProductList").val();
+            var Category3ID = $("#productModal #categoryForProduct").val();
+            var ProductPhoto = $("#productModal #resultBase64")[0].innerHTML;
+            ProductPhoto = ProductPhoto.split('"');
+            var z = ProductPhoto[1];
+            $.ajax({
+                type: "POST",
+                url: '/Order/SaveAllForProductDet'/*?prodID=' + prodID + '&isVisible=' + isVisible + '&Category3ID=' + Category3ID + '&ProductPhoto=' + z*/,
+                data: {
+                    prodID: prodID,
+                    isVisible: isVisible,
+                    Category3ID: Category3ID,
+                    ProductPhoto: z,
+                    __RequestVerificationToken: $('[name="__RequestVerificationToken"]').val()
+                },
+                success: function (data) {
+                    swal.fire({
+                        title: "Başarılı!",
+                        text: data,
+                        type: "success",
+                        buttonsStyling: false,
+                        confirmButtonText: "Tamam!",
+                        confirmButtonClass: "btn btn-brand",
+
+                    }).then(function (result) {
+                        refreshPage();
+                    });
+                },
+                error: function (request, status, error) {
+                    swal.fire("Hata!", "Bir sorun ile karşılaşıldı!", "error");
+                }
+            });
+            debugger
+    
+
+    };
+
 </script>
 
 <script>

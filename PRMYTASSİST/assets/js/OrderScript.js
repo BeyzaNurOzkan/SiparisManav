@@ -895,7 +895,7 @@ function getOrderProductsCap(groupId, branchID) {
         
         var t = tables.DataTable({
             ajax: {
-                url: '/Order/GetOrderProducts' + i + '?groupId=' + groupId + '&branchCode=' + branchID + '&date=' + date,
+                url: '/Order/GetOrderProducts' + 1 + '?groupId=' + groupId + '&branchCode=' + branchID + '&date=' + date + '&ColumnNumber=' + i,
                 type: 'POST',
                 contentType: 'application/json; charset=utf-8',
             },
@@ -2959,42 +2959,6 @@ function cancelToNewOrder() {
             swal.fire(
                 "İptal!", "Silme İşlemi İptal Edildi!", "error"
             )
-        }
-    });
-};
-function SaveAllForProductDet() {
-    debugger
-    var isVisible = $("#productModal #visibileForProductList").prop('checked');
-    var prodID = $("#productModal #visibileForProductList").val();
-    var Category3ID = $("#productModal #categoryForProductSelect").val();
-    var ProductPhoto = $("#productModal #resultBase64")[0].innerHTML;
-    ProductPhoto = ProductPhoto.split('"');
-    var z = ProductPhoto[1];
-    $.ajax({
-        type: "POST",
-        url: '/Order/SaveAllForProductDet'/*?prodID=' + prodID + '&isVisible=' + isVisible + '&Category3ID=' + Category3ID + '&ProductPhoto=' + z*/,
-        data: {
-            prodID: prodID,
-            isVisible: isVisible,
-            Category3ID: Category3ID,
-            ProductPhoto:z,
-            __RequestVerificationToken: $('[name="__RequestVerificationToken"]').val()
-        },
-        success: function (data) {
-            swal.fire({
-                title: "Başarılı!",
-                text: data,
-                type: "success",
-                buttonsStyling: false,
-                confirmButtonText: "Tamam!",
-                confirmButtonClass: "btn btn-brand",
-
-            }).then(function (result) {
-                refreshPage();
-            });
-        },
-        error: function (request, status, error) {
-            swal.fire("Hata!", "Bir sorun ile karşılaşıldı!", "error");
         }
     });
 };
