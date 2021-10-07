@@ -279,7 +279,7 @@ function getOrderProductsUpdate(groupId, branchID, id) {
                         <div class="col-10 pt-1">
                             <div class="row">
 <div class="col-12">
-                                    <span  style="width:185px;"><b style=" width:300px;  color:red;"> ` + full['Name'] + `</b> (` + Prices + ` TL) ` + `</span>
+                                    <span  style="width:185px;"><b style=" width:300px;  color:red;"> ` + full['Name'] + `&nbsp;&nbsp;&nbsp;&nbsp;</b> (` + Prices + ` TL) ` + `</span>
 <input hidden type="text" style="width: 45px;text-align: center;padding: 0rem 0.7rem;border-color: #ffe8d6;border-radius: 4px 0px 0px 4px; height:2rem; color: #000000;;background-color: #ffe8d6;font-size: 1.2rem;" value="` + id + `"class="form-control" id="order_` + full['ID'] + `">
 
                                 </div>
@@ -1710,7 +1710,7 @@ function getOrderProductsUpdateCap(groupId, branchID,id) {
                         <div class="col-10 pt-1">
                             <div class="row">
                                 <div class="col-12" style="text-align: left;">
-                                    <span  style="width:185px;"><b style=" width:300px;  color:red;"> ` + full['Name'] + `</b> (` + format + " TL" + `) ` + `</span>
+                                    <span  style="width:185px;"><b style=" width:300px;  color:red;"> ` + full['Name'] + `&nbsp;&nbsp;&nbsp;&nbsp;</b> (` + format + " TL" + `) ` + `</span>
 <input hidden type="text" style="width: 45px;text-align: center;padding: 0rem 0.7rem;border-color: #ffe8d6;border-radius: 4px 0px 0px 4px; height:2rem; color: #000000;;background-color: #ffe8d6;font-size: 1.2rem;" value="` + id + `"class="form-control" id="order_` + full['ID'] + `">
 
                                 </div>
