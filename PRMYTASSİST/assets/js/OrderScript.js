@@ -272,7 +272,7 @@ function getOrderProducts(groupId, branchID) {
                         <div class="col-10 pt-1">
                             <div class="row">
 <div class="col-12">
-                                    <span  style="width:185px;"><b style=" width:300px;  color:red;"> ` + full['Name'] + `</b> (` + Prices + ` TL) ` + `</span>
+                                    <span  style="width:185px;"><b style=" width:300px;  color:red;">` + full['Name'] + `&nbsp;&nbsp;&nbsp;&nbsp; </b> (`+ Prices + ` TL) ` + `</span>
                                 </div>
                                 <div class="col-12">
                                    <div class="row">
@@ -1168,7 +1168,7 @@ function getOrderProductsCap(groupId, branchID) {
                         <div class="col-10 pt-1">
                             <div class="row">
                                 <div class="col-12" style="text-align: left;">
-                                    <span  style="width:185px;"><b style=" width:300px;  color:red;"> ` + full['Name'] + `</b> (` + format + " TL" + `) ` + `</span>
+                                    <span  style="width:185px;"><b style=" width:300px;  color:red;"> ` + full['Name'] + `&nbsp;&nbsp;&nbsp;&nbsp;</b> (` + format + " TL" + `) ` + `</span>
                                 </div>
                                 <div class="col-12">
                                    <div class="row">
