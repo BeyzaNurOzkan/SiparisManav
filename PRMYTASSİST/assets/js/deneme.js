@@ -691,7 +691,7 @@ function getProductsReport(days) {
                         $(col[6]).attr('width', 15);
                         $(col[7]).attr('width', 16);
 
-                        $('c[r=A1] t', sheet).text('Hal Sipariş Raporu - ' + days);
+                        $('c[r=A1] t', sheet).text('Sipariş Raporu - ' + days);
 
                         $('c[r=B2] t', sheet).text('Ürün Grubu');
                         $('c[r=E2] t', sheet).text('Birim');

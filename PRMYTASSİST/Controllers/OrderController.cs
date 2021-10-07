@@ -132,8 +132,12 @@ namespace PRMYTASSİST.Controllers
             int productgroup2 = 0;
             if (ProductGroup == "0")
             {
-                int a = db.ProductGroups.Where(q => q.ID != 0).FirstOrDefault().ID;
-                productgroup2 = a;
+                ProductGroup a = db.ProductGroups.Where(q => q.ID != 0 && q.Priority>0).OrderBy(q=>q.Priority).FirstOrDefault();
+                if (a!=null)
+                productgroup2 = db.ProductGroups.Where(q => q.ID != 0 && q.Priority > 0).OrderBy(q => q.Priority).ThenBy(q=>q.Name).FirstOrDefault().ID;
+                else
+                    productgroup2 = db.ProductGroups.Where(q => q.ID != 0).OrderBy(q=>q.Name).FirstOrDefault().ID;
+
             }
             else
             {
@@ -143,7 +147,7 @@ namespace PRMYTASSİST.Controllers
             int Code = db.Branchs.Find(branch).BranchCode;
             var DetailsList = new
             {
-                data = from productGroup2s in db.ProductGroup2s.Where(q => q.ProductGroupID == productgroup2)
+                data = from productGroup2s in db.ProductGroup2s.Where(q => q.ProductGroupID == productgroup2).OrderBy(q=>q.Priority).ThenBy(q=>q.Name)
 
 
                        select new
@@ -153,7 +157,8 @@ namespace PRMYTASSİST.Controllers
                            Name = productGroup2s.Name.ToUpper(),
                            Count = (from product in db.Products.Where(q => q.ProductGroup2ID == productGroup2s.ID)
                                     from count in db.quantityModels.Where(q => q.StockCode == product.ProductCode && q.BranchCode == Code)
-                                    select count.BranchCode).Count()
+                                    select count.BranchCode).Count(),
+                          Priority=productGroup2s.Priority
                        }
             };
             return Json(DetailsList, JsonRequestBehavior.AllowGet);

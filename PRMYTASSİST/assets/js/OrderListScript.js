@@ -2250,7 +2250,7 @@ function ShowBranchOrderListOff(id) {
                         $(col[5]).attr('width', 30);
 
 
-                        $('c[r=A1] t', sheet).text('Hal Sipariş Listesi - ' + branch + ' - ' + userName + '                                   ' + Point + ' Adet                  ' + Safe + ' Kasa                  ' + Box+ ' Palet '  );
+                        $('c[r=A1] t', sheet).text('Sipariş Listesi - ' + branch + ' - ' + userName + '                                   ' + Point + ' Adet                  ' + Safe + ' Kasa                  ' + Box+ ' Palet '  );
 
                         $('c[r=A2] t', sheet).text('Ürün Grubu');
                         $('row c[r*="A"]', sheet).attr('s', '9');

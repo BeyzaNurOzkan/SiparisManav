@@ -331,9 +331,8 @@ namespace PRMYTASSİST.Controllers
         }
 
 
-        public ActionResult UpdateCategory(string categoryCodeRand, string categoryName)
+        public ActionResult UpdateCategory(string categoryCodeRand, string categoryName, int categoryCode)
         {
-
 
             ProductGroup productGroup = db.ProductGroups.Where(q => q.CodeRand == categoryCodeRand).DefaultIfEmpty().FirstOrDefault();
             ProductGroup2 productGroup2 = db.ProductGroup2s.Where(q => q.CodeRand == categoryCodeRand).DefaultIfEmpty().FirstOrDefault();
@@ -345,10 +344,13 @@ namespace PRMYTASSİST.Controllers
             if (productGroup != null)
             {
                 productGroup.Name = categoryName;
+                productGroup.Priority = categoryCode;
             }
             else if (productGroup2 != null)
             {
                 productGroup2.Name = categoryName;
+                productGroup2.Priority = categoryCode;
+
             }
             else if (productGroup3 != null)
             {
@@ -381,6 +383,7 @@ namespace PRMYTASSİST.Controllers
             int ID = 0;
             string code = "";
             string codeRand = "";
+            int priority = -1;
             if (productGroup != null)
             {
                 name = productGroup.Name;
@@ -388,6 +391,7 @@ namespace PRMYTASSİST.Controllers
                 code = productGroup.Code;
                 ID = productGroup.ID;
                 codeRand = productGroup.CodeRand;
+                priority = productGroup.Priority;
             }
             else if (productGroup2 != null)
             {
@@ -396,6 +400,7 @@ namespace PRMYTASSİST.Controllers
                 code = productGroup2.Code;
                 ID = productGroup2.ID;
                 codeRand = productGroup2.CodeRand;
+                priority = productGroup2.Priority;
 
             }
             else if (productGroup3 != null)
@@ -438,7 +443,8 @@ namespace PRMYTASSİST.Controllers
                 AllName=AllName,
                 Name = name,
                 Code = code,
-                CodeRand = codeRand
+                CodeRand = codeRand,
+                Priority=priority
             };
 
             return Json(usr, JsonRequestBehavior.AllowGet);

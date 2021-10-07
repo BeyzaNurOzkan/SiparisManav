@@ -189,9 +189,13 @@
                     <div class="col-lg-3 col-sm-6 pt-2 pl-0 pr-0" style=" align-self: center; font-weight:bold;">
                         <select id="ProductGroup" class="custom-select form-control pl-4 pr-1 selectpicker" style="font-weight:bold;" name="ProductGroup">
                             <option selected value="0" style="font-weight:bold;">Kategori Seçiniz</option>
-                            @foreach (var item in productGroups)
+                            @foreach (var item in productGroups.Where(z => z.Priority != 0).OrderBy(q => q.Priority).ThenBy(q => q.Name))
                             {
+                                <option value="@item.ID" style="font-weight: bold;">@item.Name.ToUpper() </option>
 
+                            }
+                            @foreach (var item in productGroups.Where(z => z.Priority == 0).OrderBy(q => q.Name))
+                            {
                                 <option value="@item.ID" style="font-weight: bold;">@item.Name.ToUpper() </option>
 
                             }

@@ -323,11 +323,17 @@ function EditCategory(CodeRand) {
             $('#groupModal #categoryNameOne').text(data['AllName']);
             $('#groupModal #categoryName2').val(data['Name']);
             $('#groupModal #categoryCodeRand').val(data['CodeRand']);
+            debugger
+
+            if (data['Priority'] == -1)
+                $(".Priority").hide();
+            else
+                $(".Priority").show();
 
 
             $('#groupModal #categoryID').val(data['ID']);
             $('#groupModal #categoryName1').val(data['Name'].toLocaleUpperCase());
-            $('#groupModal #categoryCode1').val(data['Code']);
+            $('#groupModal #categoryCode1').val(data['Priority']);
             $('#groupModal').modal();
         },
         error: function (request, status, error) {

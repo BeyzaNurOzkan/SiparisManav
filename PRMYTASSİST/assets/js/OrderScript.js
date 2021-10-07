@@ -2843,12 +2843,17 @@ function getProductGroup2(ProductGroup, branchID) {
             debugger
             var c = data.data.length;
             var z = c;
+            var control = 0;
             for (var i = 0; i < c; i++) {
                 if (data.data[i]['Count'] != 0) {
+
+                    if (data.data[i]['Priority'] != 0) {
+
                     if (z > i && i != 0 || i==0) {
                         z = i;
-                    }                 
-                    if (i == z) {
+                    }
+                        if (i == z) {
+                            control = 1;
                     tab.innerHTML += ` <li class="nav-item mt-1 mb-2" style=" border: 1px solid #003366; background-color: #ffb82236; border-radius: 0.25rem; ">
       <a class="nav-link active" style = "min-width: 100px; text-align: center;" id="profile-tab" data-toggle="tab" href="#TabPanel_" role = "tab" aria-controls="profile" aria-selected="false" onclick="reloadtable(` + data.data[i]['ID'] + `)"> <b>` + data.data[i]['Name'] + ` (` + data.data[i]['Count']+`)</b></a>
                                         </li>`;
@@ -2858,8 +2863,35 @@ function getProductGroup2(ProductGroup, branchID) {
                     tab.innerHTML += ` <li class="nav-item mt-1 mb-2" style=" border: 1px solid #003366; background-color: #ffb82236; border-radius: 0.25rem; ">
       <a class="nav-link" style = "min-width: 100px; text-align: center;" id="profile-tab" data-toggle="tab" href="#TabPanel_" role = "tab" aria-controls="profile" aria-selected="false"onclick="reloadtable(` + data.data[i]['ID'] + `)" > <b>` + data.data[i]['Name'] + ` (` + data.data[i]['Count']+`)</b></a>
                                         </li>`;
-                }}
+                        }
+                    }
+
+                }
             }
+            for (var i = 0; i < c; i++) {
+                if (data.data[i]['Count'] != 0) {
+
+                    if (data.data[i]['Priority'] == 0) {
+
+                        if (z > i && i != 0 || i == 0) {
+                            z = i;
+                        }
+                        if (i == z && control==0) {
+                            tab.innerHTML += ` <li class="nav-item mt-1 mb-2" style=" border: 1px solid #003366; background-color: #ffb82236; border-radius: 0.25rem; ">
+      <a class="nav-link active" style = "min-width: 100px; text-align: center;" id="profile-tab" data-toggle="tab" href="#TabPanel_" role = "tab" aria-controls="profile" aria-selected="false" onclick="reloadtable(` + data.data[i]['ID'] + `)"> <b>` + data.data[i]['Name'] + ` (` + data.data[i]['Count'] + `)</b></a>
+                                        </li>`;
+                            reloadtable(data.data[i]['ID']);
+                        }
+                        else {
+                            tab.innerHTML += ` <li class="nav-item mt-1 mb-2" style=" border: 1px solid #003366; background-color: #ffb82236; border-radius: 0.25rem; ">
+      <a class="nav-link" style = "min-width: 100px; text-align: center;" id="profile-tab" data-toggle="tab" href="#TabPanel_" role = "tab" aria-controls="profile" aria-selected="false"onclick="reloadtable(` + data.data[i]['ID'] + `)" > <b>` + data.data[i]['Name'] + ` (` + data.data[i]['Count'] + `)</b></a>
+                                        </li>`;
+                        }
+                    }
+
+                }
+            }
+
             tab.innerHTML += `<li class="nav-item mt-1 mb-2" style="border: 1px solid #003366; background-color: #ffb82236; border-radius: 0.25rem; ">
                 <a class="nav-link" style="min-width: 100px; text-align: center;" id="profile-tab" data-toggle="tab" href="#OrderBrief" role="tab" aria-controls="profile" aria-selected="false" onclick="reloadtableabs()"><b>SİPARİŞ ÖZETİ</b></a>
             </li>`;
@@ -3064,7 +3096,7 @@ function getOrderAbs(branchID) {
 
                         var sheet = xlsx.xl.worksheets['sheet1.xml'];
                         // jQuery selector to add a border
-                        $('c[r=A1] t', sheet).text('Günlük Hal Siparişi');
+                        $('c[r=A1] t', sheet).text('Günlük Sipariş');
                         $('row c[r*="A"]', sheet).attr('s', '25');
                         $('row c[r*="B"]', sheet).attr('s', '25');
                         $('row c[r*="C"]', sheet).attr('s', '25');
