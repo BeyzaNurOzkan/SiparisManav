@@ -145,10 +145,10 @@ $('#categoryForProductSelect').change(function myfunction() {
 function Addcategory() {
     debugger
     var html = document.getElementById(`addcategory`);
-    html.innerHTML += ` <div class="form-group row form-group-marginless kt-margin-t-1 pb-2">
+     $(` <div class="form-group row form-group-marginless kt-margin-t-1 pb-2">
 <label class="col-lg-2 col-form-label">Kategori Adı</label> <div class="col-lg-9"> <input type="text" id="categoryName" name="categoryName" class="form-control categoryName" placeholder="Kategori Adı" style=" font-size: 11px; "></div>
-  
-   <div class="col-lg-1"> <input type="button" onclick="DeleteCategoryInput(this)" class="form-control" value="-" style=" font-size: 11px; "></div></div> `;
+
+   <div class="col-lg-1"> <input type="button" onclick="DeleteCategoryInput(this)" class="form-control" value="-" style=" font-size: 11px; "></div></div> `).appendTo(html);
 
 
 };
@@ -320,7 +320,7 @@ function EditCategory(CodeRand) {
         url: '/Definition/EditGroup3?CodeRand=' + CodeRand,
         success: function (data) {
             $('#groupModal #groupname').text(data['Name']);
-            $('#groupModal #categoryNameOne').text(data['Name'].toLocaleUpperCase());
+            $('#groupModal #categoryNameOne').text(data['AllName']);
             $('#groupModal #categoryName2').val(data['Name']);
             $('#groupModal #categoryCodeRand').val(data['CodeRand']);
 

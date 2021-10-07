@@ -176,7 +176,7 @@ namespace PRMYTASSİST.Controllers
             {
                 int group2 = 0;
                 Product product = db.Products.Find(prodID);
-                if(Category3ID!=0)
+                if(Category3ID!=0 && Category3ID != -1)
                      group2 = db.ProductGroup3s.Find(Category3ID).ProductGroup2ID;
 
                 if (product.Visible != isVisible || ProductPhoto != null || product.ProductGroup3ID != Category3ID)
@@ -186,9 +186,10 @@ namespace PRMYTASSİST.Controllers
                     product.LastUpdateUserID = CurrentUser.ID;
                 }
                 product.Visible = isVisible;
+                if (Category3ID != -1) { 
                 product.ProductGroup3ID = Category3ID;
                 product.ProductGroup2ID = group2;
-
+}
 
                 if (ProductPhoto != null)
                 {

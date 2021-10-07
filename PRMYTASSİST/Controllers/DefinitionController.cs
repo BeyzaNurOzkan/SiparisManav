@@ -376,12 +376,15 @@ namespace PRMYTASSİST.Controllers
             ProductGroup4 productGroup4 = db.ProductGroup4s.Where(q => q.CodeRand == CodeRand).DefaultIfEmpty().FirstOrDefault();
             ProductGroup5 productGroup5 = db.ProductGroup5s.Where(q => q.CodeRand == CodeRand).DefaultIfEmpty().FirstOrDefault();
             string name = "";
+            string AllName = "";
+
             int ID = 0;
             string code = "";
             string codeRand = "";
             if (productGroup != null)
             {
                 name = productGroup.Name;
+                AllName = productGroup.Name.ToUpper();
                 code = productGroup.Code;
                 ID = productGroup.ID;
                 codeRand = productGroup.CodeRand;
@@ -389,6 +392,7 @@ namespace PRMYTASSİST.Controllers
             else if (productGroup2 != null)
             {
                 name = productGroup2.Name;
+                AllName = db.ProductGroups.Find(productGroup2.ProductGroupID).Name.ToUpper() + ", "  + productGroup2.Name.ToUpper();
                 code = productGroup2.Code;
                 ID = productGroup2.ID;
                 codeRand = productGroup2.CodeRand;
@@ -397,6 +401,7 @@ namespace PRMYTASSİST.Controllers
             else if (productGroup3 != null)
             {
                 name = productGroup3.Name;
+                AllName = db.ProductGroups.Find(db.ProductGroup2s.Find(productGroup3.ProductGroup2ID).ProductGroupID).Name.ToUpper() + ", " + db.ProductGroup2s.Find(productGroup3.ProductGroup2ID).Name.ToUpper() + ", " + productGroup3.Name.ToUpper();
                 code = productGroup3.Code;
                 ID = productGroup3.ID;
                 codeRand = productGroup3.CodeRand;
@@ -405,6 +410,10 @@ namespace PRMYTASSİST.Controllers
             else if (productGroup4 != null)
             {
                 name = productGroup4.Name;
+                var pr3 = db.ProductGroup3s.Find(productGroup4.ProductGroup3ID);
+                var pr2= db.ProductGroup2s.Find(pr3.ProductGroup2ID);
+                var pr1 = db.ProductGroups.Find(pr2.ProductGroupID);
+                AllName = pr1.Name.ToUpper() + ", " + pr2.Name.ToUpper() + ", " + pr3.Name.ToUpper() + ", " + productGroup4.Name.ToUpper(); 
                 code = productGroup4.Code;
                 ID = productGroup4.ID;
                 codeRand = productGroup4.CodeRand;
@@ -413,6 +422,11 @@ namespace PRMYTASSİST.Controllers
             else if (productGroup5 != null)
             {
                 name = productGroup5.Name;
+                var pr4 = db.ProductGroup4s.Find(productGroup5.ProductGroup4ID);
+                var pr3 = db.ProductGroup3s.Find(pr4.ProductGroup3ID);
+                var pr2 = db.ProductGroup2s.Find(pr3.ProductGroup2ID);
+                var pr1 = db.ProductGroups.Find(pr2.ProductGroupID);
+                AllName = pr1.Name.ToUpper() + ", " + pr2.Name.ToUpper() + ", " + pr3.Name.ToUpper() + ", " + pr4.Name.ToUpper() + ", "+productGroup5.Name.ToUpper();
                 code = productGroup5.Code;
                 ID = productGroup5.ID;
                 codeRand = productGroup5.CodeRand;
@@ -421,6 +435,7 @@ namespace PRMYTASSİST.Controllers
             var usr = new
             {
                 ID = ID,
+                AllName=AllName,
                 Name = name,
                 Code = code,
                 CodeRand = codeRand

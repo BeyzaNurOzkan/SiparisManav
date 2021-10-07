@@ -217,6 +217,8 @@
                                                     <label class="col-lg-2 col-form-label" style=" align-self: center"><b>Grup Değiştir</b></label>
 
                                                     <select id="categoryForProduct" class="custom-select form-control form-control kt-selectpicker col-lg-10" name="categoryForProduct" data-live-search="true">
+                                                        <option selected value="-1">Kategori Seçiniz</option>
+
                                                         @foreach (var item in productGroup3s.Where(q => q.isVisible == true))
                                                         {
                                                             <option data-content="" value="@item.ID">@item.ProductGroups2.ProductGroups.Name.ToUpper(), @item.ProductGroups2.Name.ToUpper(), @item.Name.ToUpper()</option>
@@ -991,6 +993,7 @@
             var isVisible = $("#productModal #visibileForProductList").prop('checked');
             var prodID = $("#productModal #visibileForProductList").val();
             var Category3ID = $("#productModal #categoryForProduct").val();
+           
             var ProductPhoto = $("#productModal #resultBase64")[0].innerHTML;
             ProductPhoto = ProductPhoto.split('"');
             var z = ProductPhoto[1];
@@ -1009,13 +1012,12 @@
                         title: "Başarılı!",
                         text: data,
                         type: "success",
-                        buttonsStyling: false,
-                        confirmButtonText: "Tamam!",
-                        confirmButtonClass: "btn btn-brand",
-
+                        showConfirmButton: false,
+                        timer: 750                     
                     }).then(function (result) {
                         refreshPage();
                     });
+
                 },
                 error: function (request, status, error) {
                     swal.fire("Hata!", "Bir sorun ile karşılaşıldı!", "error");

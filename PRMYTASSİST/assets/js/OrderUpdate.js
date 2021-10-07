@@ -835,21 +835,21 @@ function getOrderProductsUpdateListViewCap(groupId, branchID, id) {
                     if ((full['MaxCapacity']) == 0) {
                         output = `
                                 <div id = "barcode_` + full['ID'] + `" class="" style="justify-content: center;width:100%;">
-                                    <input disabled autocomplete="off" type="text"  value="" style="min-width:100px;background-color:#f5e9f0;border: 2px solid #ffd3e2;font-size: 11px;" type="text" class="form-control bootstrap-touchspin-vertical-btn" oninput= "UpdateOrderDet2(this.value,` + full['ID'] + `)" id = "comment">
+                                    <input disabled autocomplete="off" type="text"  value="" placeholder="Açıklama" style="text-transform: uppercase;height:25px; min-width:100px;background-color:#fff0d0;border: 1px solid #c3c3c3;font-size: 11px;"  type="text" class="form-control bootstrap-touchspin-vertical-btn" oninput= "UpdateOrderDet2(this.value,` + full['ID'] + `)" id = "comment">
                                 </div>
                   `;
                     }
                     else if (name != null) {
                         output = `
                                <div class="" style="justify-content: center;width:100%;">
-                                 <input type="text" value="` + name + `" style="text-transform: uppercase;min-width:180px;background-color: #f5e9f0;     border: 2px solid #ffd3e2;font-size: 11px;" type="text" class="form-control bootstrap-touchspin-vertical-btn" oninput= "UpdateOrderDet2Update(this.value,` + full['ID'] + `,` + id + `)" id = "comment_` + full['ID'] + `" >
+                                 <input type="text" value="` + name + `" placeholder="Açıklama" style="text-transform: uppercase;height:25px; min-width:100px;background-color:#fff0d0;border: 1px solid #c3c3c3;font-size: 11px;"  type="text" class="form-control bootstrap-touchspin-vertical-btn" oninput= "UpdateOrderDet2Update(this.value,` + full['ID'] + `,` + id + `)" id = "comment_` + full['ID'] + `" >
 
                                 </div>`;
                     }
                     else {
                         output = `
                                 <div id = "barcode_` + full['ID'] + `" class="" style="justify-content: center;width:100%;">
-                                    <input autocomplete="off" type="text"  value="" style="text-transform: uppercase;min-width:180px;background-color:#f5e9f0;border: 2px solid #ffd3e2;font-size: 11px;" type="text" class="form-control bootstrap-touchspin-vertical-btn" oninput= "UpdateOrderDet2Update(this.value,` + full['ID'] + `,` + id + `)" id = "comment">
+                                    <input autocomplete="off" type="text"  value="" placeholder="Açıklama" style="text-transform: uppercase;height:25px; min-width:100px;background-color:#fff0d0;border: 1px solid #c3c3c3;font-size: 11px;"  type="text" class="form-control bootstrap-touchspin-vertical-btn" oninput= "UpdateOrderDet2Update(this.value,` + full['ID'] + `,` + id + `)" id = "comment">
                                 </div>
                   `;
                     }
@@ -1320,14 +1320,14 @@ function getOrderProductsUpdateListView(groupId, branchID, id) {
                     if (name != null) {
                         output = `
                                <div class="" style="justify-content: center;width:100%;">
-                                 <input type="text" value="` + name + `" style="text-transform: uppercase;min-width:180px;background-color: #f5e9f0;     border: 2px solid #ffd3e2;font-size: 11px;" type="text" class="form-control bootstrap-touchspin-vertical-btn" oninput= "UpdateOrderDet2Update(this.value,` + full['ID'] + `,` + id + `)" id = "comment_` + full['ID'] + `" >
+                                 <input type="text" value="` + name + `" placeholder="Açıklama" style="text-transform: uppercase;height:25px; min-width:100px;background-color:#fff0d0;border: 1px solid #c3c3c3;font-size: 11px;"  type="text" class="form-control bootstrap-touchspin-vertical-btn" oninput= "UpdateOrderDet2Update(this.value,` + full['ID'] + `,` + id + `)" id = "comment_` + full['ID'] + `" >
 
                                 </div>`;
                     }
                     else {
                         output = `
                                 <div id = "barcode_` + full['ID'] + `" class="" style="justify-content: center;width:100%;">
-                                    <input autocomplete="off" type="text"  value="" style="text-transform: uppercase;min-width:180px;background-color:#f5e9f0;border: 2px solid #ffd3e2;font-size: 11px;" type="text" class="form-control bootstrap-touchspin-vertical-btn" oninput= "UpdateOrderDet2Update(this.value,` + full['ID'] + `,` + id + `)" id = "comment">
+                                    <input autocomplete="off" type="text"  value="" placeholder="Açıklama" style="text-transform: uppercase;height:25px; min-width:100px;background-color:#fff0d0;border: 1px solid #c3c3c3;font-size: 11px;"  type="text" class="form-control bootstrap-touchspin-vertical-btn" oninput= "UpdateOrderDet2Update(this.value,` + full['ID'] + `,` + id + `)" id = "comment">
                                 </div>
                   `;
                     }

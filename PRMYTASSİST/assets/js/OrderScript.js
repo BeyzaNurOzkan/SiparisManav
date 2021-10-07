@@ -813,21 +813,21 @@ function getOrderProductsListViewCap(groupId, branchID) {
                     if ((full['MaxCapacity']) == 0) {
                         output = `
                                 <div id = "barcode_` + full['ID'] + `" class="" style="justify-content: center;width:100%;">
-                                    <input disabled autocomplete="off" type="text"  value="" style="text-transform: uppercase;min-width:100px;background-color:#f5e9f0;border: 2px solid #ffd3e2;font-size: 11px;" type="text" class="form-control bootstrap-touchspin-vertical-btn" oninput= "UpdateOrderDet2(this.value,` + full['ID'] + `)" id = "comment">
+                                    <input disabled autocomplete="off" type="text"  value="" placeholder="Açıklama" style="text-transform: uppercase;height:25px; min-width:100px;background-color:#fff0d0;border: 1px solid #c3c3c3;font-size: 11px;" type="text" class="form-control bootstrap-touchspin-vertical-btn" oninput= "UpdateOrderDet2(this.value,` + full['ID'] + `)" id = "comment">
                                 </div>
                   `;
                     }
                     else if (name != null) {
                         output = `
                                <div class="" style="justify-content: center;width:100%;">
-                                 <input type="text" value="` + name + `" style="text-transform: uppercase;min-width:100px;background-color: #f5e9f0;     border: 2px solid #ffd3e2;font-size: 11px;" type="text" class="form-control bootstrap-touchspin-vertical-btn" oninput= "UpdateOrderDet2(this.value,` + full['ID'] + `)" id = "comment_` + full['ID'] + `" >
+                                 <input type="text" value="` + name + `" placeholder="Açıklama" style="text-transform: uppercase;height:25px; min-width:100px;background-color:#fff0d0;border: 1px solid #c3c3c3;font-size: 11px;" type="text" class="form-control bootstrap-touchspin-vertical-btn" oninput= "UpdateOrderDet2(this.value,` + full['ID'] + `)" id = "comment_` + full['ID'] + `" >
 
                                 </div>`;
                     }
                     else {
                         output = `
                                 <div id = "barcode_` + full['ID'] + `" class="" style="justify-content: center;width:100%;">
-                                    <input autocomplete="off" type="text"  value="" style="text-transform: uppercase;min-width:100px;background-color:#f5e9f0;border: 2px solid #ffd3e2;font-size: 11px;" type="text" class="form-control bootstrap-touchspin-vertical-btn" oninput= "UpdateOrderDet2(this.value,` + full['ID'] + `)" id = "comment">
+                                    <input autocomplete="off" type="text"  value="" placeholder="Açıklama" style="text-transform: uppercase;height:25px; min-width:100px;background-color:#fff0d0;border: 1px solid #c3c3c3;font-size: 11px;"  type="text" class="form-control bootstrap-touchspin-vertical-btn" oninput= "UpdateOrderDet2(this.value,` + full['ID'] + `)" id = "comment">
                                 </div>
                   `;
                     }
@@ -1692,14 +1692,14 @@ function getOrderProductsListView(groupId, branchID) {
                     if (name != null) {
                         output = `
                                <div class="" style="justify-content: center;width:100%;">
-                                 <input type="text" value="` + name + `" style="text-transform: uppercase;min-width:100px;background-color: #f5e9f0;     border: 2px solid #ffd3e2;font-size: 11px;" type="text" class="form-control bootstrap-touchspin-vertical-btn" oninput= "UpdateOrderDet2(this.value,` + full['ID'] + `)" id = "comment_` + full['ID'] + `" >
+                                 <input type="text" value="` + name + `" placeholder="Açıklama" style="text-transform: uppercase;height:25px; min-width:100px;background-color:#fff0d0;border: 1px solid #c3c3c3;font-size: 11px;" type="text" class="form-control bootstrap-touchspin-vertical-btn" oninput= "UpdateOrderDet2(this.value,` + full['ID'] + `)" id = "comment_` + full['ID'] + `" >
 
                                 </div>`;
                     }
                     else {
                         output = `
                                 <div id = "barcode_` + full['ID'] + `" class="" style="justify-content: center;width:100%;">
-                                    <input autocomplete="off" type="text"  value="" style="text-transform: uppercase;min-width:100px;background-color:#f5e9f0;border: 2px solid #ffd3e2;font-size: 11px;" type="text" class="form-control bootstrap-touchspin-vertical-btn" oninput= "UpdateOrderDet2(this.value,` + full['ID'] + `)" id = "comment">
+                                    <input autocomplete="off" type="text"  value="" placeholder="Açıklama" style="text-transform: uppercase;height:25px; min-width:100px;background-color:#fff0d0;border: 1px solid #c3c3c3;font-size: 11px;" type="text" class="form-control bootstrap-touchspin-vertical-btn" oninput= "UpdateOrderDet2(this.value,` + full['ID'] + `)" id = "comment">
                                 </div>
                   `;
                     }
@@ -2842,12 +2842,18 @@ function getProductGroup2(ProductGroup, branchID) {
         success: function (data) {
             debugger
             var c = data.data.length;
+            var z = c;
             for (var i = 0; i < c; i++) {
                 if (data.data[i]['Count'] != 0) {
-                if (i == 0)
+                    if (z > i && i != 0 || i==0) {
+                        z = i;
+                    }                 
+                    if (i == z) {
                     tab.innerHTML += ` <li class="nav-item mt-1 mb-2" style=" border: 1px solid #003366; background-color: #ffb82236; border-radius: 0.25rem; ">
       <a class="nav-link active" style = "min-width: 100px; text-align: center;" id="profile-tab" data-toggle="tab" href="#TabPanel_" role = "tab" aria-controls="profile" aria-selected="false" onclick="reloadtable(` + data.data[i]['ID'] + `)"> <b>` + data.data[i]['Name'] + ` (` + data.data[i]['Count']+`)</b></a>
                                         </li>`;
+                        reloadtable(data.data[i]['ID']);
+                    }
                 else {
                     tab.innerHTML += ` <li class="nav-item mt-1 mb-2" style=" border: 1px solid #003366; background-color: #ffb82236; border-radius: 0.25rem; ">
       <a class="nav-link" style = "min-width: 100px; text-align: center;" id="profile-tab" data-toggle="tab" href="#TabPanel_" role = "tab" aria-controls="profile" aria-selected="false"onclick="reloadtable(` + data.data[i]['ID'] + `)" > <b>` + data.data[i]['Name'] + ` (` + data.data[i]['Count']+`)</b></a>
@@ -2857,7 +2863,7 @@ function getProductGroup2(ProductGroup, branchID) {
             tab.innerHTML += `<li class="nav-item mt-1 mb-2" style="border: 1px solid #003366; background-color: #ffb82236; border-radius: 0.25rem; ">
                 <a class="nav-link" style="min-width: 100px; text-align: center;" id="profile-tab" data-toggle="tab" href="#OrderBrief" role="tab" aria-controls="profile" aria-selected="false" onclick="reloadtableabs()"><b>SİPARİŞ ÖZETİ</b></a>
             </li>`;
-            reloadtable(data.data[0]['ID']);
+           
             
             
            
@@ -2896,12 +2902,19 @@ function getProductGroup2Up(ProductGroup, branchID, OrderCode) {
         success: function (data) {
             debugger
             var c = data.data.length;
+            var z = c;
             for (var i = 0; i < c; i++) {
                 if (data.data[i]['Count'] != 0) {
-                    if (i == 0)
+                    if (z > i && i != 0 || i == 0) {
+                        z = i;
+                    }
+                    if (i == z) {
                         tab.innerHTML += ` <li class="nav-item mt-1 mb-2" style=" border: 1px solid #003366; background-color: #ffb82236; border-radius: 0.25rem; ">
       <a class="nav-link active" style = "min-width: 100px; text-align: center;" id="profile-tab" data-toggle="tab" href="#TabPanel_" role = "tab" aria-controls="profile" aria-selected="false" onclick="reloadTableUpdate(` + OrderCode + `,` + data.data[i]['ID'] + `)"> <b>` + data.data[i]['Name'] + ` (` + data.data[i]['Count'] + `)</b></a>
                                         </li>`;
+                        reloadTableUpdate(OrderCode, data.data[i]['ID']);
+                    }
+
                     else {
                         tab.innerHTML += ` <li class="nav-item mt-1 mb-2" style=" border: 1px solid #003366; background-color: #ffb82236; border-radius: 0.25rem; ">
       <a class="nav-link" style = "min-width: 100px; text-align: center;" id="profile-tab" data-toggle="tab" href="#TabPanel_" role = "tab" aria-controls="profile" aria-selected="false"onclick="reloadTableUpdate(` + OrderCode + `,` + data.data[i]['ID'] + `)" > <b>` + data.data[i]['Name'] + ` (` + data.data[i]['Count'] + `)</b></a>
@@ -2912,7 +2925,6 @@ function getProductGroup2Up(ProductGroup, branchID, OrderCode) {
             tab.innerHTML += `<li class="nav-item mt-1 mb-2" style="border: 1px solid #003366; background-color: #ffb82236; border-radius: 0.25rem; ">
                 <a class="nav-link" style="min-width: 100px; text-align: center;" id="profile-tab" data-toggle="tab" href="#OrderBrief" role="tab" aria-controls="profile" aria-selected="false" onclick="reloadTableAbsUpdate()"><b>SİPARİŞ ÖZETİ</b></a>
             </li>`;
-            reloadTableUpdate(OrderCode,data.data[0]['ID']);
         },
         error: function (request, status, error) {
             debugger

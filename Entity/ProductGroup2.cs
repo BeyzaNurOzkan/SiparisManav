@@ -18,6 +18,8 @@ namespace Entity
         public bool isDeleted { get; set; }
         // Foreign Keys
         public int ProductGroupID { get; set; }
+        public int Priority { get; set; }
+
         public virtual ProductGroup ProductGroups { get; set; }
         public virtual ICollection<ProductGroup3> ProductGroups3 { get; set; }
 

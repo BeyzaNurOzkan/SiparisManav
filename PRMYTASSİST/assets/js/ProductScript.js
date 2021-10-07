@@ -242,6 +242,7 @@ function EditProduct(id) {
 
                 $('#productModal #next').val(data['nextid']);
                 $('#productModal #back').val(data['backid']);
+                
 
                 if (data['Visibile'] == true) {
                     $("#productModal #visibileForProductList").prop("checked", true);
@@ -256,6 +257,8 @@ function EditProduct(id) {
                 debugger
                 $("#productModal #productphoto").val(data['photo']);
                // $("#productModal #categoryForProduct").val(data['ProductGroup3Id']);
+
+               
 
 
                 debugger
