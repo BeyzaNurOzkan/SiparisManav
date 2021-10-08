@@ -646,7 +646,7 @@ namespace PRMYTASSİST.Controllers
                            MaxCapacity2 = ((from order in db.Orders.Where(q => q.ApprovalStatus == 1 && q.CreateDate >= date && q.CreateDate < date2 && q.BranchCode == branch.ID)
                                             from OrderDetail in order.orderDetails.Where(q => q.ProductID == product.ID)
                                             select OrderDetail.Quantity).Count()).ToString(),
-                           PhotoGroup = group3.Photo,
+                           PhotoGroup = product.Photo,
                            Units = unit.Name.ToUpper()
                        }
             };
