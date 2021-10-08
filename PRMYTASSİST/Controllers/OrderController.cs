@@ -39,8 +39,12 @@ namespace PRMYTASSİST.Controllers
             return Json(list, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult AddBPtoOrderDetailsUpdate()
+        public ActionResult AddBPtoOrderDetailsUpdate(string userName, string ordercode)
         {
+            int order = Convert.ToInt32(ordercode);
+            Order order1 = db.Orders.Find(order);
+            order1.userName = userName;
+            db.SaveChanges();
             return RedirectToAction("OrderList", "Branch");
         }
         public ActionResult refreshPage()
