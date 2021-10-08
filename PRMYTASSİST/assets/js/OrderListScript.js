@@ -1180,7 +1180,7 @@ function RefreshBranchOrderList(id) {
                 confirmButtonClass: "btn btn-brand"
             }).then(function (result) {
                 if (result.value) {
-                    window.location.href = "/Center/StateOrderList";
+                    table.DataTable().ajax.reload();
                     NotificationSend(id, currentUserID);
 
                 }

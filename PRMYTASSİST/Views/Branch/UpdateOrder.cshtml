@@ -63,6 +63,7 @@
                             </select>
                             <input hidden type="text" id="settings" readonly placeholder="" value=@settings2 style=" font-size: 12px; color: red; text-align: center; " />
                             <input hidden type="text" id="settings2" readonly placeholder="" value=@settings3 style=" font-size: 12px; color: red; text-align: center; " />
+                            <input hidden type="text" id="ordercode" name="ordercode" readonly placeholder="" value=@OrderCode style=" font-size: 12px; color: red; text-align: center; " />
 
                             <select disabled id="branch" class="custom-select form-control pl-2 pr-1 selectpicker" name="BranchCode">
                                 @if (branches.Where(x => x.ID == CurrentUser.CurrentBranch && x.isMaster == false && x.Visible == true).FirstOrDefault() != null)
@@ -110,7 +111,7 @@
                                 <i class="la la-save"></i>
                                 Kaydet
                             </button>
-                            <a class="btn btn-danger" style="color:white;" onclick="cancelToNewOrder()" id="btn1">
+                            <a class="btn btn-danger" style="color:white;" id="btn1">
                                 Vazgeç
                             </a>
 
@@ -143,7 +144,7 @@
                         <input type="text" id="myInput" style="font-size:11px" class="form-control" onkeyup="myFunction(this.value)" placeholder="Ara..." title="">
                     </div>
                     <div class="col-md-3 pt-2 pr-2 pl-2">
-                        <input disabled type="text" id="userName" name="userName" class="form-control" style="font-size:11px" placeholder="Siparişi Oluşturan Kişi" required>
+                        <input type="text" id="userName" name="userName" class="form-control" style="font-size:11px" placeholder="Siparişi Oluşturan Kişi" required>
                     </div>
                 </div>
             </div>
