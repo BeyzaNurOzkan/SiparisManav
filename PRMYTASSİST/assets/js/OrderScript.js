@@ -2935,25 +2935,51 @@ function getProductGroup2Up(ProductGroup, branchID, OrderCode) {
             debugger
             var c = data.data.length;
             var z = c;
+            var control = 0;
             for (var i = 0; i < c; i++) {
                 if (data.data[i]['Count'] != 0) {
-                    if (z > i && i != 0 || i == 0) {
-                        z = i;
-                    }
-                    if (i == z) {
-                        tab.innerHTML += ` <li class="nav-item mt-1 mb-2" style=" border: 1px solid #003366; background-color: #ffb82236; border-radius: 0.25rem; ">
+                    if (data.data[i]['Priority'] != 0) {
+                        if (z > i && i != 0 || i == 0) {
+                            z = i;
+                        }
+                        if (i == z) {
+                            tab.innerHTML += ` <li class="nav-item mt-1 mb-2" style=" border: 1px solid #003366; background-color: #ffb82236; border-radius: 0.25rem; ">
       <a class="nav-link active" style = "min-width: 100px; text-align: center;" id="profile-tab" data-toggle="tab" href="#TabPanel_" role = "tab" aria-controls="profile" aria-selected="false" onclick="reloadTableUpdate(` + OrderCode + `,` + data.data[i]['ID'] + `)"> <b>` + data.data[i]['Name'] + ` (` + data.data[i]['Count'] + `)</b></a>
                                         </li>`;
-                        reloadTableUpdate(OrderCode, data.data[i]['ID']);
-                    }
+                            reloadTableUpdate(OrderCode, data.data[i]['ID']);
+                            control=1
+                        }
 
-                    else {
-                        tab.innerHTML += ` <li class="nav-item mt-1 mb-2" style=" border: 1px solid #003366; background-color: #ffb82236; border-radius: 0.25rem; ">
+                        else {
+                            tab.innerHTML += ` <li class="nav-item mt-1 mb-2" style=" border: 1px solid #003366; background-color: #ffb82236; border-radius: 0.25rem; ">
       <a class="nav-link" style = "min-width: 100px; text-align: center;" id="profile-tab" data-toggle="tab" href="#TabPanel_" role = "tab" aria-controls="profile" aria-selected="false"onclick="reloadTableUpdate(` + OrderCode + `,` + data.data[i]['ID'] + `)" > <b>` + data.data[i]['Name'] + ` (` + data.data[i]['Count'] + `)</b></a>
                                         </li>`;
+                        }
                     }
                 }
             }
+            for (var i = 0; i < c; i++) {
+                if (data.data[i]['Count'] != 0) {
+                    if (data.data[i]['Priority'] == 0) {
+                        if (z > i && i != 0 || i == 0) {
+                            z = i;
+                        }
+                        if (i == z && control == 0) {
+                            tab.innerHTML += ` <li class="nav-item mt-1 mb-2" style=" border: 1px solid #003366; background-color: #ffb82236; border-radius: 0.25rem; ">
+      <a class="nav-link active" style = "min-width: 100px; text-align: center;" id="profile-tab" data-toggle="tab" href="#TabPanel_" role = "tab" aria-controls="profile" aria-selected="false" onclick="reloadTableUpdate(` + OrderCode + `,` + data.data[i]['ID'] + `)"> <b>` + data.data[i]['Name'] + ` (` + data.data[i]['Count'] + `)</b></a>
+                                        </li>`;
+                            reloadTableUpdate(OrderCode, data.data[i]['ID']);
+                        }
+
+                        else {
+                            tab.innerHTML += ` <li class="nav-item mt-1 mb-2" style=" border: 1px solid #003366; background-color: #ffb82236; border-radius: 0.25rem; ">
+      <a class="nav-link" style = "min-width: 100px; text-align: center;" id="profile-tab" data-toggle="tab" href="#TabPanel_" role = "tab" aria-controls="profile" aria-selected="false"onclick="reloadTableUpdate(` + OrderCode + `,` + data.data[i]['ID'] + `)" > <b>` + data.data[i]['Name'] + ` (` + data.data[i]['Count'] + `)</b></a>
+                                        </li>`;
+                        }
+                    }
+                }
+            }
+
             tab.innerHTML += `<li class="nav-item mt-1 mb-2" style="border: 1px solid #003366; background-color: #ffb82236; border-radius: 0.25rem; ">
                 <a class="nav-link" style="min-width: 100px; text-align: center;" id="profile-tab" data-toggle="tab" href="#OrderBrief" role="tab" aria-controls="profile" aria-selected="false" onclick="reloadTableAbsUpdate()"><b>SİPARİŞ ÖZETİ</b></a>
             </li>`;

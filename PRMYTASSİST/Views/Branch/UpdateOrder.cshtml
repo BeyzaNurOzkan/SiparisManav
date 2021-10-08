@@ -125,10 +125,16 @@
                     </div>
                     <div class="col-lg-3 col-sm-6 pt-2 pl-0 pr-0" style=" align-self: center; ">
                         <select id="ProductGroupUp" class="custom-select form-control pl-2 pr-1 selectpicker" name="ProductGroupUp">
-                            @foreach (var item in productGroups)
-                            {
+                            <option selected value="0" style="font-weight:bold;">Kategori Seçiniz</option>
 
-                                <option value="@item.ID">@item.Name.ToUpper() </option>
+                            @foreach (var item in productGroups.Where(z => z.Priority != 0).OrderBy(q => q.Priority).ThenBy(q => q.Name))
+                            {
+                                <option value="@item.ID" style="font-weight: bold;">@item.Name.ToUpper() </option>
+
+                            }
+                            @foreach (var item in productGroups.Where(z => z.Priority == 0).OrderBy(q => q.Name))
+                            {
+                                <option value="@item.ID" style="font-weight: bold;">@item.Name.ToUpper() </option>
 
                             }
                         </select>
@@ -152,7 +158,7 @@
                 <!--begin: Datatable -->
                 <div class="kt-content  kt-grid__item kt-grid__item--fluid pt-1 pl-2" id="kt_content">
                     <div class="row">
-                        <div class="col-md-6 ml-0 mb-0 pr-0">
+                        <div class="col-md-12">
                             <ul class="nav nav-pills mb-3" id="myTabUp" name="myTabUp" role="tablist">
 
                                 @*@foreach (var items in productGroup2s.Where(q => q.ProductGroupID == groupId).OrderBy(q => q.ID))
