@@ -58,41 +58,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BarcodeModels.cs" />
-    <Compile Include="BasketStockForBranch.cs" />
-    <Compile Include="BasketStock.cs" />
-    <Compile Include="Chat.cs" />
-    <Compile Include="EntryStock.cs" />
-    <Compile Include="EntryStockList.cs" />
-    <Compile Include="Message.cs" />
-    <Compile Include="Migrations\202109011400144_Mig-00001.cs" />
-    <Compile Include="Migrations\202109011400144_Mig-00001.designer.cs">
-      <DependentUpon>202109011400144_Mig-00001.cs</DependentUpon>
+    <Compile Include="Migrations\202112281501493_mig-01.cs" />
+    <Compile Include="Migrations\202112281501493_mig-01.designer.cs">
+      <DependentUpon>202112281501493_mig-01.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202109281251069_Mig-00002.cs" />
-    <Compile Include="Migrations\202109281251069_Mig-00002.designer.cs">
-      <DependentUpon>202109281251069_Mig-00002.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202110071352415_Mig-00003.cs" />
-    <Compile Include="Migrations\202110071352415_Mig-00003.designer.cs">
-      <DependentUpon>202110071352415_Mig-00003.cs</DependentUpon>
+    <Compile Include="Migrations\202112281512302_mig-02.cs" />
+    <Compile Include="Migrations\202112281512302_mig-02.designer.cs">
+      <DependentUpon>202112281512302_mig-02.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Notification.cs" />
     <Compile Include="UnitFormat.cs" />
-    <Compile Include="DiscountBranch.cs" />
-    <Compile Include="Discount.cs" />
     <Compile Include="BranchFormat.cs" />
     <Compile Include="QuantityFormat.cs" />
     <Compile Include="Settings.cs" />
-    <Compile Include="Brand.cs" />
-    <Compile Include="CurrentAccountAddressModel.cs" />
-    <Compile Include="CurrentAccountModel.cs" />
-    <Compile Include="StoreStockDetail.cs" />
-    <Compile Include="StoreStock.cs" />
-    <Compile Include="Region.cs" />
     <Compile Include="OrderDetail.cs" />
-    <Compile Include="ProductGroup5.cs" />
-    <Compile Include="ProductGroup4.cs" />
     <Compile Include="ProductGroup3.cs" />
     <Compile Include="ProductGroup2.cs" />
     <Compile Include="QuantityModel.cs" />
@@ -111,7 +91,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Query.cs" />
     <Compile Include="REContext.cs" />
-    <Compile Include="UpdateDate.cs" />
     <Compile Include="Role.cs" />
     <Compile Include="Prices.cs" />
     <Compile Include="Unit.cs" />
@@ -186,14 +165,11 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202109011400144_Mig-00001.resx">
-      <DependentUpon>202109011400144_Mig-00001.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202112281501493_mig-01.resx">
+      <DependentUpon>202112281501493_mig-01.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202109281251069_Mig-00002.resx">
-      <DependentUpon>202109281251069_Mig-00002.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202110071352415_Mig-00003.resx">
-      <DependentUpon>202110071352415_Mig-00003.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202112281512302_mig-02.resx">
+      <DependentUpon>202112281512302_mig-02.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

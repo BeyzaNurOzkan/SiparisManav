@@ -1,4 +1,40 @@
-﻿function LayoutNotificationList(id) {
+﻿function getLayoutCompanyName() {
+    compantNameCode = 100798;
+    debugger
+    $.ajax({
+        type: "POST",
+        url: '/GeneralSettings/getLayoutCompanyName?compantNameCode=' + compantNameCode,
+        success: function (data) {
+            $('#companyNameLayout').text(data['companyName']);
+        },
+        error: function (request, status, error) {
+            swal.fire("Hata!", "Bir sorun ile karşılaşıldı!", "error");
+        }
+    });
+};
+function waitingOrderCountScrpt() {
+    debugger
+    $.ajax({
+        type: "POST",
+        url: '/Definition/GetOrderCountByWaiting',
+        success: function (data) {
+            if (data['OrderCountW8'] != 0) {
+                $('#waitingOrderCount').text(data['OrderCountW8']);
+                $('#waitingOrderCount').addClass('kt-badge--success');
+                $('#waitingOrderCount').removeClass('kt-badge--zero');
+            }
+            else {
+                $('#waitingOrderCount').text(data['OrderCountW8']);
+                $('#waitingOrderCount').removeClass('kt-badge--success');
+                $('#waitingOrderCount').addClass('kt-badge--zero');
+            }
+        },
+        error: function (request, status, error) {
+            swal.fire("Hata!", "Bir sorun ile karşılaşıldı!", "error");
+        }
+    });
+};
+function LayoutNotificationList(id) {
     debugger
     $.ajax({
         type: "POST",
@@ -6,7 +42,6 @@
         success: function (data) {
             var List = "";
             var c = data.length;
-            
             var controlOne = $('#NotificationCount').text();
             if (controlOne == c) {
 
@@ -15,15 +50,8 @@
                 $('#NotificationBodyChange').empty();
                 for (var i = 0; i < c; i++) {
                     $('#NotificationCount').text(data[i]['notReadCount']);
-                    var notification = data[i]['notReadCount'];
-                    
-                    if (notification!=0)
-                        $('#NotificationCountring').addClass('kt-pulse__ring');
-                    
-
-                    
                     if (data[i]['Control'] == 0) {
-                        List = List + `<a href="/Branch/UpdateOrder?id=` + data[i]['OrderID'] + `" class="kt-notification__item">
+                        List = List + `<a href="/Center/StateOrderListViewOff?id=` + data[i]['OrderID'] + `" class="kt-notification__item">
                                         <div class="kt-notification__item-icon">
                                             <i class="icon-2x text-dark-50 flaticon-refresh"></i>
                                         </div>
@@ -34,7 +62,7 @@
                                     </a>`;
                     }
                     else if (data[i]['Control'] == 1) {
-                        List = List + `<a href="/Center/StateOrderListViewOffForBranch?id=` + data[i]['OrderID'] + `" class="kt-notification__item">
+                        List = List + `<a href="/Center/StateOrderListViewOff?id=` + data[i]['OrderID'] + `" class="kt-notification__item">
                                         <div class="kt-notification__item-icon ">
                                             <i class="icon-2x text-dark-50 flaticon2-check-mark " style="color:#0abb87;"></i>
                                         </div>
@@ -45,7 +73,7 @@
                                     </a>`;
                     }
                     else if (data[i]['Control'] == 2) {
-                        List = List + `<a href="/Center/StateOrderListViewOffForBranch?id=` + data[i]['OrderID'] + `" class="kt-notification__item">
+                        List = List + `<a href="/Center/StateOrderListViewOff?id=` + data[i]['OrderID'] + `" class="kt-notification__item">
                                         <div class="kt-notification__item-icon ">
                                             <i class="icon-2x text-dark-50 flaticon2-cross kt-font-danger"></i>
                                         </div>
@@ -64,31 +92,37 @@
         }
     });
 };
-
-function NotificationSend(id, currentUserID) {
-    debugger
-    $.ajax({
-        type: "POST",
-        url: '/Notification/NotificationSend?orderid=' + id + '&userId=' + currentUserID,
-        success: function (data) {
-
-        },
-        error: function (request, status, error) {
-            swal.fire("Hata!", "Bir sorun ile karşılaşıldı! Ürün Sayısı Bulunamadı...", "error");
-        }
-    });
+function ChangeDateRange() {
+    var StartDate = $('#StartDate').val();
+    var EndDate = $('#EndDate').val();
+    var UserID = $('#UserID').val();
+    getBranchOrderList(StartDate, EndDate, UserID);
 };
+function cancelToNewOrder() {
+    var branchID = $("#branch").val();
+    swal.fire({
+        title: 'Silmek istediğinizden emin misiniz?',
+        text: "Bu İşlem Geri Alınamaz!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Evet, Sil!',
+        cancelButtonText: 'Hayır, İptal Et!',
+        reverseButtons: true
+    }).then(function (result) {
+        if (result.value) {
 
-function NotificationRead(id) {
-    debugger
-    $.ajax({
-        type: "POST",
-        url: '/Notification/NotificationRead?userId=' + id,
-        success: function (data) {
+            $.ajax({
+                type: "POST",
+                url: '/Order/cancelToNewOrder?id=' + branchID,
+                success: function (data) {
+                    window.location.reload();
+                },
+            });
 
-        },
-        error: function (request, status, error) {
-            swal.fire("Hata!", "Bir sorun ile karşılaşıldı! Ürün Sayısı Bulunamadı...", "error");
+        } else if (result.dismiss === 'cancel') {
+            swal.fire(
+                "İptal!", "Silme İşlemi İptal Edildi!", "error"
+            )
         }
     });
 };

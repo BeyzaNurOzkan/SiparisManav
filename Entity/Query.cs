@@ -14,10 +14,6 @@ namespace Entity
         {
             return db.ProductGroups.AsNoTracking().ToList();
         }
-        public static List<StoreStock> storeStocks()
-        {
-            return db.storeStocks.AsNoTracking().ToList();
-        }
         public static List<Order> orders()
         {
             return db.Orders.AsNoTracking().ToList();
@@ -30,10 +26,7 @@ namespace Entity
         {
             return db.Settings.AsNoTracking().ToList();
         }
-        public static List<StoreStockDetail> storeStockDetails()
-        {
-            return db.storeStockDetails.AsNoTracking().ToList();
-        }
+      
         public static List<Product> Product()
         {
             return db.Products.AsNoTracking().ToList();
@@ -51,14 +44,7 @@ namespace Entity
         {
             return db.ProductGroup3s.AsNoTracking().ToList();
         }
-        public static List<ProductGroup4> ProductGroup4s()
-        {
-            return db.ProductGroup4s.AsNoTracking().ToList();
-        }
-        public static List<ProductGroup5> ProductGroup5s()
-        {
-            return db.ProductGroup5s.AsNoTracking().ToList();
-        }
+      
         public static List<ProductGroup2> ProductGroup2s(int id)
         {
             return db.ProductGroup2s.Where(x => x.ProductGroupID == id).AsNoTracking().ToList();
@@ -75,14 +61,6 @@ namespace Entity
         {
             return db.Branchs.AsNoTracking().ToList();
         }
-        public static List<Region> getRegions()
-        {
-            return db.Regions.AsNoTracking().ToList();
-        }
-        public static List<Region> getRegion()
-        {
-            return db.Regions.AsNoTracking().ToList();
-        }
         public static List<Role> getRoles()
         {
             return db.Roles.AsNoTracking().ToList();
@@ -90,14 +68,6 @@ namespace Entity
         public static List<BranchFormat> getBranchFormat()
         {
             return db.branchFormats.AsNoTracking().ToList();
-        }
-        public static List<Discount> discounts()
-        {
-            return db.Discounts.AsNoTracking().ToList();
-        }
-        public static List<CurrentAccountModel> currentAccountModels()
-        {
-            return db.currentAccounts.AsNoTracking().ToList();
         }
     }
 }

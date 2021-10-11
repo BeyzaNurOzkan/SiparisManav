@@ -14,16 +14,7 @@ namespace Entity
         [StringLength(27)]
         [Index]
         public string StockCode { get; set; }
-        public string BatchCode { get; set; }
-        
         public string Code { get; set; }
-        public int UnitCode { get; set; }
-        public int Lot { get; set; }
-        public int BarcodeType { get; set; }
-        public int BarcodeCont { get; set; }
-        public int ConnectionType { get; set; }
-        public int Sizecode { get; set; }
-        public int Colorcode { get; set; }
         public Boolean IsMaster { get; set; }
     }
 }

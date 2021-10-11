@@ -10,7 +10,6 @@ namespace Entity
 {
     public class Settings : BaseEntity
     {
-        public string Name { get; set; }
         public int SettingsCode { get; set; }
         public string Value { get; set; }
     }

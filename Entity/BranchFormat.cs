@@ -14,9 +14,6 @@ namespace Entity
         [StringLength(50)]
         public string FormatName { get; set; }
         [Index]
-        public int FormatCode { get; set; }
-        public DateTime LastUpdateDate { get; set; }
         public bool Visible { get; set; }
-        public int UserID { get; set; }
     }
 }

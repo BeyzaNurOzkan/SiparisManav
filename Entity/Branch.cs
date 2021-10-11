@@ -22,11 +22,6 @@ namespace Entity
         [DefaultValue(true)]
         public bool Visible { get; set; }
         public bool isMaster { get; set; }
-
-        public int? RegionID { get; set; }
-        public int? UserID { get; set; }
-
-        public virtual Region Regions { get; set; }
         // Foreign Keys
         public virtual ICollection<User> users { get; set; }
 

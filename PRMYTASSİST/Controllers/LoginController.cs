@@ -94,7 +94,6 @@ namespace PRMYTASSİST.Controllers
             return Json(jsonModel, JsonRequestBehavior.AllowGet);
 
         }
-
         public ActionResult Logout(int id)
         {
             User currentUser = db.Users.Where(x => x.ID == id).SingleOrDefault();
@@ -103,11 +102,6 @@ namespace PRMYTASSİST.Controllers
             Session["currentUser"] = null;
             Session.Abandon();
             return RedirectToAction("Index", "Login");
-        }
-
-        public int GetSessionTime()
-        {
-            return Session.Timeout;
         }
     }
 }

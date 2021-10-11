@@ -122,13 +122,13 @@
 @*<script src="https://cdn.datatables.net/rowgroup/1.1.2/js/dataTables.rowGroup.js"></script>*@
 <script>
     $(document).ready(function () {
-        UTCToday();
+        UTCTodayDis();
     });
 </script>
 
 <script>
     $(document).ready(function () {
-        var dateID = $('#kt_datepicker_3').val();
+        var dateID = localStorage.dateForDist;
         getProductsReport(dateID);
     });
 </script>

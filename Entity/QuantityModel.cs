@@ -18,9 +18,6 @@ namespace Entity
         [StringLength(27)]
         [Index]
         public string StockCode { get; set; }
-        public int MaxCapacity { get; set; }
-        public int MinCapacity { get; set; }
-        public string Comment { get; set; }
 
     }
 }

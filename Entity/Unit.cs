@@ -25,7 +25,6 @@ namespace Entity
         
         public double Weight { get; set; }
         
-        public bool isDeleted { get; set; }
         // Foreign Keys
        
        

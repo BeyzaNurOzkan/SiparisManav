@@ -17,34 +17,6 @@ namespace PRMYTASSİST.Controllers
         {
             return View();
         }
-        public void NotificationSendTotal(int?[] orderid, int userId)
-        {
-            foreach (var orders in orderid)
-            {
-                Order order = db.Orders.Find(orders);
-                string message = "";
-                if (order.ApprovalStatus == 1)
-                    message = " Onaylandı..";
-                if (order.ApprovalStatus == 0)
-                    message = " Beklemeye Alındı..";
-                if (order.ApprovalStatus == 2)
-                    message = " Reddedildi..";
-                Notification notification = new Notification()
-                {
-                    SendUser = db.Users.Find(userId),
-                    Content = order.OrderNo.ToString() + " Nolu Siparişiniz " + db.Users.Find(userId).FirstName.ToUpper() + " " + db.Users.Find(userId).LastName.ToUpper() + " Tarafından" + message,
-                    lastNotificationTime = DateTime.Now,
-                    CreateDate = DateTime.Now,
-                    Control2 = order.OrderNo,
-                    ComeUser = db.Users.Find(order.userID),
-                    Control = order.ApprovalStatus,
-                };
-                db.Notifications.Add(notification);
-                db.SaveChanges();
-            }
-            
-        }
-
         public void NotificationSend(int orderid, int userId)
         {
             Order order = db.Orders.Find(orderid);
@@ -67,18 +39,7 @@ namespace PRMYTASSİST.Controllers
             };
             db.Notifications.Add(notification);
             db.SaveChanges();
-        }
-        public void NotificationRead(int userId)
-        {
-            int count = db.Notifications.Where(q => q.ComeUser.ID == userId && q.isRead == false).Count();
-            for (int i = 0; i < count; i++)
-            {
-                Notification notification = db.Notifications.Where(q => q.ComeUser.ID == userId && q.isRead == false).FirstOrDefault();
-                notification.isRead = true;
-                db.SaveChanges();
-            }
-        }
-      
+        }      
         public JsonResult LayoutNotificationList(int id)
         {
             DateTime date = DateTime.Now;

@@ -140,7 +140,7 @@
                                                         <div class="form-group col-lg-9">
                                                             <select id="userForRoleSelect" class="custom-select form-control form-control kt-selectpicker" name="userForRoleSelect1" data-live-search="true" style="color:blue;">
                                                                 <option id="userForCategorySelectOptions" value=""></option>
-                                                                @foreach (var item in roles.Where(q => q.Visible == true))
+                                                                @foreach (var item in roles)
                                                                 {
                                                                     <option name="RoleID" value="@item.ID">@item.Name.ToUpper()</option>
                                                                 }
@@ -287,7 +287,7 @@
                                                     <label class="col-lg-2 col-form-label">Görevi</label>
                                                     <div class="col-lg-10">
                                                         <select id="userForRoleSelect1" class="custom-select form-control form-control kt-selectpicker" name="userForRoleSelect1" data-live-search="true" style="margin-top: 2px;">
-                                                            @foreach (var item in roles.Where(q => q.Visible == true))
+                                                            @foreach (var item in roles)
                                                             {
                                                                 <option value="@item.ID">@item.Name.ToUpper()</option>
                                                             }

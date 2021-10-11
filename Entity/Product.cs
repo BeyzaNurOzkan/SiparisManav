@@ -22,8 +22,6 @@ namespace Entity
         public bool Visible { get; set; }
         public DateTime LastUpdateDate { get; set; }
         public bool isDeleted { get; set; }
-        public int LastUpdateUserID { get; set; }
-        public int CreateUserID { get; set; }
 
         [Column(TypeName = "varchar")]
         [StringLength(25)]
@@ -46,33 +44,12 @@ namespace Entity
         [Column(TypeName = "varchar")]
         [StringLength(25)]
         public string PlaceCode { get; set; }
-        public string ManufacturerCode { get; set; }
-        public string ResponsibilityCenterCode { get; set; }
-        [DefaultValue(0)]
-        public int ProductGroupID { get; set; }
         [DefaultValue(0)]
         public int ProductGroup2ID { get; set; }
         [DefaultValue(0)]
         public int ProductGroup3ID { get; set; }
         [DefaultValue(0)]
-        public int ProductGroup4ID { get; set; }
-        [DefaultValue(0)]
-        public int ProductGroup5ID { get; set; }
-        public int WholeSaleTaxCode { get; set; }
-        public double WholeSaleTaxPercentage { get; set; }
-        public int RetailTaxCode { get; set; }
-        public bool IsLocked { get; set; }
-        public bool IsRegisterWeighted { get; set; }
-        public string ShortName { get; set; }
-        public string ForeignKey { get; set; }
-        public double RetailTaxPercentage { get; set; }
-        public string CategoryCode { get; set; }
-        public string MainGroupCode { get; set; }
-        public string SubGroupCode { get; set; }
         public string Photo { get; set; }
-        public string SectionCode { get; set; }
-        public string QualintyControlCode { get; set; }
-        public int Shelflife { get; set; }
         // Foreign Keys
     }
 }
