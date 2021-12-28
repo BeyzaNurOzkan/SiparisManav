@@ -169,7 +169,7 @@ namespace PRMYTASSİST.Controllers
                 data = from order in db.Orders.Where(q => q.CreateDate >= date && q.CreateDate < date2)
                        from branch in db.Branchs.Where(q => order.BranchCode == q.ID)
                        from user in db.Users.Where(q => q.ID == order.userID).DefaultIfEmpty()
-                       from format in db.branchFormats.Where(q => q.ID == branch.FormatID)
+                       //from format in db.branchFormats.Where(q => q.ID == branch.FormatID)
                        select new
                        {
                            ID = order.ID,
@@ -194,7 +194,7 @@ namespace PRMYTASSİST.Controllers
                                    from product in db.Products.Where(q => q.ID == orderDet.ProductID)
                                    from unit in db.Units.Where(q => q.StockCode == product.ProductCode && q.UnitCode == 2 && q.Name.ToUpper() == "KASA")
                                    select orderDet.SubTotal).Sum() / settings).ToString(),
-                           Format = format.FormatName.ToUpper()
+                           //Format = format.FormatName.ToUpper()
 
                        }
 

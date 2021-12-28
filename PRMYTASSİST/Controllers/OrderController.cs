@@ -150,13 +150,13 @@ namespace PRMYTASSİST.Controllers
                        {
                            ID = product.ID,
                            Group = Group2.Name,
-                           Code = "fsdfs",
+                           Code = product.ProductCode,
                            Name = product.Name,
-                           ProductUnitName ="fdsfs",
-                           UnitWeight = "fsdfds",
-                           UnitFactor = "fdsfsdfs",
+                           ProductUnitName ="Adet" ,
+                           UnitWeight = "50",
+                           UnitFactor = "50",
                            MaxCapacity = quantityForm.Capacity.ToString(),
-                           UnitPrices = "fsdfsd", /* *unit.factor*/
+                           UnitPrices = "29,90",
                            subtotal = basketPro.SubTotal.ToString(),
                            quantity = basketPro.Quantity.ToString(),
                            Comment = basketPro.Comment,

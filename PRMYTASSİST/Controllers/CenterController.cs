@@ -77,25 +77,25 @@ namespace PRMYTASSİST.Controllers
                 data = from order in db.Orders.Where(q => q.ID == id)
                        from orderdetails in order.orderDetails.DefaultIfEmpty()
                        from product in db.Products.Where(q => orderdetails.ProductID == q.ID).DefaultIfEmpty()
-                       from unit in db.Units.Where(q => q.StockCode == product.ProductCode && q.UnitCode == 2).DefaultIfEmpty().Take(1)
+                       //from unit in db.Units.Where(q => q.StockCode == product.ProductCode && q.UnitCode == 2).DefaultIfEmpty().Take(1)
                        from branch in db.Branchs.Where(q => q.ID == order.BranchCode)
                        from QuantityModel in db.quantityModels.Where(q => q.StockCode == product.ProductCode && q.BranchCode == branch.BranchCode).DefaultIfEmpty()
                            //from price in db.prices.Where(q => q.StockCode == product.ProductCode).Take(1)
-                       from barcode4 in db.barcodeModels.Where(q => q.Code == "Tanımsız").Take(1)
-                       from Barcode in db.barcodeModels.Where(q => q.StockCode == product.ProductCode).OrderByDescending(q => q.IsMaster).Take(1).DefaultIfEmpty(barcode4)
+                       //from barcode4 in db.barcodeModels.Where(q => q.Code == "Tanımsız").Take(1)
+                       //from Barcode in db.barcodeModels.Where(q => q.StockCode == product.ProductCode).OrderByDescending(q => q.IsMaster).Take(1).DefaultIfEmpty(barcode4)
                        from Group3 in db.ProductGroup3s.Where(q => q.ID == product.ProductGroup3ID).DefaultIfEmpty()
                        from Group2 in db.ProductGroup2s.Where(q => q.ID == Group3.ProductGroup2ID).DefaultIfEmpty()
-                       from quantityForm in db.quantityFormats.Where(q => q.StockCode == product.ProductCode && q.FormatID == branch.FormatID).DefaultIfEmpty()
+                       //from quantityForm in db.quantityFormats.Where(q => q.StockCode == product.ProductCode && q.FormatID == branch.FormatID).DefaultIfEmpty()
 
                        select new
                        {
                            ID = product.ID,
                            Name = product.Name.ToUpper(),
-                           Code = Barcode.Code,
-                           ProductUnitName = unit.Name.ToUpper(),
+                           Code = product.ProductCode,
+                           ProductUnitName ="Adet",
                            SubTotal = orderdetails.SubTotal.ToString(),
                            Quantity = orderdetails.Quantity.ToString(),
-                           MaxCapacity = quantityForm.Capacity.ToString(),
+                           MaxCapacity = QuantityModel.StockQuantity.ToString(),
                            Group2 = Group2.Name.ToUpper(),
                            Comment = orderdetails.Comment,
                            CheckBox=orderdetails.CheckBox,

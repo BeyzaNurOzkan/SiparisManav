@@ -67,50 +67,7 @@ function getBranchOrderListCenter(StartDate, EndDate) {
         }],
 
         initComplete: function () {
-            this.api().columns([5]).every(function () {
-                var column = this;
-                $(column.header()).empty();
-                var select = $('<select class="bootstrap-select" style="width:100%; font-weight: bold; font-family:segoe ui;"><option value="">Bölge</option></select>')
-                    .appendTo($(column.header()))
-                    .on('change', function () {
-                        var val = $.fn.dataTable.util.escapeRegex(
-                            $(this).val()
-                        );
-                        var StartDate = $('#StartDate').val();
-                        var EndDate = $('#EndDate').val();
-                        column
-                            .search(val ? '^' + val + '$' : '', true, false)
-                            .draw();
-                    });
-
-                column.data().unique().sort().each(function (d, j) {
-
-                    select.append('<option value="' + d + '">' + d + '</option>')
-
-                });
-            });
-            this.api().columns([6]).every(function () {
-                var column = this;
-                $(column.header()).empty();
-                var select = $('<select class="bootstrap-select" style="width:100%; font-weight: bold; font-family:segoe ui;"><option value="">Format</option></select>')
-                    .appendTo($(column.header()))
-                    .on('change', function () {
-                        var val = $.fn.dataTable.util.escapeRegex(
-                            $(this).val()
-                        );
-                        var StartDate = $('#StartDate').val();
-                        var EndDate = $('#EndDate').val();
-                        column
-                            .search(val ? '^' + val + '$' : '', true, false)
-                            .draw();
-                    });
-
-                column.data().unique().sort().each(function (d, j) {
-
-                    select.append('<option value="' + d + '">' + d + '</option>')
-
-                });
-            });
+           
             this.api().columns([4]).every(function () {
                 var column = this;
                 $(column.header()).empty();
@@ -134,7 +91,7 @@ function getBranchOrderListCenter(StartDate, EndDate) {
 
                 });
             });
-            this.api().columns([7]).every(function () {
+            this.api().columns([5]).every(function () {
                 var bekleme = "Beklemede";
                 var onaylı = "Onaylandı";
                 var red = "Red";
@@ -197,16 +154,6 @@ function getBranchOrderListCenter(StartDate, EndDate) {
                 data: 'BranchName',
                 orderable: false,
                 className: 'font-weight-bold text-danger',
-
-            },
-            
-            {
-
-                data: 'Format',
-                orderable: false,
-                width: "12%",
-                className: ' text-green',
-
 
             },
 
@@ -357,7 +304,7 @@ function getBranchOrderListCenter(StartDate, EndDate) {
 
             },
             {
-                targets: 8,
+                targets: 7,
                 render: function (data, type, full, meta) {
 
                     var totalPrintFormat = full['Safe'].toString();
@@ -374,7 +321,7 @@ function getBranchOrderListCenter(StartDate, EndDate) {
 
             },
             {
-                targets: 9,
+                targets: 8,
                 render: function (data, type, full, meta) {
 
                     var totalPrintFormat = full['Point'].toString();
@@ -392,7 +339,7 @@ function getBranchOrderListCenter(StartDate, EndDate) {
             },
 
             {
-                targets: 6,
+                targets: 5,
                 title: 'Onay Durumu',
                 orderable: false,
                 className: 'dt-center',
@@ -469,7 +416,7 @@ function getBranchOrderListCenter(StartDate, EndDate) {
                 }
             },
             {
-                targets: 10,
+                targets: 9,
                 render: function (data, type, full, meta) {
                     result = "";
                     if (full['Box'] != "") {
