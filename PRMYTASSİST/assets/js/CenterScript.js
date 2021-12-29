@@ -1137,3 +1137,32 @@ function OrderDetailChangeBranch(d) {
         },
     });
 };
+function DeleteBranchOrder(id) {
+    var table = $('#kt_table_getBranchOrderList');
+    swal.fire({
+        title: 'Silmek istediğinizden emin misiniz?',
+        text: "Bu İşlem Geri Alınamaz!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Evet, Sil!',
+        cancelButtonText: 'Hayır, İptal Et!',
+        reverseButtons: true
+    }).then(function (result) {
+        if (result.value) {
+            debugger
+            $.ajax({
+                type: "POST",
+                url: '/Order/DeleteBranchOrder/' + id,
+                success: function (data) {
+                    window.location.href = "Branch/OrderList"
+                },
+            });
+            table.DataTable().ajax.reload();
+            debugger
+        } else if (result.dismiss === 'cancel') {
+            swal.fire(
+                "İptal!", "Silme İşlemi İptal Edildi!", "error"
+            )
+        }
+    });
+};
